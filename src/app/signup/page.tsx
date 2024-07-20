@@ -12,7 +12,11 @@ import { OnChangeValueType } from '@/types/globalType';
 import * as queryString from 'querystring';
 import { useRouter } from 'next/navigation';
 import { fetchAccessToken } from '@/hooks/useKakaoLogin';
-import { filterNumericInput, LocalStorage } from '@/hooks/useUtil';
+import {
+  checkParamsFilled,
+  filterNumericInput,
+  LocalStorage,
+} from '@/hooks/useUtil';
 import { PATH } from '@/routes/path';
 import { useForm } from 'react-hook-form';
 import InputForm from '@/app/_component/atom/InputForm';
@@ -33,10 +37,10 @@ export default function Signup(): React.JSX.Element {
     }));
   };
   const handleClick = () => {
-    if (params.userName) {
-      router.push(PATH.LOGIN);
+    if (checkParamsFilled(params)) {
+      //api 요청 및 라우팅
     } else {
-      router.push(PATH.SIGNUP_TERMS);
+      // 에러 표기
     }
   };
 
@@ -85,7 +89,7 @@ export default function Signup(): React.JSX.Element {
       </div>
 
       <BottomButton
-        filled={params.signupState !== undefined}
+        filled={checkParamsFilled(params)}
         handleNextButtonClick={() => {
           handleClick();
         }}

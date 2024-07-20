@@ -62,6 +62,7 @@ export default function Signup(): React.JSX.Element {
    */
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
   const [errormessage, setErrormessage] = useState(''); // 로딩 상태 추가
+
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
       try {

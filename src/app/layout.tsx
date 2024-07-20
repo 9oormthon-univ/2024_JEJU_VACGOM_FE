@@ -1,15 +1,10 @@
 'use client';
-import type { Metadata } from 'next';
-import { useEffect } from 'react';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import './globalicon.css';
-import Head from 'next/head';
 import 'react-tooltip/dist/react-tooltip.css';
-import NavigationFixed from '@/app/_component/organism/navigationFixed';
-import { LocalStorage } from '@/hooks/useUtil';
 import { useRouter } from 'next/navigation';
-import { PATH } from '@/routes/path';
+import ReactQueryProviders from '../../src/utils/react-query-provider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -76,7 +71,9 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="black" />
         <meta name="apple-mobile-web-app-title" content="백곰" />
       </head>
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ReactQueryProviders>{children}</ReactQueryProviders>
+      </body>
     </html>
   );
 }
