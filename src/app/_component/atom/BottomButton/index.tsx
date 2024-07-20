@@ -12,7 +12,7 @@ type props = {
   type?: 'button' | 'submit' | 'reset';
   loading?: boolean;
   filled: boolean;
-  handleNextButtonClick: () => void;
+  handleNextButtonClick?: () => void;
 };
 const BottomButton: React.FC<props> = ({
   loading,

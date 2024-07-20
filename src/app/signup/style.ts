@@ -12,7 +12,7 @@ export const SignupWrapper = styled.main`
     //height: 24px;
     ${fontGenerator('20px', '700', '23.87px')}
   }
-  & > .container {
+  .container {
     & > .item {
       padding: 14px 20px;
       & > .item_row {
@@ -35,7 +35,7 @@ export const SignupWrapper = styled.main`
       }
     }
   }
-  & > .bottom {
+  .bottom {
     & > .confirm_button {
       border: none;
       height: 56px;
