@@ -60,9 +60,6 @@ const Index = ({
   variant = '',
   children,
   autoComplete = 'one-time-code',
-  hookValueName,
-  required = false,
-  ...rest
 }: React.PropsWithChildren<InputFormType>) => {
   const [isInputFilled, setInputFilled] = useState(false);
 
@@ -72,13 +69,6 @@ const Index = ({
   };
 
   const variantValue = !isInputFilled ? 'placeHolder' : variant;
-
-  const {
-    register,
-    setValue,
-    watch,
-    formState: { errors },
-  } = useFormContext();
 
   return (
     <InputWrapper
@@ -116,7 +106,6 @@ const Index = ({
           onClick={onClick}
           onBlur={handleBlur}
           autoComplete={autoComplete}
-          {...register(hookValueName, { required })}
         />
         {rightIcon && (
           <Icon
