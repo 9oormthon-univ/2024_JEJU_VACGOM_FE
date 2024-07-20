@@ -25,16 +25,16 @@ export default function RootLayout({
 }>) {
   const router = useRouter();
 
-  const checkToken = () => {
-    const accessToken = LocalStorage.getItem('accessToken');
-    if (!accessToken) {
-      router.push(PATH.root);
-    }
-  };
-
-  useEffect(() => {
-    checkToken();
-  }, []);
+  // const checkToken = () => {
+  //   const accessToken = LocalStorage.getItem('accessToken');
+  //   if (!accessToken) {
+  //     router.push(PATH.root);
+  //   }
+  // };
+  //
+  // useEffect(() => {
+  //   checkToken();
+  // }, []);
 
   return (
     <html lang="ko">
