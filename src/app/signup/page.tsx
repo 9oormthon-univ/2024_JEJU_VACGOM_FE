@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 import { SignupWrapper } from './style';
 
@@ -17,11 +17,18 @@ import {
   filterNumericInput,
   LocalStorage,
 } from '@/hooks/useUtil';
-import { PATH } from '@/routes/path';
-import { useForm } from 'react-hook-form';
+
 import InputForm from '@/app/_component/atom/InputForm';
-import { Icons } from '@/styles';
-import { css } from '@emotion/react';
+
+import { useSignIn } from '@/api/queries/auth/sign-in';
+import { useAccessToken } from '@/bridge/hook';
+import { setSession } from '@/api/api_utils';
+
+interface IFormValues {
+  userName: string;
+  identity_first: string;
+  identity_last: string;
+}
 
 export default function Signup(): React.JSX.Element {
   const router = useRouter();
@@ -30,19 +37,46 @@ export default function Signup(): React.JSX.Element {
     identity_first: '',
     identity_last: '',
   });
+  const { mutate, isLoading } = useSignIn<IFormValues>();
+  const { accessToken } = useAccessToken();
+
+  //초기 ACCESS token 설정
+  useEffect(() => {
+    console.log(accessToken);
+    setSession(accessToken);
+  }, [accessToken]);
+
   const onChangeValue: OnChangeValueType = (field, value) => {
     setParam((prevState) => ({
       ...prevState,
       [field]: value,
     }));
   };
-  const handleClick = () => {
+  const onSubmit = () => {
     if (checkParamsFilled(params)) {
-      //api 요청 및 라우팅
+      // API 요청 및 라우팅
+      mutate(
+        {
+          userName: params.userName,
+          identity: params.identity_first + params.identity_last,
+        },
+        {
+          onSuccess: () => {
+            // router.push(PATH.); // 성공 시 라우팅
+          },
+          onError: () => {
+            // 에러 처리
+          },
+        },
+      );
     } else {
       // 에러 표기
     }
   };
+
+  if (isLoading) {
+    return <ViewingComponent />;
+  }
 
   return (
     <SignupWrapper>
@@ -90,9 +124,7 @@ export default function Signup(): React.JSX.Element {
 
       <BottomButton
         filled={checkParamsFilled(params)}
-        handleNextButtonClick={() => {
-          handleClick();
-        }}
+        handleNextButtonClick={onSubmit}
       />
     </SignupWrapper>
   );
