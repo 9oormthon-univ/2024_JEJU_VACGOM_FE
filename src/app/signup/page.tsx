@@ -23,6 +23,8 @@ import InputForm from '@/app/_component/atom/InputForm';
 import { useSignIn } from '@/api/queries/auth/sign-in';
 import { useAccessToken } from '@/bridge/hook';
 import { setSession } from '@/api/api_utils';
+import { PATH } from '@/routes/path';
+import ViewingPage from '@/app/_component/temp/Loading';
 
 interface IFormValues {
   userName: string;
@@ -74,8 +76,8 @@ export default function Signup(): React.JSX.Element {
     }
   };
 
-  if (isLoading) {
-    return <ViewingComponent />;
+  if (!isLoading) {
+    return <ViewingPage backUrl={PATH.SIGNUP} userName={params?.userName} />;
   }
 
   return (

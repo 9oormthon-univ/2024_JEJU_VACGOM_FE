@@ -9,6 +9,7 @@ import google from '../../public/assets/ico/ic-google.svg';
 import vacgom from '../../public/assets/image/img-splash-vacgom.svg';
 import Vacgom01 from '../../public/assets/image/img-Vacgom01.svg';
 import vacgomLoading from '../../public/assets/image/img-Vacgom-loading.svg';
+import vacgomViewing from '../../public/assets/image/img-Vacgom-viewing.svg';
 import vacgom_face from '../../public/assets/image/img-vacgom-face.svg';
 import syringe from '../../public/assets/image/img-syringe.svg';
 
@@ -244,6 +245,7 @@ export const Images: ImagesType = {
   //image
   vacgom01: Vacgom01,
   vacgomLoading: vacgomLoading,
+  vacgomViewing: vacgomViewing,
   vacgom: vacgom,
   vacgom_face: vacgom_face,
   VaccineCardBack: VaccineCardBack,
