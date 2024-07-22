@@ -20,32 +20,20 @@ const SignupErrorPage = (): React.JSX.Element => {
       <BackHeader title={' '} url={PATH.SIGNUP} color={'white'} />
       <div className="container">
         <div className="top">
-          <div className="title">
-            아이의 예방접종 내역을
-            <br /> 확인할 수 없어요
-          </div>
-          <div className="subTitle">
-            아이의 정보가 잘못되었거나, <br />
-            예방접종 내역이 확인되지 않아요.
-          </div>
+          <div className="cate">정보 조회 완료</div>
+          <div className="title">환영합니다!</div>
+          <div className="subTitle">지금 바로, 백곰을 시작해 보세요!</div>
         </div>
         <div className="body">
-          <Image
-            src={Images.vacgom_pillow}
-            alt={'백곰이 베게 들고 있는 사진'}
+          <img
+            loading="lazy"
+            src="https://cdn.builder.io/api/v1/image/assets/TEMP/ffedf4cdb87ccc9e401bdf99e8d9219b1160eed52b9582b4cc61008ac4077b04?"
+            className="mt-7 w-full aspect-[0.92]"
           />
         </div>
         <div className="bottom">
           <Button
-            label={'제가 직접 등록할게요'}
-            size={'large'}
-            variant={'Secondary'}
-            onClick={() => {
-              // router.push(PATH.MOREINFO_DIS);
-            }}
-          />
-          <Button
-            label={'아이 정보를 다시 입력할게요'}
+            label={'백곰 시작하기'}
             size={'large'}
             onClick={() => {
               // router.push(PATH.MOREINFO_DIS);
