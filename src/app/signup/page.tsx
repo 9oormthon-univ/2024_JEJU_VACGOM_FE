@@ -24,7 +24,7 @@ import { useSignIn } from '@/api/queries/auth/sign-in';
 import { useAccessToken } from '@/bridge/hook';
 import { setSession } from '@/api/api_utils';
 import { PATH } from '@/routes/path';
-import ViewingPage from '@/app/_component/temp/Loading';
+import ViewingPage from '@/app/_component/temp/Viewing';
 
 interface IFormValues {
   userName: string;

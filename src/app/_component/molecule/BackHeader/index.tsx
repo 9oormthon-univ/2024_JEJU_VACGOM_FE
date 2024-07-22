@@ -6,13 +6,18 @@ import Icon from '@/app/_component/atom/Icon/Icon';
 import { Icons } from '@/styles';
 import { useRouter } from 'next/navigation';
 
-const MainHeader: React.FC<MainHeaderType> = ({ title, url, counter }) => {
+const MainHeader: React.FC<MainHeaderType> = ({
+  title,
+  url,
+  counter,
+  color = 'black',
+}) => {
   const router = useRouter();
 
   return (
     <HeaderContainer>
       <Icon
-        icon={Icons.arrow_left}
+        icon={color === 'black' ? Icons.arrow_left : Icons.arrow_left_white}
         onClick={() => {
           router.push(url);
         }}

@@ -5,5 +5,6 @@ export interface MainHeaderType {
   title: string;
   url?: string;
   counter?: number;
+  color?: 'black' | 'white';
   onClick?: React.MouseEventHandler<HTMLSpanElement>;
 }
