@@ -6,10 +6,15 @@ const BASE_URL = process.env.BASE_URL;
 interface ImagesType extends Record<string, string> {}
 import kakao from '../../public/assets/ico/ico-kakao.svg';
 import google from '../../public/assets/ico/ic-google.svg';
+
+//백곰 아이콘
 import vacgom from '../../public/assets/image/img-splash-vacgom.svg';
 import Vacgom01 from '../../public/assets/image/img-Vacgom01.svg';
 import vacgomLoading from '../../public/assets/image/img-Vacgom-loading.svg';
+import vacgomViewing from '../../public/assets/image/img-Vacgom-viewing.svg';
 import vacgom_face from '../../public/assets/image/img-vacgom-face.svg';
+import vacgom_pillow from '../../public/assets/image/img-vacgom-pillow.svg';
+
 import syringe from '../../public/assets/image/img-syringe.svg';
 
 import share from '../../public/assets/ico/ico-share.svg';
@@ -44,6 +49,7 @@ import warning from '../../public/assets/ico/ico-warning.svg';
 import arrow_down from '../../public/assets/ico/ico-arrow-down.png';
 import arrow_right from '../../public/assets/ico/ico-arrow-right.svg';
 import arrow_left from '../../public/assets/ico/ico-arrow-left.svg';
+import arrow_left_white from '../../public/assets/ico/ico-arrow_left_white.svg';
 import choice_selec from '../../public/assets/ico/ico-choice-selec.svg';
 import choice_unselec from '../../public/assets/ico/ico-choice-unselec.svg';
 import radio_selec from '../../public/assets/ico/ico-Radiobox_select.svg';
@@ -169,6 +175,7 @@ export const Images: ImagesType = {
   arrow_down: arrow_down,
   arrow_right: arrow_right,
   arrow_left: arrow_left,
+  arrow_left_white: arrow_left_white,
 
   choice_selec: choice_selec,
   choice_unselec: choice_unselec,
@@ -244,8 +251,10 @@ export const Images: ImagesType = {
   //image
   vacgom01: Vacgom01,
   vacgomLoading: vacgomLoading,
+  vacgomViewing: vacgomViewing,
   vacgom: vacgom,
   vacgom_face: vacgom_face,
+  vacgom_pillow: vacgom_pillow,
   VaccineCardBack: VaccineCardBack,
   VaccineCardBackLarge: VaccineCardBackLarge,
   vaccine_status_false: vaccine_status_false,

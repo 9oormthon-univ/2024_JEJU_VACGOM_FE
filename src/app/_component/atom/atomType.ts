@@ -55,7 +55,8 @@ export interface IconDetailType {
 }
 
 // atom/InputForm 의 타입
-export interface InputFormType {
+export interface InputFormType
+  extends React.InputHTMLAttributes<HTMLInputElement> {
   // 아래는 input태그 외에 사용되는 props 의 type을 나타냄
   // otherProps 형태로 반환
   leftIcon?: IconDetailType;
@@ -87,6 +88,8 @@ export interface InputFormType {
   maxLength?: number;
   autoComplete?: string;
   iconSize?: string;
+  hookValueName?: string;
+  required?: boolean;
 }
 
 // atom/RadioBox 의 타입

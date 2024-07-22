@@ -8,11 +8,13 @@ export const PATH = {
   KAKAOLOGIN: 'https://api-dev.vacgom.co.kr/api/v1/oauth/kakao',
   RECOMVAC: '/recomvac',
   FAILVAC: '/failvac',
-  // signup
+  // signup_new
   SIGNUP: '/signup',
+  SIGNUP_INFO: '/signup/info', // 보호자 본인 인증
+  SIGNUP_ERROR: '/signup/error', // 아이 예방접종 내역 확인 불가
+  // signup_old
   SIGNUP_TERMS: '/signup/terms', // 약관동의
   SIGNUP_MORE: '/signup/more', // 예방접종도우미 회원가입 - 아이디 비번
-  SIGNUP_INFO: '/signup/info', // 예방접종도우미 회원가입 - 개인정보
   SIGNUP_CAPCHA: '/signup/captcha', // 예방접종도우미 회원가입 - 보안문자
   SIGNUP_VERIF: '/signup/verification', // 예방접종도우미 회원가입 - 문자
   SIGNUP_DONE: '/signup/done', // 예방접종도우미 회원가입 - 완료

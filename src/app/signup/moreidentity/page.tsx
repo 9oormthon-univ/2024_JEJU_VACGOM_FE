@@ -26,7 +26,7 @@ import { postRegister } from '@/app/_lib/postRegister';
 import WarningToast from '@/app/_component/atom/WarningToast';
 import { postLogin } from '@/app/_lib/postLogin';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
-import LoadingPage from '@/app/_component/temp/Loading';
+import LoadingPage from '@/app/_component/temp/Viewing';
 import { PATH } from '@/routes/path';
 
 export default function MoreIdentity(): React.JSX.Element {
@@ -142,7 +142,6 @@ export default function MoreIdentity(): React.JSX.Element {
       </div>
 
       <WarningToastWrap errorMessage={error} setErrorMessage={setError} />
-
       {loading && <LoadingPage />}
       {!loading && (
         <BottomButton

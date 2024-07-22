@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { LoadingPageWrap } from './style';
+import { ViewingPageWrap } from './style';
 import Image from 'next/image';
 import { Colors, Icons, Images } from '@/styles';
 import { SecureLocalStorage } from '@/hooks/useUtil';
@@ -10,8 +10,9 @@ import LinearProgress, {
   linearProgressClasses,
 } from '@mui/material/LinearProgress';
 import { useEffect, useState } from 'react';
+import BackHeader from '@/app/_component/molecule/BackHeader';
 
-type props = {};
+type props = { backUrl: string; userName?: string | null };
 
 const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   height: 10,
@@ -26,16 +27,15 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-const LoadingPage: React.FC<props> = ({}) => {
-  const username = SecureLocalStorage.getItem('userName');
+const ViewingPage: React.FC<props> = ({ backUrl, userName }: props) => {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setProgress((prevProgress) =>
-        prevProgress >= 100 ? 0 : prevProgress + 5,
+        prevProgress >= 100 ? 0 : prevProgress + 1,
       );
-    }, 390);
+    }, 50); // 주기를 20밀리초로 설정하여 1단위로 증가
 
     return () => {
       clearInterval(timer);
@@ -43,20 +43,18 @@ const LoadingPage: React.FC<props> = ({}) => {
   }, []);
 
   return (
-    <LoadingPageWrap>
+    <ViewingPageWrap>
+      <BackHeader title={' '} url={backUrl} />
       <div className="container">
         <div className="top">
+          <div className="percent">{`${progress}%`}</div>
           <div className="title">
-            {username ? username : '회원'}님의 <br />
+            <p>{userName ? userName : '회원'}님</p>의 <br />
             접종 내역을 조회중이에요
-          </div>
-          <div className="subTitle">
-            예방접종등록사업을 시작한, <br />
-            2002년 이후의 예방접종기록을 확인할 수 있어요
           </div>
         </div>
         <div className="body">
-          <Image src={Images.vacgomLoading} alt={'백곰'} />
+          <Image src={Images.vacgomViewing} alt={'백곰'} />
         </div>
         <div className="bottom">
           <div className="progress">
@@ -64,8 +62,8 @@ const LoadingPage: React.FC<props> = ({}) => {
           </div>
         </div>
       </div>
-    </LoadingPageWrap>
+    </ViewingPageWrap>
   );
 };
 
-export default LoadingPage;
+export default ViewingPage;

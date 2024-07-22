@@ -1,9 +1,9 @@
 'use client';
 
 import * as React from 'react';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
-import { JoinWrap } from './style';
+import { SignupWrapper } from './style';
 
 import BackHeader from '@/app/_component/molecule/BackHeader';
 import JoinTemplate from '@/app/_component/temp/JoinTemplate';
@@ -12,73 +12,124 @@ import { OnChangeValueType } from '@/types/globalType';
 import * as queryString from 'querystring';
 import { useRouter } from 'next/navigation';
 import { fetchAccessToken } from '@/hooks/useKakaoLogin';
-import { LocalStorage } from '@/hooks/useUtil';
+import {
+  checkParamsFilled,
+  filterNumericInput,
+  LocalStorage,
+} from '@/hooks/useUtil';
+
+import InputForm from '@/app/_component/atom/InputForm';
+
+import { useSignIn } from '@/api/queries/auth/sign-in';
+import { useAccessToken } from '@/bridge/hook';
+import { setSession } from '@/api/api_utils';
 import { PATH } from '@/routes/path';
+import ViewingPage from '@/app/_component/temp/Viewing';
+
+interface IFormValues {
+  userName: string;
+  identity_first: string;
+  identity_last: string;
+}
 
 export default function Signup(): React.JSX.Element {
   const router = useRouter();
   const [params, setParam] = useState({
-    signupState: undefined,
+    userName: '',
+    identity_first: '',
+    identity_last: '',
   });
+  const { mutate, isLoading } = useSignIn<IFormValues>();
+  const { accessToken } = useAccessToken();
+
+  //초기 ACCESS token 설정
+  useEffect(() => {
+    console.log(accessToken);
+    setSession(accessToken);
+  }, [accessToken]);
+
   const onChangeValue: OnChangeValueType = (field, value) => {
     setParam((prevState) => ({
       ...prevState,
       [field]: value,
     }));
   };
-  const handleClick = () => {
-    if (params.signupState === true) {
-      router.push(PATH.LOGIN);
+  const onSubmit = () => {
+    if (checkParamsFilled(params)) {
+      // API 요청 및 라우팅
+      router.push(PATH.SIGNUP_ERROR); // 일단 해둠
+      // mutate(
+      //   {
+      //     userName: params.userName,
+      //     identity: params.identity_first + params.identity_last,
+      //   },
+      //   {
+      //     onSuccess: () => {
+      //       router.push(PATH.SIGNUP_INFO); // 성공 시 라우팅
+      //     },
+      //     onError: () => {
+      //       // 에러 처리
+      //       router.push(PATH.SIGNUP_ERROR); // 일단 해둠
+      //     },
+      //   },
+      // );
     } else {
-      router.push(PATH.SIGNUP_TERMS);
+      // 에러 표기
     }
   };
 
-  const [code, setCode] = useState<string | null>(null);
-
-  const fetchData = async () => {
-    if (code) {
-      const response = await fetchAccessToken(code);
-      if (response?.accessToken) {
-        LocalStorage.setItem('accessToken', response.accessToken);
-      }
-      if (response?.data.member.role === 'ROLE_USER') {
-        LocalStorage.setItem('accessToken', response.accessToken);
-        router.push(PATH.HOME);
-      }
-    }
-  };
-
-  useEffect(() => {
-    const queryCode = new URL(window.location.href).searchParams.get('code');
-    if (queryCode) {
-      setCode(queryCode);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [code]);
+  if (isLoading) {
+    return <ViewingPage backUrl={PATH.SIGNUP} userName={params?.userName} />;
+  }
 
   return (
-    <JoinWrap>
+    <SignupWrapper>
       <BackHeader title={' '} url={'/'} />
-      <JoinTemplate
-        title={'예방접종도우미에 가입한 적이 있나요?'}
-        subTop={'백곰을 이용하기 위해서는'}
-        subBottom={'질병관리청의 예방접종도우미 가입이 필요해요'}
-        falseLabel={'아니요, 가입한 적이 없어요'}
-        trueLabel={'네, 가입한 적이 있어요'}
-        params={params}
-        field={'signupState'}
-        onChangeValue={onChangeValue}
-      />
+      <div className="top">우리 아이 정보를 입력해 주세요</div>
+      <div className="container">
+        <div className="item">
+          <InputForm
+            placeholder="이름"
+            value={params.userName}
+            descriptionTop={'이름'}
+            type="text"
+            onChange={(e) => {
+              onChangeValue('userName', e.target.value);
+            }}
+          />
+        </div>
+        <div className="item">
+          <div className="input_title">주민등록번호</div>
+          <div className="item_row">
+            <InputForm
+              placeholder="앞자리 입력"
+              value={params.identity_first}
+              type="text"
+              maxLength={6}
+              onChange={(e) => {
+                let filteredValue = filterNumericInput(e);
+                onChangeValue('identity_first', filteredValue);
+              }}
+            />
+            <p>-</p>
+            <InputForm
+              placeholder="뒷자리 입력"
+              value={params.identity_last}
+              type="password"
+              maxLength={7}
+              onChange={(e) => {
+                let filteredValue = filterNumericInput(e);
+                onChangeValue('identity_last', filteredValue);
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
       <BottomButton
-        filled={params.signupState !== undefined}
-        handleNextButtonClick={() => {
-          handleClick();
-        }}
+        filled={checkParamsFilled(params)}
+        handleNextButtonClick={onSubmit}
       />
-    </JoinWrap>
+    </SignupWrapper>
   );
 }

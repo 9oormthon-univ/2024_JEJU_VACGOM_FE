@@ -6,14 +6,18 @@ import { BottomButtonWrap } from './style';
 import BackHeader from '@/app/_component/molecule/BackHeader';
 import JoinTemplate from '@/app/_component/temp/JoinTemplate';
 import { ButtonType } from '@/app/_component/atom/atomType';
+import Loading from '@/app/_component/atom/Loading/Loading';
+
 type props = {
-  loading: boolean;
+  type?: 'button' | 'submit' | 'reset';
+  loading?: boolean;
   filled: boolean;
-  handleNextButtonClick: () => void;
+  handleNextButtonClick?: () => void;
 };
 const BottomButton: React.FC<props> = ({
   loading,
   filled,
+  type = 'button',
   handleNextButtonClick,
 }) => {
   const onClickValid = () => {
@@ -25,8 +29,10 @@ const BottomButton: React.FC<props> = ({
     <BottomButtonWrap
       className={filled ? 'confirm_button_Filled' : 'confirm_button'}
       onClick={onClickValid}
+      type={type}
+      data-loading={loading}
     >
-      다음
+      {loading ? <Loading /> : '다음'}
     </BottomButtonWrap>
   );
 };

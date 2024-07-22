@@ -9,6 +9,7 @@ import { InputWrapper } from './styles';
 
 // Components
 import Icon from '../Icon/Icon';
+import { useFormContext } from 'react-hook-form';
 
 // Typings
 
