@@ -57,26 +57,28 @@ export default function Signup(): React.JSX.Element {
   const onSubmit = () => {
     if (checkParamsFilled(params)) {
       // API 요청 및 라우팅
-      mutate(
-        {
-          userName: params.userName,
-          identity: params.identity_first + params.identity_last,
-        },
-        {
-          onSuccess: () => {
-            // router.push(PATH.); // 성공 시 라우팅
-          },
-          onError: () => {
-            // 에러 처리
-          },
-        },
-      );
+      router.push(PATH.SIGNUP_ERROR); // 일단 해둠
+      // mutate(
+      //   {
+      //     userName: params.userName,
+      //     identity: params.identity_first + params.identity_last,
+      //   },
+      //   {
+      //     onSuccess: () => {
+      //       router.push(PATH.SIGNUP_INFO); // 성공 시 라우팅
+      //     },
+      //     onError: () => {
+      //       // 에러 처리
+      //       router.push(PATH.SIGNUP_ERROR); // 일단 해둠
+      //     },
+      //   },
+      // );
     } else {
       // 에러 표기
     }
   };
 
-  if (!isLoading) {
+  if (isLoading) {
     return <ViewingPage backUrl={PATH.SIGNUP} userName={params?.userName} />;
   }
 
