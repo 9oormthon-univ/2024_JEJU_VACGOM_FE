@@ -6,11 +6,15 @@ const BASE_URL = process.env.BASE_URL;
 interface ImagesType extends Record<string, string> {}
 import kakao from '../../public/assets/ico/ico-kakao.svg';
 import google from '../../public/assets/ico/ic-google.svg';
+
+//백곰 아이콘
 import vacgom from '../../public/assets/image/img-splash-vacgom.svg';
 import Vacgom01 from '../../public/assets/image/img-Vacgom01.svg';
 import vacgomLoading from '../../public/assets/image/img-Vacgom-loading.svg';
 import vacgomViewing from '../../public/assets/image/img-Vacgom-viewing.svg';
 import vacgom_face from '../../public/assets/image/img-vacgom-face.svg';
+import vacgom_pillow from '../../public/assets/image/img-vacgom-pillow.svg';
+
 import syringe from '../../public/assets/image/img-syringe.svg';
 
 import share from '../../public/assets/ico/ico-share.svg';
@@ -250,6 +254,7 @@ export const Images: ImagesType = {
   vacgomViewing: vacgomViewing,
   vacgom: vacgom,
   vacgom_face: vacgom_face,
+  vacgom_pillow: vacgom_pillow,
   VaccineCardBack: VaccineCardBack,
   VaccineCardBackLarge: VaccineCardBackLarge,
   vaccine_status_false: vaccine_status_false,
