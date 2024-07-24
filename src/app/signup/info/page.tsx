@@ -23,6 +23,15 @@ import { postSignup } from '@/app/_lib/postSignup';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import useSignupStore from '@/store/signup/signup';
+import { useSignup } from '@/api/queries/auth/sign-up';
+import TermsDetail from '@/app/_component/molecule/TermsDetail';
+import TermsAllAgree from '@/app/_component/TermsAllAgree';
+
+interface Values {
+  userName: string;
+  identity_first: string;
+  identity_last: string;
+}
 
 export default function Signup(): React.JSX.Element {
   const { babyName, babySsn } = useSignupStore((state) => state);
@@ -43,23 +52,15 @@ export default function Signup(): React.JSX.Element {
     }));
   };
 
-  /**
-   *  이전 페이지 데이터 끌고 오는
-   */
-  useEffect(() => {
-    let id = SecureLocalStorage.getItem('id');
-    let password = SecureLocalStorage.getItem('password');
-
-    setParams({
-      ...params,
-      id,
-      password,
-    });
-  }, []);
+  const [termSelected, setSelected] = useState(false);
+  const handleSelected = () => {
+    setSelected(!termSelected);
+  };
 
   /**
    *  api 호출
    */
+  // const { mutate, isLoading } = useSignup<Values>();
   const [loading, setLoading] = useState(false); // 로딩 상태 추가
   const [errormessage, setErrormessage] = useState(''); // 로딩 상태 추가
 
@@ -98,12 +99,12 @@ export default function Signup(): React.JSX.Element {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <SignupWrapper>
-        <BackHeader title={'예방접종도우미 회원가입'} url={'/signup/more'} />
-        <div className="top">정보를 입력해 주세요</div>
+        <BackHeader title={'보호자 본인 인증'} url={'/signup/more'} />
+        <div className="top">보호자의 정보를 입력해 주세요</div>
         <div className="container">
           <div className="item">
             <InputForm
-              placeholder="이름"
+              placeholder="이름을 입력해주세요"
               value={params.userName}
               descriptionTop={'이름'}
               type="text"
@@ -114,7 +115,7 @@ export default function Signup(): React.JSX.Element {
           </div>
           <div className="item">
             <InputForm
-              placeholder="통신사"
+              placeholder="통신사를 선택해 주세요"
               value={params.telecom}
               descriptionTop={'통신사'}
               rightIcon={Icons.arrow_down}
@@ -133,7 +134,7 @@ export default function Signup(): React.JSX.Element {
           </div>
           <div className="item">
             <InputForm
-              placeholder="번호 입력"
+              placeholder="숫자만 입력해 주세요"
               value={params.phoneNumber}
               descriptionTop={'휴대폰 번호'}
               type="text"
@@ -150,7 +151,7 @@ export default function Signup(): React.JSX.Element {
             <div className="input_title">주민등록번호</div>
             <div className="item_row">
               <InputForm
-                placeholder="YYMMDD"
+                placeholder="앞자리 입력"
                 value={params.identity_first}
                 type="text"
                 maxLength={6}
@@ -184,6 +185,12 @@ export default function Signup(): React.JSX.Element {
                 <p></p>
               </div>
             </div>
+          </div>
+          <div className="item">
+            <TermsAllAgree
+              selected={termSelected}
+              handleSelected={handleSelected}
+            />
           </div>
         </div>
 
