@@ -1,32 +1,32 @@
 'use client';
 
 import * as React from 'react';
+import { Fragment, Suspense, useEffect, useState } from 'react';
 import { SignupWrapper } from './style';
 import { css } from '@emotion/react';
 
-import { Colors, Icons, Images } from '@/styles';
-import { Fragment, Suspense, useEffect, useState } from 'react';
+import { Icons } from '@/styles';
 import { useRouter } from 'next/navigation';
 import BackHeader from '@/app/_component/molecule/BackHeader';
 import InputForm from '@/app/_component/atom/InputForm';
 import { agencyRanges } from '@/constants';
 import { OnChangeValueType, ParamsType } from '@/types/globalType';
 import {
-  parseIdentity,
-  filterNumericInput,
   checkParamsFilled,
+  filterNumericInput,
   LocalStorage,
   SecureLocalStorage,
 } from '@/hooks/useUtil';
 import BottomButton from '@/app/_component/atom/BottomButton';
-import secureLocalStorage from 'react-secure-storage';
 import FilterRadioModal from '@/app/_component/organism/filterRadioModal';
 import { postSignup } from '@/app/_lib/postSignup';
-import WarningToast from '@/app/_component/atom/WarningToast';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
+import useSignupStore from '@/store/signup/signup';
 
 export default function Signup(): React.JSX.Element {
+  const { babyName, babySsn } = useSignupStore((state) => state);
+
   const [params, setParams] = useState<ParamsType>({
     identity_first: '',
     identity_last: '',
