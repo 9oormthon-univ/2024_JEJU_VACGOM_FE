@@ -13,12 +13,14 @@ type props = {
   loading?: boolean;
   filled: boolean;
   handleNextButtonClick?: () => void;
+  label?: string;
 };
 const BottomButton: React.FC<props> = ({
   loading,
   filled,
   type = 'button',
   handleNextButtonClick,
+  label = '다음',
 }) => {
   const onClickValid = () => {
     if (filled) {
@@ -32,7 +34,7 @@ const BottomButton: React.FC<props> = ({
       type={type}
       data-loading={loading}
     >
-      {loading ? <Loading /> : '다음'}
+      {loading ? <Loading /> : label}
     </BottomButtonWrap>
   );
 };
