@@ -1,6 +1,7 @@
 import { PATH_API } from './path';
 
 export const QUERY_KEY = {
-  SIGN_IN: PATH_API.SIGN_IN,
+  CHILD_VAC: PATH_API.CHILD_VAC,
+  DUMMY_MEMBER: PATH_API.DUMMY_MEMBER,
   SIGN_UP: PATH_API.SIGN_UP,
 };

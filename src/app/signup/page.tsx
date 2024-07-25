@@ -20,13 +20,16 @@ import {
 
 import InputForm from '@/app/_component/atom/InputForm';
 
-import { useSignIn } from '@/api/queries/auth/sign-in';
+import {
+  useChildVaccination,
+  useSignIn,
+} from '@/api/queries/auth/child-vaccination';
 import { useAccessToken } from '@/bridge/hook';
 import { setSession } from '@/api/api_utils';
 import { PATH } from '@/routes/path';
 import ViewingPage from '@/app/_component/temp/Viewing';
 
-interface IFormValues {
+interface Values {
   userName: string;
   identity_first: string;
   identity_last: string;
@@ -39,7 +42,7 @@ export default function Signup(): React.JSX.Element {
     identity_first: '',
     identity_last: '',
   });
-  const { mutate, isLoading } = useSignIn<IFormValues>();
+  const { mutate, isLoading } = useChildVaccination<Values>();
   const { accessToken } = useAccessToken();
 
   //초기 ACCESS token 설정
