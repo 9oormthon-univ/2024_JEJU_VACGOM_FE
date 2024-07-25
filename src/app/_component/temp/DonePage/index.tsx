@@ -14,6 +14,7 @@ type props = {
   title_bottom?: string;
   content_top?: string;
   content_bottom?: string;
+  src_success?: boolean;
 };
 const DonePage: React.FC<props> = ({
   more,
@@ -21,11 +22,15 @@ const DonePage: React.FC<props> = ({
   title_bottom,
   content_top,
   content_bottom,
+  src_success = true,
 }) => {
   return (
     <DonePageWrap more={more}>
       <div className="container">
-        <Image src={Images.vacgom_face} alt={'접종 이미지'} />
+        <Image
+          src={src_success ? Images.vacgom_face : Images.warning_gray}
+          alt={'접종 이미지'}
+        />
         <div className="title">{title}</div>
         {title_bottom && <div className="title">{title_bottom}</div>}
         <div className="content_top">{content_top}</div>

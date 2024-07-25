@@ -13,7 +13,9 @@ export const DonePageWrap = styled.main<props>`
     text-align: center;
     height: ${(props) =>
       props.more ? 'calc(100vh - 186px)' : 'calc(100vh - 130px)'};
-
+    & > img {
+      margin: 20px;
+    }
     & > .title {
       //width: 287px;
       ${fontGenerator('24px', '700', '32px')}

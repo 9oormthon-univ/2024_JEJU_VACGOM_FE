@@ -45,6 +45,7 @@ import nav_vachistory_unselec from '../../public/assets/ico/ico-nav-vachistory-u
 import nav_vaclookup_selec from '../../public/assets/ico/ico-nav-vaclookup-selec.svg';
 import nav_vaclookup_unselec from '../../public/assets/ico/ico-nav-vaclookup-unselec.svg';
 import warning from '../../public/assets/ico/ico-warning.svg';
+import warning_gray from '../../public/assets/ico/ico-warning-gray.svg';
 
 import kakao_logo from '../../public/assets/image/img-kakao-logo.svg';
 import fingerprint_logo from '../../public/assets/image/img-Fingerprint-logo.svg';
@@ -175,6 +176,7 @@ export const Images: ImagesType = {
   nav_vaclookup_selec: nav_vaclookup_selec,
   nav_vaclookup_unselec: nav_vaclookup_unselec,
   warning: warning,
+  warning_gray: warning_gray,
 
   arrow_down: arrow_down,
   arrow_right: arrow_right,
