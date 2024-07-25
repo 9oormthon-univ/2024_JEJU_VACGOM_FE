@@ -24,10 +24,12 @@ import {
   useChildVaccination,
   useSignIn,
 } from '@/api/queries/auth/child-vaccination';
-import { useAccessToken } from '@/bridge/hook';
+import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { setSession } from '@/api/api_utils';
 import { PATH } from '@/routes/path';
 import ViewingPage from '@/app/_component/temp/Viewing';
+import { useNickName } from '@/bridge/hook/useNickName';
+import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 
 interface Values {
   userName: string;
@@ -44,11 +46,14 @@ export default function Signup(): React.JSX.Element {
   });
   const { mutate, isLoading } = useChildVaccination<Values>();
   const { accessToken } = useAccessToken();
+  const { nickName } = useNickName();
+  const [errormessage, setErrormessage] = useState<string>('');
 
   //초기 ACCESS token 설정
   useEffect(() => {
-    console.log(accessToken);
-    setSession(accessToken);
+    setSession(
+      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNCIsImlhdCI6MTcyMTkzMDQ2NCwicm9sZSI6IlJPTEVfVEVNUF9VU0VSIiwiZXhwIjoxNzMwOTMwNDY0fQ.ALgbpVKfghGbmNSzyxpVGohjKz5tQ8gZ62UAKICA4I0',
+    );
   }, [accessToken]);
 
   const onChangeValue: OnChangeValueType = (field, value) => {
@@ -58,26 +63,36 @@ export default function Signup(): React.JSX.Element {
     }));
   };
   const onSubmit = () => {
+    if (nickName === null) {
+      setErrormessage('닉네임이 설정되지 않았습니다.');
+    }
     if (checkParamsFilled(params)) {
       // API 요청 및 라우팅
-      router.push(PATH.SIGNUP_ERROR); // 일단 해둠
-      // mutate(
-      //   {
-      //     userName: params.userName,
-      //     identity: params.identity_first + params.identity_last,
-      //   },
-      //   {
-      //     onSuccess: () => {
-      //       router.push(PATH.SIGNUP_INFO); // 성공 시 라우팅
-      //     },
-      //     onError: () => {
-      //       // 에러 처리
-      //       router.push(PATH.SIGNUP_ERROR); // 일단 해둠
-      //     },
-      //   },
-      // );
+      mutate(
+        {
+          nickname: '어쩌라고',
+          babyName: params.userName,
+          babySsn: params.identity_first + params.identity_last,
+        },
+        {
+          onSuccess: () => {
+            router.push(PATH.SIGNUP_INFO); // 성공 시 라우팅
+          },
+          onError: (error) => {
+            // 에러 처리
+            if (error.success === false) {
+              // 서버가 핸들링한 에러
+              setErrormessage(error.data.message);
+            } else {
+              // 서버에러
+              setErrormessage(error.errorMessage);
+              router.push(PATH.SIGNUP_ERROR);
+            }
+          },
+        },
+      );
     } else {
-      // 에러 표기
+      setErrormessage('값을 모두 입력해주세요.');
     }
   };
 
@@ -128,7 +143,10 @@ export default function Signup(): React.JSX.Element {
           </div>
         </div>
       </div>
-
+      <WarningToastWrap
+        errorMessage={errormessage}
+        setErrorMessage={setErrormessage}
+      />
       <BottomButton
         filled={checkParamsFilled(params)}
         handleNextButtonClick={onSubmit}

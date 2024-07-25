@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { getVacBridge } from './index';
+import { getVacBridge } from '../index';
 
 export const useAccessToken = () => {
   const [accessToken, setAccessToken] = useState<string | null>(null);
