@@ -30,6 +30,7 @@ import { PATH } from '@/routes/path';
 import ViewingPage from '@/app/_component/temp/Viewing';
 import { useNickName } from '@/bridge/hook/useNickName';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
+import useSignupStore from '@/store/signup/signup';
 
 interface Values {
   userName: string;
@@ -48,25 +49,30 @@ export default function Signup(): React.JSX.Element {
   const { accessToken } = useAccessToken();
   const { nickName } = useNickName();
   const [errormessage, setErrormessage] = useState<string>('');
-
   //초기 ACCESS token 설정
+
   useEffect(() => {
     setSession(
       'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNCIsImlhdCI6MTcyMTkzMDQ2NCwicm9sZSI6IlJPTEVfVEVNUF9VU0VSIiwiZXhwIjoxNzMwOTMwNDY0fQ.ALgbpVKfghGbmNSzyxpVGohjKz5tQ8gZ62UAKICA4I0',
     );
   }, [accessToken]);
-
   const onChangeValue: OnChangeValueType = (field, value) => {
     setParam((prevState) => ({
       ...prevState,
       [field]: value,
     }));
   };
+
+  const { setbabyName, setBabySsn } = useSignupStore((state) => state);
+
   const onSubmit = () => {
     if (nickName === null) {
       setErrormessage('닉네임이 설정되지 않았습니다.');
     }
     if (checkParamsFilled(params)) {
+      // 값 전역 저장
+      setbabyName(params.userName);
+      setBabySsn(params.identity_first + params.identity_last);
       // API 요청 및 라우팅
       mutate(
         {
