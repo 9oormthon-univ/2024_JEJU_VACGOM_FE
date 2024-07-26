@@ -41,14 +41,14 @@ const SignupErrorPage = (): React.JSX.Element => {
             size={'large'}
             variant={'Secondary'}
             onClick={() => {
-              // router.push(PATH.MOREINFO_DIS);
+              router.push(PATH.SIGNUP_INFO);
             }}
           />
           <Button
             label={'아이 정보를 다시 입력할게요'}
             size={'large'}
             onClick={() => {
-              // router.push(PATH.MOREINFO_DIS);
+              router.push(PATH.SIGNUP);
             }}
           />
         </div>

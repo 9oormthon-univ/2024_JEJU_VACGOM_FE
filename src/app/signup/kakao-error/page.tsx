@@ -22,56 +22,32 @@ import { OnChangeValueType, ParamsType } from '@/types/globalType';
 import { PATH } from '@/routes/path';
 import { postRegister } from '@/app/_lib/postRegister';
 import { postLogin } from '@/app/_lib/postLogin';
-import { LocalStorage, SecureLocalStorage } from '@/hooks/useUtil';
+import {
+  checkParamsFilled,
+  LocalStorage,
+  SecureLocalStorage,
+} from '@/hooks/useUtil';
 
-export default function SignupDone(): React.JSX.Element {
+export default function KakaoErrorPage(): React.JSX.Element {
   const router = useRouter();
-  const [alreadyUser, setAlreadyUser] = useState(true);
-  // 예방접종도우미 가입한 이력이 있으면 helpalready
-  // 예방접종도우미 최초 가입이면 helpnew
-  // 조회완료면 submit
-  // 로그인 완
-  const [params, setParams] = useState<ParamsType>({
-    type: '',
-  });
-  const [loading, setLoading] = useState(false); // 로딩 상태 추가
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    let type = localStorage.getItem('type');
-    let id = SecureLocalStorage.getItem('id');
-    let password = SecureLocalStorage.getItem('password');
-
-    setParams({ type: type, id: id, password: password });
-  }, []);
 
   return (
     <SignupDoneWrap>
       <div className="padding">
         <DonePage
-          title={'예방접종도우미 로그인 완료!'}
-          content_top={'서비스 이용을 위해 회원님의 정보를 입력해 주세요'}
-          content_bottom={'회원님과 꼭 맞는 백신을 추천해 드릴게요!'}
-        />
-        <Button
-          label={
-            params.type === 'haveIdentity'
-              ? '내 정보 입력하기'
-              : '예방접종 내역 확인하기'
-          }
-          size={'large'}
-          customStyle={css`
-            width: 100%;
-          `}
-          onClick={() => {
-            if (params.type === 'haveIdentity') {
-              router.push(PATH.MOREINFO_DIS);
-            } else {
-              router.push(PATH.SIGNUP_IDENTITY);
-            }
-          }}
+          title={'인증에 실패했어요'}
+          content_top={'올바른 정보를 입력했는지 확인하고,'}
+          content_bottom={'다시 시도해 주세요.'}
+          src_success={false}
         />
       </div>
+      <BottomButton
+        label={'다시 인증하기'}
+        filled={true}
+        handleNextButtonClick={() => {
+          router.push(PATH.SIGNUP_INFO);
+        }}
+      />
     </SignupDoneWrap>
   );
 }

@@ -15,14 +15,14 @@ export const useChildVaccination = <T>(
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: [QUERY_KEY.CHILD_VAC],
+    mutationKey: [QUERY_KEY.SIGN_UP],
     mutationFn: async (payload: T) => {
-      const response = await axiosInstance.post(PATH_API.CHILD_VAC, payload);
+      const response = await axiosInstance.post(PATH_API.SIGN_UP, payload);
       return response.data;
     },
     onSuccess: (data) => {
       setSession(data);
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.CHILD_VAC] });
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SIGN_UP] });
     },
     onError: (error) => {},
     ...options,

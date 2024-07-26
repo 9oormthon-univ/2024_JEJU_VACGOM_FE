@@ -36,6 +36,8 @@ interface Values {
 export default function Signup(): React.JSX.Element {
   const { babyName, babySsn } = useSignupStore((state) => state);
 
+  console.log(babyName, babySsn);
+
   const [params, setParams] = useState<ParamsType>({
     identity_first: '',
     identity_last: '',
