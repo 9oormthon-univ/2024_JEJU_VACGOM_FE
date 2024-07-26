@@ -28,7 +28,7 @@ import {
   SecureLocalStorage,
 } from '@/hooks/useUtil';
 
-export default function SignupDone(): React.JSX.Element {
+export default function KakaoErrorPage(): React.JSX.Element {
   const router = useRouter();
 
   return (

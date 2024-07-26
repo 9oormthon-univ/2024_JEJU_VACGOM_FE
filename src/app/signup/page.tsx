@@ -52,9 +52,7 @@ export default function Signup(): React.JSX.Element {
   //초기 ACCESS token 설정
 
   useEffect(() => {
-    setSession(
-      'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxNCIsImlhdCI6MTcyMTkzMDQ2NCwicm9sZSI6IlJPTEVfVEVNUF9VU0VSIiwiZXhwIjoxNzMwOTMwNDY0fQ.ALgbpVKfghGbmNSzyxpVGohjKz5tQ8gZ62UAKICA4I0',
-    );
+    setSession(accessToken);
   }, [accessToken]);
   const onChangeValue: OnChangeValueType = (field, value) => {
     setParam((prevState) => ({
@@ -76,7 +74,7 @@ export default function Signup(): React.JSX.Element {
       // API 요청 및 라우팅
       mutate(
         {
-          nickname: '어쩌라고',
+          nickname: nickName,
           babyName: params.userName,
           babySsn: params.identity_first + params.identity_last,
         },
