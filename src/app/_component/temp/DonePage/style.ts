@@ -11,8 +11,8 @@ export const DonePageWrap = styled.main<props>`
     align-items: center;
     //padding: 0 20px;
     text-align: center;
-    height: ${(props) =>
-      props.more ? 'calc(100vh - 186px)' : 'calc(100vh - 130px)'};
+    height: calc(100vh - 110px);
+
     & > img {
       margin: 10px;
     }
@@ -27,6 +27,7 @@ export const DonePageWrap = styled.main<props>`
     }
     & > .content_top,
     .content_bottom {
+      max-width: 260px;
       color: ${Colors.Gray600};
       ${fontGenerator('14px', '500', '22px')};
     }

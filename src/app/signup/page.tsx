@@ -28,9 +28,9 @@ import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { setSession } from '@/api/api_utils';
 import { PATH } from '@/routes/path';
 import ViewingPage from '@/app/_component/temp/Viewing';
-import { useNickName } from '@/bridge/hook/useNickName';
+import { useBridge } from '@/bridge/hook/useBridge';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
-import useSignupStore from '@/store/signup/signup';
+import useSignupStore from '@/store/signup/babySignup';
 
 interface Values {
   userName: string;
@@ -47,7 +47,7 @@ export default function Signup(): React.JSX.Element {
   });
   const { mutate, isLoading } = useChildVaccination<Values>();
   const { accessToken } = useAccessToken();
-  const { nickName } = useNickName();
+  const { nickName, goBack } = useBridge();
   const [errormessage, setErrormessage] = useState<string>('');
   //초기 ACCESS token 설정
 
@@ -106,7 +106,7 @@ export default function Signup(): React.JSX.Element {
 
   return (
     <SignupWrapper>
-      <BackHeader title={' '} url={'/'} />
+      <BackHeader title={' '} onClickHandler={goBack} />
       <div className="top">우리 아이 정보를 입력해 주세요</div>
       <div className="container">
         <div className="item">

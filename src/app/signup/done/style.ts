@@ -7,14 +7,8 @@ export const SignupDoneWrap = styled.main`
   & > .padding {
     padding: 0 20px 0 20px;
     height: 100%;
-
-    & > .password {
-      display: flex;
-      justify-content: center;
-      padding: 20px;
-      color: ${Colors.Gray500};
-      text-decoration: underline;
-      ${fontGenerator('14px', '600', '16px', '-0.3px')};
+    & > button {
+      margin-bottom: -20px;
     }
   }
 `;

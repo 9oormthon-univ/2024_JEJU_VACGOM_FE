@@ -11,6 +11,7 @@ const MainHeader: React.FC<MainHeaderType> = ({
   url,
   counter,
   color = 'black',
+  onClickHandler,
 }) => {
   const router = useRouter();
 
@@ -19,7 +20,8 @@ const MainHeader: React.FC<MainHeaderType> = ({
       <Icon
         icon={color === 'black' ? Icons.arrow_left : Icons.arrow_left_white}
         onClick={() => {
-          router.push(url);
+          url && router.push(url);
+          onClickHandler && onClickHandler();
         }}
         size={'20px'}
       />

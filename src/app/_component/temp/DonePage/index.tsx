@@ -15,6 +15,7 @@ type props = {
   content_top?: string;
   content_bottom?: string;
   src_success?: boolean;
+  plus?: string;
 };
 const DonePage: React.FC<props> = ({
   more,
@@ -22,6 +23,7 @@ const DonePage: React.FC<props> = ({
   title_bottom,
   content_top,
   content_bottom,
+  plus,
   src_success = true,
 }) => {
   return (
@@ -35,6 +37,7 @@ const DonePage: React.FC<props> = ({
         {title_bottom && <div className="title">{title_bottom}</div>}
         <div className="content_top">{content_top}</div>
         <div className="content_bottom">{content_bottom}</div>
+        <div className="content_bottom">{plus}</div>
       </div>
     </DonePageWrap>
   );

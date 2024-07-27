@@ -14,7 +14,7 @@ interface Action {
 
 const useSignupStore = devtools<State & Action>((set) => ({
   // state
-  babyName: '',
+  babyName: '회원',
   babySsn: '',
   nickname: '',
   // actions
