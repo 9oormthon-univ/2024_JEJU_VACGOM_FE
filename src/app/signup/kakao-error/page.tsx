@@ -2,32 +2,13 @@
 
 import * as React from 'react';
 import { SignupDoneWrap } from './style';
-import Image from 'next/image';
-import { css } from '@emotion/react';
-
-import { Colors, Icons, Images } from '@/styles';
-import { Fragment, Suspense, useEffect, useState } from 'react';
 import BackHeader from '@/app/_component/molecule/BackHeader';
 import BottomButton from '@/app/_component/atom/BottomButton';
-import {
-  ReadonlyURLSearchParams,
-  useRouter,
-  useSearchParams,
-} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import DonePage from '@/app/_component/temp/DonePage';
-import Button from '@/app/_component/atom/button/button';
-import Link from 'next/link';
-import { useQueryParams } from '@/hooks/useParam';
-import { OnChangeValueType, ParamsType } from '@/types/globalType';
 import { PATH } from '@/routes/path';
-import { postRegister } from '@/app/_lib/postRegister';
-import { postLogin } from '@/app/_lib/postLogin';
-import {
-  checkParamsFilled,
-  LocalStorage,
-  SecureLocalStorage,
-} from '@/hooks/useUtil';
 import { useBridge } from '@/bridge/hook/useBridge';
+import ParentsVerify from '@/store/signup/ParentsVerify';
 
 export default function KakaoErrorPage(): React.JSX.Element {
   const router = useRouter();

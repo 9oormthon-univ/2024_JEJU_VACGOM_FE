@@ -30,7 +30,7 @@ import { PATH } from '@/routes/path';
 import ViewingPage from '@/app/_component/temp/Viewing';
 import { useBridge } from '@/bridge/hook/useBridge';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
-import useSignupStore from '@/store/signup/signup';
+import useSignupStore from '@/store/signup/babySignup';
 
 interface Values {
   userName: string;
