@@ -5,17 +5,25 @@ import { getVacBridge } from '../index';
 
 export const useNickName = () => {
   const [nickName, setNickName] = useState<string | null>(null);
+  const [vacbridge, setVacBridge] = useState<any>(null);
 
   useEffect(() => {
     (async () => {
-      const vacbridge = await getVacBridge();
-      if (vacbridge == null) return;
-      const nickName = await vacbridge.getOnboardingNickname();
+      const vacbridgeInstance = await getVacBridge();
+      if (vacbridgeInstance == null) return;
+      setVacBridge(vacbridgeInstance);
+
+      const nickName = await vacbridgeInstance.getOnboardingNickname();
 
       console.log('nickName', nickName);
       setNickName(nickName);
     })();
   }, []);
 
-  return { nickName };
+  const goBack = async () => {
+    if (!vacbridge) return;
+    await vacbridge.goBack();
+  };
+
+  return { nickName, goBack };
 };

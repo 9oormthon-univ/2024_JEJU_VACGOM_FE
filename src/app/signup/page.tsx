@@ -47,7 +47,7 @@ export default function Signup(): React.JSX.Element {
   });
   const { mutate, isLoading } = useChildVaccination<Values>();
   const { accessToken } = useAccessToken();
-  const { nickName } = useNickName();
+  const { nickName, goBack } = useNickName();
   const [errormessage, setErrormessage] = useState<string>('');
   //초기 ACCESS token 설정
 
@@ -106,7 +106,7 @@ export default function Signup(): React.JSX.Element {
 
   return (
     <SignupWrapper>
-      <BackHeader title={' '} url={'/'} />
+      <BackHeader title={' '} onClickHandler={goBack} />
       <div className="top">우리 아이 정보를 입력해 주세요</div>
       <div className="container">
         <div className="item">
