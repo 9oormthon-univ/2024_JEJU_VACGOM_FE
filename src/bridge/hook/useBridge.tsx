@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getVacBridge } from '../index';
 
-export const useNickName = () => {
+export const useBridge = () => {
   const [nickName, setNickName] = useState<string | null>(null);
   const [vacbridge, setVacBridge] = useState<any>(null);
 

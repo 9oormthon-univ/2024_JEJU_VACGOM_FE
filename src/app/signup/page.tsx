@@ -28,7 +28,7 @@ import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { setSession } from '@/api/api_utils';
 import { PATH } from '@/routes/path';
 import ViewingPage from '@/app/_component/temp/Viewing';
-import { useNickName } from '@/bridge/hook/useNickName';
+import { useBridge } from '@/bridge/hook/useBridge';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import useSignupStore from '@/store/signup/signup';
 
@@ -47,7 +47,7 @@ export default function Signup(): React.JSX.Element {
   });
   const { mutate, isLoading } = useChildVaccination<Values>();
   const { accessToken } = useAccessToken();
-  const { nickName, goBack } = useNickName();
+  const { nickName, goBack } = useBridge();
   const [errormessage, setErrormessage] = useState<string>('');
   //초기 ACCESS token 설정
 
