@@ -28,6 +28,7 @@ import TermsDetail from '@/app/_component/molecule/TermsDetail';
 import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import Image from 'next/image';
 import Button from '@/app/_component/atom/button/button';
+import { useBridge } from '@/bridge/hook/useBridge';
 
 interface Values {
   userName: string;
@@ -39,9 +40,10 @@ export default function SignupKaKao(): React.JSX.Element {
   const handleReTry = () => {
     console.log('handleReTry');
   };
+  const { goBack } = useBridge();
   return (
     <SingupKakaoWrapper>
-      <BackHeader title={'보호자 본인 인증'} url={'/signup/more'} />
+      <BackHeader title={'보호자 본인 인증'} onClickHandler={goBack} />
       <div className="top">
         카카오톡 지갑에서
         <br /> 간편인증을 해주세요.
