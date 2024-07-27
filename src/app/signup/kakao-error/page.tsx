@@ -27,12 +27,15 @@ import {
   LocalStorage,
   SecureLocalStorage,
 } from '@/hooks/useUtil';
+import { useBridge } from '@/bridge/hook/useBridge';
 
 export default function KakaoErrorPage(): React.JSX.Element {
   const router = useRouter();
+  const { goBack } = useBridge();
 
   return (
     <SignupDoneWrap>
+      <BackHeader onClickHandler={goBack} />
       <div className="padding">
         <DonePage
           title={'인증에 실패했어요'}
