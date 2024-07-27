@@ -37,10 +37,11 @@ export default function SignupDone(): React.JSX.Element {
         <DonePage
           title={`배우자에게 등록된 자녀예요!`}
           content_top={`${babyName}님은 예방접종 도우미에서`}
-          content_bottom={`${parentsName}님의 자녀로 등록되어 있어요. 백곰 가입 링크를 보내고 초대를 요청해 보세요!`}
+          content_bottom={`${parentsName}님의 자녀로 등록되어 있어요.`}
+          plus={`백곰 가입 링크를 보내고 초대를 요청해 보세요!`}
         />
         <Button
-          label={'예방접종도우미 로그인하기'}
+          label={'백곰 가입 링크 보내기'}
           size={'large'}
           customStyle={css`
             width: 100%;
