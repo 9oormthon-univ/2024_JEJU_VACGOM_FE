@@ -80,7 +80,7 @@ export default function Signup(): React.JSX.Element {
         },
         {
           onSuccess: () => {
-            router.push(PATH.SIGNUP_INFO); // 성공 시 라우팅
+            router.push(PATH.SIGNUP_WELCOME);
           },
           onError: (error) => {
             // 에러 처리
