@@ -217,7 +217,7 @@ export default function Signup(): React.JSX.Element {
 
         {!loading && (
           <BottomButton
-            filled={checkParamsFilled(params)}
+            filled={checkParamsFilled(params) && termSelected}
             handleNextButtonClick={handleNextButtonClick}
           />
         )}
