@@ -12,6 +12,7 @@ export const PATH = {
   SIGNUP: '/signup',
   SIGNUP_INFO: '/signup/info', // 보호자 본인 인증
   SIGNUP_ERROR: '/signup/error', // 아이 예방접종 내역 확인 불가
+  SIGNUP_WELCOME: '/signup/welcome', // 아이 예방접종 내역 확인 불가
   // signup_old
   SIGNUP_TERMS: '/signup/terms', // 약관동의
   SIGNUP_MORE: '/signup/more', // 예방접종도우미 회원가입 - 아이디 비번
