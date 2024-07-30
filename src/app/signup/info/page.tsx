@@ -23,10 +23,11 @@ import { postSignup } from '@/app/_lib/postSignup';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import useSignupStore from '@/store/signup/babySignup';
-import { useSignup } from '@/api/queries/auth/auth-kakao';
+import { useAuthKaKao, useSignup } from '@/api/queries/auth/auth-kakao';
 import TermsDetail from '@/app/_component/molecule/TermsDetail';
 import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import { useBridge } from '@/bridge/hook/useBridge';
+import { PATH } from '@/routes/path';
 
 interface Values {
   userName: string;
@@ -44,7 +45,6 @@ export default function Signup(): React.JSX.Element {
     identity_last: '',
     userName: '',
     phoneNumber: '',
-    telecom: '',
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
@@ -64,29 +64,42 @@ export default function Signup(): React.JSX.Element {
   /**
    *  api 호출
    */
-  // const { mutate, isLoading } = useSignup<Values>();
-  const [loading, setLoading] = useState(false); // 로딩 상태 추가
+  const { mutate, isLoading } = useAuthKaKao<Values>();
   const [errormessage, setErrormessage] = useState(''); // 로딩 상태 추가
 
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
-      try {
-        setLoading(true);
-        const response = await postSignup(params);
-
-        if (!response.success) {
-          setErrormessage(response.message);
-          return;
-        }
-        LocalStorage.setItem('secureNoImage', response.data.secureNoImage);
-        router.push(
-          `/signup/captcha?secureNoImage=${response.data.secureNoImage}`,
-        );
-      } catch (error) {
-        console.error('Signup failed:', error.message);
-      } finally {
-        setLoading(false); // 로딩 종료
-      }
+      mutate(
+        {
+          birthday: ((firstDigit) => {
+            // Check the first digit of identity_last
+            if (firstDigit === '3' || firstDigit === '4') {
+              return '20' + params.identity_first;
+            } else if (firstDigit === '1' || firstDigit === '2') {
+              return '19' + params.identity_first;
+            }
+            return params.identity_first; // default case if needed
+          })(params.identity_last[0]),
+          userName: params.userName,
+          phoneNo: params.phoneNumber,
+        },
+        {
+          onSuccess: () => {
+            router.push(PATH.SIGNUP_KAKAO);
+          },
+          onError: (error) => {
+            // 에러 처리
+            if (error.success === false) {
+              // 서버가 핸들링한 에러
+              setErrormessage(error.data.message);
+              router.push(PATH.SIGNUP_DONE);
+            } else {
+              // 서버에러
+              router.push(PATH.SIGNUP_KAKAO_ERROR);
+            }
+          },
+        },
+      );
     }
   };
 
@@ -98,7 +111,7 @@ export default function Signup(): React.JSX.Element {
     onChangeValue('telecom', []);
   };
 
-  if (loading) return <SkeletonScreen />;
+  if (isLoading) return <SkeletonScreen />;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -183,12 +196,11 @@ export default function Signup(): React.JSX.Element {
           setErrorMessage={setErrormessage}
         />
 
-        {!loading && (
-          <BottomButton
-            filled={checkParamsFilled(params) && termSelected}
-            handleNextButtonClick={handleNextButtonClick}
-          />
-        )}
+        <BottomButton
+          filled={checkParamsFilled(params) && termSelected}
+          handleNextButtonClick={handleNextButtonClick}
+          loading={isLoading}
+        />
       </SignupWrapper>
     </Suspense>
   );
