@@ -119,25 +119,6 @@ export default function Signup(): React.JSX.Element {
           </div>
           <div className="item">
             <InputForm
-              placeholder="통신사를 선택해 주세요"
-              value={params.telecom}
-              descriptionTop={'통신사'}
-              rightIcon={Icons.arrow_down}
-              type="text"
-              customStyle={css`
-                & > .input__content > .input__content--right__icon > img {
-                  width: 24px;
-                  height: 24px;
-                }
-              `}
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-              readOnly
-            />
-          </div>
-          <div className="item">
-            <InputForm
               placeholder="숫자만 입력해 주세요"
               value={params.phoneNumber}
               descriptionTop={'휴대폰 번호'}
@@ -197,19 +178,6 @@ export default function Signup(): React.JSX.Element {
             />
           </div>
         </div>
-
-        <Fragment>
-          <FilterRadioModal
-            isOpen={isModalOpen}
-            title="통신사를 선택해 주세요"
-            options={agencyRanges}
-            selectedOptions={params.telecom}
-            onClose={() => setIsModalOpen(false)}
-            onOptionSelect={handleAgencySelect}
-            onReset={resetAgencyOptions}
-          />
-        </Fragment>
-
         <WarningToastWrap
           errorMessage={errormessage}
           setErrorMessage={setErrormessage}
