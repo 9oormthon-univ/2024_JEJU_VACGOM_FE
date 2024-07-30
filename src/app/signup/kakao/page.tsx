@@ -23,7 +23,7 @@ import { postSignup } from '@/app/_lib/postSignup';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import useSignupStore from '@/store/signup/babySignup';
-import { useSignup } from '@/api/queries/auth/sign-up';
+import { useSignup } from '@/api/queries/auth/auth-kakao';
 import TermsDetail from '@/app/_component/molecule/TermsDetail';
 import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import Image from 'next/image';
