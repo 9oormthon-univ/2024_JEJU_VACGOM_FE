@@ -58,7 +58,7 @@ export default function Signup(): React.JSX.Element {
     let filteredValue = filterNumericInput(e);
     onChangeValue('identity_first', filteredValue);
     if (filteredValue.length === 6) {
-      identityLastRef?.current.focus();
+      identityLastRef.current.focus();
     }
   };
   const onSubmit = () => {
