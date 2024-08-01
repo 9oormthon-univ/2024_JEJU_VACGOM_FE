@@ -1,35 +1,25 @@
 'use client';
 
 import * as React from 'react';
-import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import { SignupWrapper } from './style';
 import { css } from '@emotion/react';
-
-import { Icons } from '@/styles';
 import { useRouter } from 'next/navigation';
 import BackHeader from '@/app/_component/molecule/BackHeader';
 import InputForm from '@/app/_component/atom/InputForm';
-import { agencyRanges } from '@/constants';
 import { OnChangeValueType, ParamsType } from '@/types/globalType';
 import {
+  calculateBirthday,
   checkParamsFilled,
   filterNumericInput,
-  LocalStorage,
-  SecureLocalStorage,
 } from '@/hooks/useUtil';
 import BottomButton from '@/app/_component/atom/BottomButton';
-import FilterRadioModal from '@/app/_component/organism/filterRadioModal';
-import { postSignup } from '@/app/_lib/postSignup';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
-import useSignupStore from '@/store/signup/babySignup';
 import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
-import TermsDetail from '@/app/_component/molecule/TermsDetail';
-import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import { useBridge } from '@/bridge/hook/useBridge';
 import { PATH } from '@/routes/path';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
-import { calculateBirthday } from '@/hooks/useUtil';
 
 interface Values {
   userName: string;
@@ -106,7 +96,7 @@ export default function Signup(): React.JSX.Element {
     let filteredValue = filterNumericInput(e);
     onChangeValue('identity_first', filteredValue);
     if (filteredValue.length === 6) {
-      identityLastRef.current.focus();
+      identityLastRef?.current.focus();
     }
   };
 
