@@ -13,6 +13,8 @@ import { useBridge } from '@/bridge/hook/useBridge';
 import { useAuthKaKaoVerify } from '@/api/queries/auth/auth-kakao-verify';
 import useSignupStore from '@/store/signup/babySignup';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
+import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
+import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
 
 interface Values {
   userName: string;
@@ -23,12 +25,18 @@ interface Values {
 export default function SignupKaKao(): React.JSX.Element {
   const { babyName, babySsn } = useSignupStore((state) => state);
   const { birthday, userName, phoneNo } = useKaKaoStore((state) => state);
-  const { mutate, isLoading } = useAuthKaKaoVerify<Values>();
+  const { mutate: kakaoMutate, isLoading: isKakaoLoading } =
+    useAuthKaKao<Values>();
+
+  const { mutate: kakaoVerifyMutate, isLoading: isVerifyLoading } =
+    useAuthKaKaoVerify<Values>();
   const { goBack } = useBridge();
   const [isDone, setIsDone] = useState(false);
   console.log(birthday, userName, phoneNo);
+  const [errormessage, setErrormessage] = useState<string>('');
+
   const handleReTry = () => {
-    mutate(
+    kakaoMutate(
       {
         birthday: birthday,
         userName: userName,
@@ -36,10 +44,10 @@ export default function SignupKaKao(): React.JSX.Element {
       },
       {
         onSuccess: (data) => {
-          console.log('onSuccess', data);
+          setIsDone(false);
         },
         onError: (error) => {
-          console.log('onError', error);
+          setErrormessage(error.message);
         },
       },
     );
@@ -50,12 +58,12 @@ export default function SignupKaKao(): React.JSX.Element {
     }, 5000);
 
     return () => clearTimeout(timer);
-  }, []);
+  }, [isDone]);
 
   console.log('babyName', babyName);
 
   const handleDone = () => {
-    mutate(
+    kakaoVerifyMutate(
       {
         babyName: babyName,
       },
@@ -64,7 +72,11 @@ export default function SignupKaKao(): React.JSX.Element {
           console.log('onSuccess', data);
         },
         onError: (error) => {
-          console.log('onError', error);
+          if (error.data.success === false) {
+            setErrormessage(error.data.message);
+          } else {
+            setErrormessage(error.message);
+          }
         },
       },
     );
@@ -114,6 +126,10 @@ export default function SignupKaKao(): React.JSX.Element {
           size={'large'}
         />
       </div>
+      <WarningToastWrap
+        errorMessage={errormessage}
+        setErrorMessage={setErrormessage}
+      />
       <BottomButton
         filled={isDone}
         label={'카카오 인증 완료 후 눌러주세요'}
