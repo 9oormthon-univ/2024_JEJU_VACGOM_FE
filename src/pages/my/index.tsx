@@ -252,7 +252,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>개인정보 수집 및 활용 동의서</ListItemText>
           </ListInfoItem>
-          <Link href="/myrevise" passHref>
+          <Link href="https://been2spring.notion.site/143ea9e50cd9471a856fd1ce52e47ed3?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -262,7 +262,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>이용약관</ListItemText>
           </ListInfoItem>
-          <Link href="/myrevise" passHref>
+          <Link href="https://been2spring.notion.site/104c56edfef54ae3bd36657f8824d24e?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -276,7 +276,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>개인정보 수집 및 이용에 대한 동의</ListItemText>
           </ListInfoItem>
-          <Link href="/myrevise" passHref>
+          <Link href="https://been2spring.notion.site/4c407e7fa55c4866827b7b2301169e57?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -286,7 +286,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>개인정보처리방침</ListItemText>
           </ListInfoItem>
-          <Link href="/myrevise" passHref>
+          <Link href="https://been2spring.notion.site/37c4eb9131f944a3981f97e9a80cb933?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -296,7 +296,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>이용약관</ListItemText>
           </ListInfoItem>
-          <Link href="/myrevise" passHref>
+          <Link href="https://been2spring.notion.site/cb723ed5c4dc45a183964c9ff056cd2c?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
