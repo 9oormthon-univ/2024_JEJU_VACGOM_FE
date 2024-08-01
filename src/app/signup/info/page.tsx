@@ -44,7 +44,6 @@ export default function Signup(): React.JSX.Element {
     userName: '',
     phoneNumber: '',
   });
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
   const onChangeValue: OnChangeValueType = (field, value) => {
     setParams((prevState) => ({
@@ -53,10 +52,6 @@ export default function Signup(): React.JSX.Element {
     }));
   };
 
-  const [termSelected, setSelected] = useState(false);
-  const handleSelected = () => {
-    setSelected(!termSelected);
-  };
   const { goBack } = useBridge();
 
   /**
