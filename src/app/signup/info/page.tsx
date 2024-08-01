@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Fragment, Suspense, useEffect, useState } from 'react';
+import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
 import { SignupWrapper } from './style';
 import { css } from '@emotion/react';
 
@@ -23,7 +23,7 @@ import { postSignup } from '@/app/_lib/postSignup';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import useSignupStore from '@/store/signup/babySignup';
-import { useAuthKaKao, useSignup } from '@/api/queries/auth/auth-kakao';
+import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
 import TermsDetail from '@/app/_component/molecule/TermsDetail';
 import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import { useBridge } from '@/bridge/hook/useBridge';
@@ -67,6 +67,8 @@ export default function Signup(): React.JSX.Element {
   const { setBirthday, setPhoneNo, setUserName } = useKaKaoStore(
     (state) => state,
   );
+  const identityFirstRef = useRef<HTMLInputElement>(null);
+  const identityLastRef = useRef<HTMLInputElement>(null);
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
       mutate(
@@ -103,15 +105,15 @@ export default function Signup(): React.JSX.Element {
     }
   };
 
-  const handleAgencySelect = (selectedOptions) => {
-    onChangeValue('telecom', selectedOptions);
-    setIsModalOpen(false);
-  };
-  const resetAgencyOptions = () => {
-    onChangeValue('telecom', []);
-  };
-
   if (isLoading) return <SkeletonScreen />;
+
+  const handleFirstPartChange = (e) => {
+    let filteredValue = filterNumericInput(e);
+    onChangeValue('identity_first', filteredValue);
+    if (filteredValue.length === 6) {
+      identityLastRef.current.focus();
+    }
+  };
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -156,10 +158,8 @@ export default function Signup(): React.JSX.Element {
                 customStyle={css`
                   width: 50%;
                 `}
-                onChange={(e) => {
-                  let filteredValue = filterNumericInput(e);
-                  onChangeValue('identity_first', filteredValue);
-                }}
+                inputRef={identityFirstRef}
+                onChange={handleFirstPartChange}
               />
               <p>-</p>
               <InputForm
@@ -170,6 +170,7 @@ export default function Signup(): React.JSX.Element {
                 customStyle={css`
                   width: 60px;
                 `}
+                inputRef={identityLastRef}
                 onChange={(e) => {
                   onChangeValue('identity_last', filterNumericInput(e));
                 }}
@@ -184,20 +185,13 @@ export default function Signup(): React.JSX.Element {
               </div>
             </div>
           </div>
-          <div className="item">
-            <TermsAllAgree
-              selected={termSelected}
-              handleSelected={handleSelected}
-            />
-          </div>
         </div>
         <WarningToastWrap
           errorMessage={errormessage}
           setErrorMessage={setErrormessage}
         />
-
         <BottomButton
-          filled={checkParamsFilled(params) && termSelected}
+          filled={checkParamsFilled(params)}
           handleNextButtonClick={handleNextButtonClick}
           loading={isLoading}
         />
