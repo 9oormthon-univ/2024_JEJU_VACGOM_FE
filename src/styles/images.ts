@@ -6,15 +6,10 @@ const BASE_URL = process.env.BASE_URL;
 interface ImagesType extends Record<string, string> {}
 import kakao from '../../public/assets/ico/ico-kakao.svg';
 import google from '../../public/assets/ico/ic-google.svg';
-
-//백곰 아이콘
 import vacgom from '../../public/assets/image/img-splash-vacgom.svg';
 import Vacgom01 from '../../public/assets/image/img-Vacgom01.svg';
 import vacgomLoading from '../../public/assets/image/img-Vacgom-loading.svg';
-import vacgomViewing from '../../public/assets/image/img-Vacgom-viewing.svg';
 import vacgom_face from '../../public/assets/image/img-vacgom-face.svg';
-import vacgom_pillow from '../../public/assets/image/img-vacgom-pillow.svg';
-
 import syringe from '../../public/assets/image/img-syringe.svg';
 
 import share from '../../public/assets/ico/ico-share.svg';
@@ -45,16 +40,10 @@ import nav_vachistory_unselec from '../../public/assets/ico/ico-nav-vachistory-u
 import nav_vaclookup_selec from '../../public/assets/ico/ico-nav-vaclookup-selec.svg';
 import nav_vaclookup_unselec from '../../public/assets/ico/ico-nav-vaclookup-unselec.svg';
 import warning from '../../public/assets/ico/ico-warning.svg';
-import warning_gray from '../../public/assets/ico/ico-warning-gray.svg';
-
-import kakao_logo from '../../public/assets/image/img-kakao-logo.svg';
-import fingerprint_logo from '../../public/assets/image/img-Fingerprint-logo.svg';
-import check_logo from '../../public/assets/image/img-check-logo.svg';
 
 import arrow_down from '../../public/assets/ico/ico-arrow-down.png';
 import arrow_right from '../../public/assets/ico/ico-arrow-right.svg';
 import arrow_left from '../../public/assets/ico/ico-arrow-left.svg';
-import arrow_left_white from '../../public/assets/ico/ico-arrow_left_white.svg';
 import choice_selec from '../../public/assets/ico/ico-choice-selec.svg';
 import choice_unselec from '../../public/assets/ico/ico-choice-unselec.svg';
 import radio_selec from '../../public/assets/ico/ico-Radiobox_select.svg';
@@ -112,12 +101,23 @@ import ico_map_influ_tooltip from '../../public/assets/ico/ico_map_influ_tooltip
 import ico_map_hpv_tooltip from '../../public/assets/ico/ico_map_hpv_tooltip.svg';
 import ico_map_tooltip_button from '../../public/assets/ico/ico-map-tooltip-button.svg';
 import ico_map_reload from '../../public/assets/ico/ico-map-reload.svg';
+import ico_map_mom from '../../public/assets/ico/ico-map-mom.svg';
+import ico_map_baby from '../../public/assets/ico/ico-map-baby.svg';
+import ico_map_univ from '../../public/assets/ico/ico-map-univ.svg';
+import ico_map_mom_none from '../../public/assets/ico/ico-map-mom-none.svg';
+import ico_map_baby_none from '../../public/assets/ico/ico-map-baby-none.svg';
+import ico_map_univ_none from '../../public/assets/ico/ico-map-my-univ-none.svg';
+import ico_map_normal from '../../public/assets/ico/ico-map-nomal.svg';
+import ico_map_normal_none from '../../public/assets/ico/ico-map-nomal-none.svg';
 import ico_support_intro from '../../public/assets/ico/ico-support-influ.svg';
 import ico_support_hintro from '../../public/assets/ico/ico-support-hpv.svg';
 import ico_map_bell from '../../public/assets/ico/ico-map-bell.svg';
 import ico_map_vacgom from '../../public/assets/ico/ico-map-vacgom.svg';
 import ico_map_main from '../../public/assets/ico/ico-map-main.svg';
 import ico_map_home from '../../public/assets/ico/ico-map-home.svg';
+
+import ico_vacscore_info from '../../public/assets/ico/ico-vacscore-info.svg';
+import ico_vacscore_vaccine from '../../public/assets/ico/ico-vacscore-vaccine.svg';
 
 // 홈화면에 들어가는 이미지들
 import ico_home_greet from '../../public/assets/ico/ico-home-greet.svg';
@@ -129,6 +129,20 @@ import ico_my_recom from '../../public/assets/ico/ico-my-recom.svg';
 import ico_my_docs from '../../public/assets/ico/ico-my-docs.svg';
 import ico_my_profile from '../../public/assets/ico/ico-my-profile.svg';
 import ico_my_right from '../../public/assets/ico/ico-my-right.svg';
+import ico_my_info_revise from '../../public/assets/ico/ico-my-info-revise.svg';
+import ico_my_baby from '../../public/assets/ico/ico-my-baby.svg';
+import ico_my_baby_list from '../../public/assets/ico/ico-my-baby-list.svg';
+import ico_my_books from '../../public/assets/ico/ico-my-books.svg';
+import ico_my_logout from '../../public/assets/ico/ico-my-logout.svg';
+import ico_my_map from '../../public/assets/ico/ico-my-map.svg';
+import ico_my_news from '../../public/assets/ico/ico-my-news.svg';
+import ico_my_version from '../../public/assets/ico/ico-my-version.svg';
+import ico_my_1_1 from '../../public/assets/ico/ico-my-1-1.svg';
+import ico_my_baby_revise_profile from '../../public/assets/ico/ico-my-baby-revise-profile.svg';
+import ico_vacinfo_list from '../../public/assets/ico/ico-vacinfo-list.svg';
+import ico_vacinfo_look from '../../public/assets/ico/ico-vacinfo-look.svg';
+import ico_my_success from  '../../public/assets/ico/ico-my-success.svg';
+
 import ico_dropdown from '../../public/assets/ico/ico-dropdown-down.svg';
 import ico_quit_intro from '../../public/assets/ico/ico-quit-intro.svg';
 import ico_quit from '../../public/assets/ico/ico-quit.svg';
@@ -142,6 +156,7 @@ import ico_alert_clock from '../../public/assets/ico/ico-alert-clock.svg';
 import ico_alert_fail from '../../public/assets/ico/ico-alert-fail.svg';
 import ico_alert_vaccine from '../../public/assets/ico/ico-alert-vaccine.svg';
 import ico_alert_welcome from '../../public/assets/ico/ico-alert-welcome.svg';
+import icon_setting from '../../public/assets/ico/icon-setting.svg';
 
 // prettier-ignore
 export const Images: ImagesType = {
@@ -176,17 +191,11 @@ export const Images: ImagesType = {
   nav_vaclookup_selec: nav_vaclookup_selec,
   nav_vaclookup_unselec: nav_vaclookup_unselec,
   warning: warning,
-  warning_gray: warning_gray,
 
   arrow_down: arrow_down,
   arrow_right: arrow_right,
   arrow_left: arrow_left,
-  arrow_left_white: arrow_left_white,
-  
-  kakao_logo: kakao_logo,
-  fingerprint_logo: fingerprint_logo,
-  check_logo: check_logo,
-  
+
   choice_selec: choice_selec,
   choice_unselec: choice_unselec,
   radio_selec: radio_selec,
@@ -222,6 +231,7 @@ export const Images: ImagesType = {
   check_default: check_default,
   check_true: check_true,
   check_false: check_false,
+  ico_vacscore_vaccine:ico_vacscore_vaccine,
 
   ico_map_my: ico_map_my,
   ico_map_selec: ico_map_selec,
@@ -237,34 +247,56 @@ export const Images: ImagesType = {
   ico_map_vacgom: ico_map_vacgom,
   ico_map_main: ico_map_main,
   ico_map_home: ico_map_home,
+  ico_map_mom: ico_map_mom,
+  ico_map_baby: ico_map_baby,
+  ico_map_univ: ico_map_univ,
+  ico_map_normal: ico_map_normal,
+  ico_map_normal_none: ico_map_normal_none,
+  ico_map_mom_none: ico_map_mom_none,
+  ico_map_baby_none: ico_map_baby_none,
+  ico_map_univ_none: ico_map_univ_none,
+  ico_my_success:ico_my_success,
   ico_home_greet: ico_home_greet,
   ico_syringe: ico_syringe,
   ico_none_syringe: ico_none_syringe,
   ico_see_again: ico_see_again,
+  ico_vacscore_info:ico_vacscore_info,
+  ico_vacscore_vaccine:ico_vacscore_vaccine,
 
   ico_alert_clock: ico_alert_clock,
   ico_alert_fail: ico_alert_fail,
   ico_alert_vaccine: ico_alert_vaccine,
   ico_alert_welcome: ico_alert_welcome,
-
+  ico_my_1_1:ico_my_1_1,
   ico_my_recom: ico_my_recom,
   ico_my_docs: ico_my_docs,
   ico_my_profile: ico_my_profile,
   ico_my_right: ico_my_right,
+  ico_my_baby:ico_my_baby,
+  ico_my_logout:ico_my_logout,
+  ico_my_books:ico_my_books,
+  ico_my_map: ico_my_map,
+  ico_my_news:ico_my_news,
+  ico_my_version: ico_my_version,
+  ico_my_baby_revise_profile: ico_my_baby_revise_profile,
+  ico_my_baby_list :ico_my_baby_list ,
+  ico_vacinfo_list:ico_vacinfo_list,
+  ico_vacinfo_look:ico_vacinfo_look,
+
   ico_dropdown: ico_dropdown,
   ico_quit_intro: ico_quit_intro,
   ico_quit: ico_quit,
   ico_home_1: ico_home_1,
   ico_home_2: ico_home_2,
   ico_home_3: ico_home_3,
+  icon_setting:icon_setting,
+  ico_my_info_revise: ico_my_info_revise ,
 
   //image
   vacgom01: Vacgom01,
   vacgomLoading: vacgomLoading,
-  vacgomViewing: vacgomViewing,
   vacgom: vacgom,
   vacgom_face: vacgom_face,
-  vacgom_pillow: vacgom_pillow,
   VaccineCardBack: VaccineCardBack,
   VaccineCardBackLarge: VaccineCardBackLarge,
   vaccine_status_false: vaccine_status_false,
