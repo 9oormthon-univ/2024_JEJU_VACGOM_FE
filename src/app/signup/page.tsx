@@ -1,29 +1,19 @@
 'use client';
 
 import * as React from 'react';
-import { Suspense, useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { SignupWrapper } from './style';
 
 import BackHeader from '@/app/_component/molecule/BackHeader';
-import JoinTemplate from '@/app/_component/temp/JoinTemplate';
 import BottomButton from '@/app/_component/atom/BottomButton';
 import { OnChangeValueType } from '@/types/globalType';
-import * as queryString from 'querystring';
 import { useRouter } from 'next/navigation';
-import { fetchAccessToken } from '@/hooks/useKakaoLogin';
-import {
-  checkParamsFilled,
-  filterNumericInput,
-  LocalStorage,
-} from '@/hooks/useUtil';
+import { checkParamsFilled, filterNumericInput } from '@/hooks/useUtil';
 
 import InputForm from '@/app/_component/atom/InputForm';
 
-import {
-  useChildVaccination,
-  useSignIn,
-} from '@/api/queries/auth/child-vaccination';
+import { useChildVaccination } from '@/api/queries/auth/child-vaccination';
 import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { setSession } from '@/api/api_utils';
 import { PATH } from '@/routes/path';
@@ -49,7 +39,8 @@ export default function Signup(): React.JSX.Element {
   const { accessToken } = useAccessToken();
   const { nickName, goBack } = useBridge();
   const [errormessage, setErrormessage] = useState<string>('');
-  //초기 ACCESS token 설정
+  const identityFirstRef = useRef<HTMLInputElement>(null);
+  const identityLastRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setSession(accessToken);
@@ -63,6 +54,13 @@ export default function Signup(): React.JSX.Element {
 
   const { setbabyName, setBabySsn } = useSignupStore((state) => state);
 
+  const handleFirstPartChange = (e) => {
+    let filteredValue = filterNumericInput(e);
+    onChangeValue('identity_first', filteredValue);
+    if (filteredValue.length === 6) {
+      identityLastRef?.current.focus();
+    }
+  };
   const onSubmit = () => {
     if (nickName === null) {
       setErrormessage('닉네임이 설정되지 않았습니다.');
@@ -128,10 +126,8 @@ export default function Signup(): React.JSX.Element {
               value={params.identity_first}
               type="text"
               maxLength={6}
-              onChange={(e) => {
-                let filteredValue = filterNumericInput(e);
-                onChangeValue('identity_first', filteredValue);
-              }}
+              inputRef={identityFirstRef}
+              onChange={handleFirstPartChange}
             />
             <p>-</p>
             <InputForm
@@ -139,6 +135,7 @@ export default function Signup(): React.JSX.Element {
               value={params.identity_last}
               type="password"
               maxLength={7}
+              inputRef={identityLastRef}
               onChange={(e) => {
                 let filteredValue = filterNumericInput(e);
                 onChangeValue('identity_last', filteredValue);

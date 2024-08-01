@@ -7,7 +7,7 @@ export const BottomButtonWrap = styled.button`
     height: 56px;
     width: 100%;
     max-width: 500px;
-    padding: 20px;
+    padding: 20px 20px 55px 20px;
     ${fontGenerator('16px', '600', '16px', '-0.3px')}
     color: ${Colors.Gray500};
     background-color: ${Colors.Gray100};
