@@ -23,10 +23,13 @@ import { postSignup } from '@/app/_lib/postSignup';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import useSignupStore from '@/store/signup/babySignup';
-import { useSignup } from '@/api/queries/auth/sign-up';
+import { useAuthKaKao, useSignup } from '@/api/queries/auth/auth-kakao';
 import TermsDetail from '@/app/_component/molecule/TermsDetail';
 import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import { useBridge } from '@/bridge/hook/useBridge';
+import { PATH } from '@/routes/path';
+import useKaKaoStore from '@/store/signup/kakaoAgain';
+import { calculateBirthday } from '@/hooks/useUtil';
 
 interface Values {
   userName: string;
@@ -35,16 +38,11 @@ interface Values {
 }
 
 export default function Signup(): React.JSX.Element {
-  const { babyName, babySsn } = useSignupStore((state) => state);
-
-  console.log(babyName, babySsn);
-
   const [params, setParams] = useState<ParamsType>({
     identity_first: '',
     identity_last: '',
     userName: '',
     phoneNumber: '',
-    telecom: '',
   });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const router = useRouter();
@@ -59,34 +57,49 @@ export default function Signup(): React.JSX.Element {
   const handleSelected = () => {
     setSelected(!termSelected);
   };
-  const { nickName, goBack } = useBridge();
+  const { goBack } = useBridge();
 
   /**
    *  api 호출
    */
-  // const { mutate, isLoading } = useSignup<Values>();
-  const [loading, setLoading] = useState(false); // 로딩 상태 추가
+  const { mutate, isLoading } = useAuthKaKao<Values>();
   const [errormessage, setErrormessage] = useState(''); // 로딩 상태 추가
-
+  const { setBirthday, setPhoneNo, setUserName } = useKaKaoStore(
+    (state) => state,
+  );
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
-      try {
-        setLoading(true);
-        const response = await postSignup(params);
-
-        if (!response.success) {
-          setErrormessage(response.message);
-          return;
-        }
-        LocalStorage.setItem('secureNoImage', response.data.secureNoImage);
-        router.push(
-          `/signup/captcha?secureNoImage=${response.data.secureNoImage}`,
-        );
-      } catch (error) {
-        console.error('Signup failed:', error.message);
-      } finally {
-        setLoading(false); // 로딩 종료
-      }
+      mutate(
+        {
+          birthday: calculateBirthday(
+            params?.identity_first,
+            params?.identity_last,
+          ),
+          userName: params.userName,
+          phoneNo: params.phoneNumber,
+        },
+        {
+          onSuccess: () => {
+            setUserName(params.userName);
+            setBirthday(
+              calculateBirthday(params?.identity_first, params?.identity_last),
+            );
+            setPhoneNo(params.phoneNumber);
+            router.push(PATH.SIGNUP_KAKAO);
+          },
+          onError: (error) => {
+            // 에러 처리
+            if (error.success === false) {
+              // 서버가 핸들링한 에러
+              setErrormessage(error.data.message);
+              router.push(PATH.SIGNUP_DONE);
+            } else {
+              // 서버에러
+              router.push(PATH.SIGNUP_KAKAO_ERROR);
+            }
+          },
+        },
+      );
     }
   };
 
@@ -98,7 +111,7 @@ export default function Signup(): React.JSX.Element {
     onChangeValue('telecom', []);
   };
 
-  if (loading) return <SkeletonScreen />;
+  if (isLoading) return <SkeletonScreen />;
 
   return (
     <Suspense fallback={<div>Loading...</div>}>
@@ -115,25 +128,6 @@ export default function Signup(): React.JSX.Element {
               onChange={(e) => {
                 onChangeValue('userName', e.target.value);
               }}
-            />
-          </div>
-          <div className="item">
-            <InputForm
-              placeholder="통신사를 선택해 주세요"
-              value={params.telecom}
-              descriptionTop={'통신사'}
-              rightIcon={Icons.arrow_down}
-              type="text"
-              customStyle={css`
-                & > .input__content > .input__content--right__icon > img {
-                  width: 24px;
-                  height: 24px;
-                }
-              `}
-              onClick={() => {
-                setIsModalOpen(true);
-              }}
-              readOnly
             />
           </div>
           <div className="item">
@@ -197,30 +191,16 @@ export default function Signup(): React.JSX.Element {
             />
           </div>
         </div>
-
-        <Fragment>
-          <FilterRadioModal
-            isOpen={isModalOpen}
-            title="통신사를 선택해 주세요"
-            options={agencyRanges}
-            selectedOptions={params.telecom}
-            onClose={() => setIsModalOpen(false)}
-            onOptionSelect={handleAgencySelect}
-            onReset={resetAgencyOptions}
-          />
-        </Fragment>
-
         <WarningToastWrap
           errorMessage={errormessage}
           setErrorMessage={setErrormessage}
         />
 
-        {!loading && (
-          <BottomButton
-            filled={checkParamsFilled(params) && termSelected}
-            handleNextButtonClick={handleNextButtonClick}
-          />
-        )}
+        <BottomButton
+          filled={checkParamsFilled(params) && termSelected}
+          handleNextButtonClick={handleNextButtonClick}
+          loading={isLoading}
+        />
       </SignupWrapper>
     </Suspense>
   );

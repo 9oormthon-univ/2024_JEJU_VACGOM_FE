@@ -23,9 +23,6 @@ const TIMEOUT_TIME = 10_000;
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    // const token = localStorage.getItem('capsule_token') as any;
-    // config.headers.Authorization = `Bearer ${token?.access}`;
-
     firstRequestCancelToken = cancelTokenSource();
     config.cancelToken = firstRequestCancelToken.token;
     config.timeout = TIMEOUT_TIME;

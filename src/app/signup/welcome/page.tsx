@@ -11,9 +11,11 @@ import { PATH } from '@/routes/path';
 import { css } from '@emotion/react';
 import Button from '@/app/_component/atom/button/button';
 import { useRouter } from 'next/navigation';
+import { useBridge } from '@/bridge/hook/useBridge';
 
 const SignupErrorPage = (): React.JSX.Element => {
   const router = useRouter();
+  const { goHome } = useBridge();
 
   return (
     <SignupErrorPageWrap>
@@ -36,7 +38,7 @@ const SignupErrorPage = (): React.JSX.Element => {
             label={'백곰 시작하기'}
             size={'large'}
             onClick={() => {
-              // router.push(PATH.MOREINFO_DIS);
+              goHome();
             }}
           />
         </div>

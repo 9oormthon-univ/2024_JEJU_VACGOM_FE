@@ -1,34 +1,20 @@
 'use client';
 
 import * as React from 'react';
-import { Fragment, Suspense, useEffect, useState } from 'react';
 import { SingupKakaoWrapper } from './style';
-import { css } from '@emotion/react';
 
-import { Icons, Images } from '@/styles';
-import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { Images } from '@/styles';
 import BackHeader from '@/app/_component/molecule/BackHeader';
-import InputForm from '@/app/_component/atom/InputForm';
-import { agencyRanges } from '@/constants';
-import { OnChangeValueType, ParamsType } from '@/types/globalType';
-import {
-  checkParamsFilled,
-  filterNumericInput,
-  LocalStorage,
-  SecureLocalStorage,
-} from '@/hooks/useUtil';
 import BottomButton from '@/app/_component/atom/BottomButton';
-import FilterRadioModal from '@/app/_component/organism/filterRadioModal';
-import { postSignup } from '@/app/_lib/postSignup';
-import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
-import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
-import useSignupStore from '@/store/signup/babySignup';
-import { useSignup } from '@/api/queries/auth/sign-up';
-import TermsDetail from '@/app/_component/molecule/TermsDetail';
-import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import Image from 'next/image';
 import Button from '@/app/_component/atom/button/button';
 import { useBridge } from '@/bridge/hook/useBridge';
+import { useAuthKaKaoVerify } from '@/api/queries/auth/auth-kakao-verify';
+import useSignupStore from '@/store/signup/babySignup';
+import useKaKaoStore from '@/store/signup/kakaoAgain';
+import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
+import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
 
 interface Values {
   userName: string;
@@ -37,10 +23,65 @@ interface Values {
 }
 
 export default function SignupKaKao(): React.JSX.Element {
-  const handleReTry = () => {
-    console.log('handleReTry');
-  };
+  const { babyName, babySsn } = useSignupStore((state) => state);
+  const { birthday, userName, phoneNo } = useKaKaoStore((state) => state);
+  const { mutate: kakaoMutate, isLoading: isKakaoLoading } =
+    useAuthKaKao<Values>();
+
+  const { mutate: kakaoVerifyMutate, isLoading: isVerifyLoading } =
+    useAuthKaKaoVerify<Values>();
   const { goBack } = useBridge();
+  const [isDone, setIsDone] = useState(false);
+  console.log(birthday, userName, phoneNo);
+  const [errormessage, setErrormessage] = useState<string>('');
+
+  const handleReTry = () => {
+    kakaoMutate(
+      {
+        birthday: birthday,
+        userName: userName,
+        phoneNo: phoneNo,
+      },
+      {
+        onSuccess: (data) => {
+          setIsDone(false);
+        },
+        onError: (error) => {
+          setErrormessage(error.message);
+        },
+      },
+    );
+  };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsDone(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, [isDone]);
+
+  console.log('babyName', babyName);
+
+  const handleDone = () => {
+    kakaoVerifyMutate(
+      {
+        babyName: babyName,
+      },
+      {
+        onSuccess: (data) => {
+          console.log('onSuccess', data);
+        },
+        onError: (error) => {
+          if (error.data.success === false) {
+            setErrormessage(error.data.message);
+          } else {
+            setErrormessage(error.message);
+          }
+        },
+      },
+    );
+  };
+
   return (
     <SingupKakaoWrapper>
       <BackHeader title={'보호자 본인 인증'} onClickHandler={goBack} />
@@ -85,7 +126,15 @@ export default function SignupKaKao(): React.JSX.Element {
           size={'large'}
         />
       </div>
-      <BottomButton filled={false} label={'카카오 인증 완료 후 눌러주세요'} />
+      <WarningToastWrap
+        errorMessage={errormessage}
+        setErrorMessage={setErrormessage}
+      />
+      <BottomButton
+        filled={isDone}
+        label={'카카오 인증 완료 후 눌러주세요'}
+        handleNextButtonClick={handleDone}
+      />
     </SingupKakaoWrapper>
   );
 }

@@ -24,7 +24,7 @@ const BottomButton: React.FC<props> = ({
 }) => {
   const onClickValid = () => {
     if (filled) {
-      handleNextButtonClick();
+      handleNextButtonClick?.();
     }
   };
   return (

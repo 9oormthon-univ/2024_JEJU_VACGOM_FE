@@ -1,12 +1,14 @@
 export const PATH_API = {
   API_DOMAIN: 'https://api-dev-v2.vacgom.co.kr',
   // auth
-  // 아기 백신 조회
-  CHILD_VAC: '/child-vaccination',
+  // 아기 생성 및 백신 조회 후 저장
+  SIGNUP: '/child-vaccination',
   // Dummy Member Request (회원 role 별 토큰발급)
   DUMMY_MEMBER: '/api/v2/dummy/member',
-  //아기 생성 및 백신 조회 후 저장
-  SIGN_UP: '/api/v2/auth/signup',
+  // 카카오 간편인증 1차 요청
+  KAKAO: '/api/v2/auth/simpleAuth/kakao',
+  // 카카오 간편인증 2차 요청
+  KAKAO_VERIFY: '/api/v2/auth/simpleAuth/kakao/verify',
 };
 
 /**
