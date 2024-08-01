@@ -28,6 +28,8 @@ import TermsDetail from '@/app/_component/molecule/TermsDetail';
 import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import { useBridge } from '@/bridge/hook/useBridge';
 import { PATH } from '@/routes/path';
+import useKaKaoStore from '@/store/signup/kakaoAgain';
+import { calculateBirthday } from '@/hooks/useUtil';
 
 interface Values {
   userName: string;
@@ -36,10 +38,6 @@ interface Values {
 }
 
 export default function Signup(): React.JSX.Element {
-  const { babyName, babySsn } = useSignupStore((state) => state);
-
-  console.log(babyName, babySsn);
-
   const [params, setParams] = useState<ParamsType>({
     identity_first: '',
     identity_last: '',
@@ -59,7 +57,7 @@ export default function Signup(): React.JSX.Element {
   const handleSelected = () => {
     setSelected(!termSelected);
   };
-  const { nickName, goBack } = useBridge();
+  const { goBack } = useBridge();
 
   /**
    *  api 호출
@@ -71,15 +69,10 @@ export default function Signup(): React.JSX.Element {
     if (checkParamsFilled(params)) {
       mutate(
         {
-          birthday: ((firstDigit) => {
-            // Check the first digit of identity_last
-            if (firstDigit === '3' || firstDigit === '4') {
-              return '20' + params.identity_first;
-            } else if (firstDigit === '1' || firstDigit === '2') {
-              return '19' + params.identity_first;
-            }
-            return params.identity_first; // default case if needed
-          })(params.identity_last[0]),
+          birthday: calculateBirthday(
+            params.identity_first,
+            params.identity_last,
+          ),
           userName: params.userName,
           phoneNo: params.phoneNumber,
         },

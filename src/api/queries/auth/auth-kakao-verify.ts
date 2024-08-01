@@ -11,7 +11,7 @@ import { setSession } from '@/api/api_utils';
 import { useRouter } from 'next/navigation';
 
 // 카카오 간편인증 1차
-export const useAuthKaKao = <T>(
+export const useAuthKaKaoVerify = <T>(
   options?: Omit<UseMutationOptions<any, any, T>, 'mutationKey'>,
 ) => {
   const queryClient = useQueryClient();
