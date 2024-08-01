@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { Fragment, Suspense, useEffect, useRef, useState } from 'react';
+import { Suspense, useRef, useState } from 'react';
 import { SignupWrapper } from './style';
 import { css } from '@emotion/react';
 import { useRouter } from 'next/navigation';
@@ -16,10 +16,7 @@ import {
 import BottomButton from '@/app/_component/atom/BottomButton';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
-import useSignupStore from '@/store/signup/babySignup';
 import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
-import TermsDetail from '@/app/_component/molecule/TermsDetail';
-import TermsAllAgree from '@/app/_component/TermsAllAgree';
 import { useBridge } from '@/bridge/hook/useBridge';
 import { PATH } from '@/routes/path';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
@@ -100,7 +97,7 @@ export default function Signup(): React.JSX.Element {
     let filteredValue = filterNumericInput(e);
     onChangeValue('identity_first', filteredValue);
     if (filteredValue.length === 6) {
-      identityLastRef.current.focus();
+      identityLastRef?.current.focus();
     }
   };
 
