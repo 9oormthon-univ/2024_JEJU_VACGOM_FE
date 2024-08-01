@@ -3,7 +3,6 @@ import {
   useMutation,
   useQueryClient,
 } from '@tanstack/react-query';
-import { PATH } from '../../../routes/path';
 import { PATH_API } from '../../path';
 import { axiosInstance } from '../../axios';
 import { QUERY_KEY } from '../../queryKeys';

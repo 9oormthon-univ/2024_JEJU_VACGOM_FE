@@ -11,6 +11,7 @@ import { VacgomAppIpc } from './ipc/vacgom-app-ipc';
 import { Token } from './ipc/message/token';
 import { Nickname } from '@/bridge/ipc/message/nickname';
 import { BackRequest } from '@/bridge/ipc/message/back';
+import { GoHomeRequest } from '@/bridge/ipc/message/goHome';
 
 declare global {
   interface Window {
@@ -95,6 +96,14 @@ export class Vacbridge implements Bridge {
       data: null,
     });
   }
+  async goHome(): Promise<void> {
+    const ipc = await this.getIpc();
+    await ipc.send<GoHomeRequest>({
+      type: 'GoHome',
+      data: null,
+    });
+  }
+
   async getAccessToken(): Promise<string | null> {
     const ipc = await this.getIpc();
     const response = await ipc.invoke<Token>({

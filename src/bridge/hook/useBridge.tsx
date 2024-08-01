@@ -24,6 +24,10 @@ export const useBridge = () => {
     if (!vacbridge) return;
     await vacbridge.goBack();
   };
+  const goHome = async () => {
+    if (!vacbridge) return;
+    await vacbridge.goHome();
+  };
 
-  return { nickName, goBack };
+  return { nickName, goBack, goHome };
 };
