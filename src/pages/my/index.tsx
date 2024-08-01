@@ -170,34 +170,34 @@ export default function My() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const accessToken = LocalStorage.getItem('accessToken');
+  // const accessToken = LocalStorage.getItem('accessToken');
 
-  useEffect(() => {
-    fetch('https://api-dev.vacgom.co.kr/api/v1/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUserName(data.name);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://api-dev-v2.vacgom.co.kr/member', {
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setUserName(data.name);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
 
-  if (isLoading) return;
-  if (error) return <div>Error: {error}</div>;
+  // if (isLoading) return;
+  // if (error) return <div>Error: {error}</div>;
 
   const handleClick = () => {
     router.push('/myrevise');
@@ -213,7 +213,7 @@ export default function My() {
             <Image src={Images.ico_my_profile} alt="" />
           </ImageWrapper>
           <InfoContainer>
-            <NameContainer>{userName}</NameContainer>
+            <NameContainer>오소현</NameContainer>
             <EmailContainer>가든 돌보미</EmailContainer>
           </InfoContainer>
           </InfoWrapper>
