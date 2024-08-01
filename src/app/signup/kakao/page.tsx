@@ -66,6 +66,7 @@ export default function SignupKaKao(): React.JSX.Element {
     kakaoVerifyMutate(
       {
         babyName: babyName,
+        userName: userName,
       },
       {
         onSuccess: (data) => {
