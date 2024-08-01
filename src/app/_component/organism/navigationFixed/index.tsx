@@ -39,8 +39,8 @@ const navItems = [
   {
     iconSelected: 'nav_vaclookup_selec',
     iconUnselected: 'nav_vaclookup_unselec',
-    label: '백신정보',
-    route: PATH.VACLOOKUP,
+    label: '백신',
+    route: PATH.VACINFO,
   },
   {
     iconSelected: 'nav_my_selec',

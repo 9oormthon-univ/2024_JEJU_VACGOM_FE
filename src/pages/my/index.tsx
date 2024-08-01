@@ -170,34 +170,34 @@ export default function My() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const accessToken = LocalStorage.getItem('accessToken');
+  // const accessToken = LocalStorage.getItem('accessToken');
 
-  useEffect(() => {
-    fetch('https://api-dev.vacgom.co.kr/api/v1/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUserName(data.name);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://api-dev-v2.vacgom.co.kr/member', {
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setUserName(data.name);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
 
-  if (isLoading) return;
-  if (error) return <div>Error: {error}</div>;
+  // if (isLoading) return;
+  // if (error) return <div>Error: {error}</div>;
 
   const handleClick = () => {
     router.push('/myrevise');
@@ -213,12 +213,13 @@ export default function My() {
             <Image src={Images.ico_my_profile} alt="" />
           </ImageWrapper>
           <InfoContainer>
-            <NameContainer>{userName}</NameContainer>
+            <NameContainer>오소현</NameContainer>
             <EmailContainer>가든 돌보미</EmailContainer>
           </InfoContainer>
           </InfoWrapper>
         </UserGreeting>
       </GreetingContainer>
+
       <NavContainer>
         <AccountTitle>우리 아이</AccountTitle>
         <ListItem>
@@ -244,41 +245,66 @@ export default function My() {
           </Link>
         </ListItem>
       </NavContainer>
+
+      <NavContainer>
+        <AccountTitle>백곰 약관</AccountTitle>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보 수집 및 활용 동의서</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/143ea9e50cd9471a856fd1ce52e47ed3?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>이용약관</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/104c56edfef54ae3bd36657f8824d24e?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+      </NavContainer>
+
+      <NavContainer>
+        <AccountTitle>예방 접종 도우미 약관</AccountTitle>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보 수집 및 이용에 대한 동의</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/4c407e7fa55c4866827b7b2301169e57?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보처리방침</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/37c4eb9131f944a3981f97e9a80cb933?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>이용약관</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/cb723ed5c4dc45a183964c9ff056cd2c?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+      </NavContainer>
       <NavContainer>
         <AccountTitle>설정</AccountTitle>
-        <ListItem>
-          <ListInfoItem>
-            <Image src={Images.ico_my_map} alt="" />
-            <ListItemText>위치정보 이용약관</ListItemText>
-          </ListInfoItem>
-          <Link href="/myrevise" passHref>
-            <LinkButton>
-              <Image src={Images.ico_my_right} alt="" />
-            </LinkButton>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <ListInfoItem>
-            <Image src={Images.ico_my_news} alt="" />
-            <ListItemText>서비스 이용약관</ListItemText>
-          </ListInfoItem>
-          <Link href="/myrevise" passHref>
-            <LinkButton>
-              <Image src={Images.ico_my_right} alt="" />
-            </LinkButton>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <ListInfoItem>
-            <Image src={Images.ico_my_books} alt="" />
-            <ListItemText>개인정보 처리방침</ListItemText>
-          </ListInfoItem>
-          <Link href="/myrevise" passHref>
-            <LinkButton>
-              <Image src={Images.ico_my_right} alt="" />
-            </LinkButton>
-          </Link>
-        </ListItem>
         <ListItem>
           <ListInfoItem>
             <Image src={Images.ico_my_1_1} alt="" />
