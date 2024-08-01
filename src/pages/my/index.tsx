@@ -219,6 +219,7 @@ export default function My() {
           </InfoWrapper>
         </UserGreeting>
       </GreetingContainer>
+
       <NavContainer>
         <AccountTitle>우리 아이</AccountTitle>
         <ListItem>
@@ -244,41 +245,66 @@ export default function My() {
           </Link>
         </ListItem>
       </NavContainer>
+
+      <NavContainer>
+        <AccountTitle>백곰 약관</AccountTitle>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보 수집 및 활용 동의서</ListItemText>
+          </ListInfoItem>
+          <Link href="/myrevise" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>이용약관</ListItemText>
+          </ListInfoItem>
+          <Link href="/myrevise" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+      </NavContainer>
+
+      <NavContainer>
+        <AccountTitle>예방 접종 도우미 약관</AccountTitle>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보 수집 및 이용에 대한 동의</ListItemText>
+          </ListInfoItem>
+          <Link href="/myrevise" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보처리방침</ListItemText>
+          </ListInfoItem>
+          <Link href="/myrevise" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>이용약관</ListItemText>
+          </ListInfoItem>
+          <Link href="/myrevise" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+      </NavContainer>
       <NavContainer>
         <AccountTitle>설정</AccountTitle>
-        <ListItem>
-          <ListInfoItem>
-            <Image src={Images.ico_my_map} alt="" />
-            <ListItemText>위치정보 이용약관</ListItemText>
-          </ListInfoItem>
-          <Link href="/myrevise" passHref>
-            <LinkButton>
-              <Image src={Images.ico_my_right} alt="" />
-            </LinkButton>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <ListInfoItem>
-            <Image src={Images.ico_my_news} alt="" />
-            <ListItemText>서비스 이용약관</ListItemText>
-          </ListInfoItem>
-          <Link href="/myrevise" passHref>
-            <LinkButton>
-              <Image src={Images.ico_my_right} alt="" />
-            </LinkButton>
-          </Link>
-        </ListItem>
-        <ListItem>
-          <ListInfoItem>
-            <Image src={Images.ico_my_books} alt="" />
-            <ListItemText>개인정보 처리방침</ListItemText>
-          </ListInfoItem>
-          <Link href="/myrevise" passHref>
-            <LinkButton>
-              <Image src={Images.ico_my_right} alt="" />
-            </LinkButton>
-          </Link>
-        </ListItem>
         <ListItem>
           <ListInfoItem>
             <Image src={Images.ico_my_1_1} alt="" />
