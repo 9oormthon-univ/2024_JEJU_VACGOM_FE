@@ -17,9 +17,6 @@ export const useAuthKaKao = <T>(
 ) => {
   const queryClient = useQueryClient();
   const navigate = useRouter();
-  const { setBirthday, setPhoneNo, setUserName } = useKaKaoStore(
-    (state) => state,
-  );
 
   return useMutation({
     mutationKey: [QUERY_KEY.KAKAO],
@@ -28,10 +25,6 @@ export const useAuthKaKao = <T>(
       return response.data;
     },
     onSuccess: (data) => {
-      // 스토어에 사용자 정보 저장
-      setUserName(data.userName);
-      setBirthday(data.birthday);
-      setPhoneNo(data.phoneNo);
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.KAKAO] });
     },
     onError: (error) => {},

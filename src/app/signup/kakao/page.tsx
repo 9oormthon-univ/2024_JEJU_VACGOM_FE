@@ -3,6 +3,7 @@
 import * as React from 'react';
 import { SingupKakaoWrapper } from './style';
 
+import { useEffect, useState } from 'react';
 import { Images } from '@/styles';
 import BackHeader from '@/app/_component/molecule/BackHeader';
 import BottomButton from '@/app/_component/atom/BottomButton';
@@ -24,6 +25,7 @@ export default function SignupKaKao(): React.JSX.Element {
   const { birthday, userName, phoneNo } = useKaKaoStore((state) => state);
   const { mutate, isLoading } = useAuthKaKaoVerify<Values>();
   const { goBack } = useBridge();
+  const [isDone, setIsDone] = useState(false);
   console.log(birthday, userName, phoneNo);
   const handleReTry = () => {
     mutate(
@@ -42,6 +44,15 @@ export default function SignupKaKao(): React.JSX.Element {
       },
     );
   };
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsDone(true);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  console.log('babyName', babyName);
 
   const handleDone = () => {
     mutate(
@@ -104,7 +115,7 @@ export default function SignupKaKao(): React.JSX.Element {
         />
       </div>
       <BottomButton
-        filled={false}
+        filled={isDone}
         label={'카카오 인증 완료 후 눌러주세요'}
         handleNextButtonClick={handleDone}
       />

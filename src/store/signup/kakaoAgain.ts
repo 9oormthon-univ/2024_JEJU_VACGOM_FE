@@ -14,7 +14,7 @@ interface Action {
 
 const useKaKaoStore = devtools<State & Action>((set) => ({
   // state
-  birthday: '회원',
+  birthday: '',
   userName: '',
   phoneNo: '',
   // actions
