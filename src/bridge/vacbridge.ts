@@ -34,9 +34,11 @@ export class Vacbridge implements Bridge {
 
   async init(): Promise<void> {
     console.log('[Vacbridge] 초기화 시작');
-    this.vacapiPostMessage = await this.retrieveFlutterPostMessage();
+    if (typeof window !== 'undefined') {
+      this.vacapiPostMessage = await this.retrieveFlutterPostMessage();
+      this.exposeAutomationPostMessage();
+    }
     this.ipcInternal = new InternalVacgomAppIpc(this.vacapiPostMessage);
-    this.exposeAutomationPostMessage();
     this.vacgomIpc = new VacgomAppIpc(this.ipcInternal);
     this.isInitialized = true;
     console.log('[Vacbridge] 초기화 완료');
@@ -60,6 +62,11 @@ export class Vacbridge implements Bridge {
   private async retrieveFlutterPostMessage(): Promise<
     (message: string) => void
   > {
+    if (typeof window === 'undefined') {
+      console.log('[Vacbridge] 서버 환경에서는 실행할 수 없습니다.');
+      throw new BridgeNotInitialized();
+    }
+
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         clearInterval(interval);

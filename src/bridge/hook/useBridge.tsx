@@ -15,7 +15,6 @@ export const useBridge = () => {
 
       const nickName = await vacbridgeInstance.getOnboardingNickname();
 
-      console.log('nickName', nickName);
       setNickName(nickName);
     })();
   }, []);
