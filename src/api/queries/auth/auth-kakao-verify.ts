@@ -24,7 +24,6 @@ export const useAuthKaKaoVerify = <T>(
       return response.data;
     },
     onSuccess: (data) => {
-      setSession(data);
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.KAKAO_VERIFY] });
     },
     onError: (error) => {},

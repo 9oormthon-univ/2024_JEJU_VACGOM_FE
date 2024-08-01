@@ -172,12 +172,16 @@ export const AccessTokenRouter = (router) => {
  * @param {string} identityLast - The last part of the identity number (includes the first digit).
  * @returns {string} - The calculated birthday.
  */
-function calculateBirthday(identityFirst, identityLast) {
-  const firstDigit = identityLast[0];
+
+export const calculateBirthday = (
+  identityFirst: string,
+  identityLast: string,
+) => {
+  const firstDigit = identityLast?.[0];
   if (firstDigit === '3' || firstDigit === '4') {
     return '20' + identityFirst;
   } else if (firstDigit === '1' || firstDigit === '2') {
     return '19' + identityFirst;
   }
   return identityFirst; // Default case, might need more handling
-}
+};

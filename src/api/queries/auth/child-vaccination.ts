@@ -22,7 +22,6 @@ export const useChildVaccination = <T>(
       return response.data;
     },
     onSuccess: (data) => {
-      setSession(data);
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY.SIGNUP] });
     },
     onError: (error) => {},

@@ -28,8 +28,6 @@ export const useAuthKaKao = <T>(
       return response.data;
     },
     onSuccess: (data) => {
-      // 세션 설정
-      setSession(data);
       // 스토어에 사용자 정보 저장
       setUserName(data.userName);
       setBirthday(data.birthday);

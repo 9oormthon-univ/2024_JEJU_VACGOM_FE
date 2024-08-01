@@ -65,13 +65,15 @@ export default function Signup(): React.JSX.Element {
   const { mutate, isLoading } = useAuthKaKao<Values>();
   const [errormessage, setErrormessage] = useState(''); // 로딩 상태 추가
 
+  console.log(calculateBirthday(params.identity_first, params.identity_last));
+
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
       mutate(
         {
           birthday: calculateBirthday(
-            params.identity_first,
-            params.identity_last,
+            params?.identity_first,
+            params?.identity_last,
           ),
           userName: params.userName,
           phoneNo: params.phoneNumber,

@@ -24,7 +24,7 @@ export default function SignupKaKao(): React.JSX.Element {
   const { birthday, userName, phoneNo } = useKaKaoStore((state) => state);
   const { mutate, isLoading } = useAuthKaKaoVerify<Values>();
   const { goBack } = useBridge();
-
+  console.log(birthday, userName, phoneNo);
   const handleReTry = () => {
     mutate(
       {
@@ -99,7 +99,7 @@ export default function SignupKaKao(): React.JSX.Element {
         <Button
           label="인증 재요청"
           variant={'OutlineWhite'}
-          onClick={handleDone}
+          onClick={handleReTry}
           size={'large'}
         />
       </div>
