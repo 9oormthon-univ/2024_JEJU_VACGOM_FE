@@ -60,8 +60,6 @@ export default function SignupKaKao(): React.JSX.Element {
     return () => clearTimeout(timer);
   }, [isDone]);
 
-  console.log('babyName', babyName);
-
   const handleDone = () => {
     kakaoVerifyMutate(
       {
