@@ -12,8 +12,6 @@ export const PATH_API = {
   // 백신 인증서 조회
   INOCULATIONS: '/api/v2/inoculations',
   INOCULATIONS_DETAIL: '/api/v2/inoculations/inoculation',
-  //내 정보 조회
-  MY_MEMEBER: '/api/v2/member',
 };
 
 /**
