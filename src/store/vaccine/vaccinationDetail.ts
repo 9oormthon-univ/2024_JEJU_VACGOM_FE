@@ -3,21 +3,21 @@ import { devtools } from 'zustand/middleware';
 
 interface State {
   vacType: string | null;
-  vaccineId: string | null;
+  vaccinationId: string | null;
 }
 interface Action {
   setVacType: (text: string) => void;
-  setVaccineId: (text: string) => void;
+  setVaccinationId: (text: string) => void;
 }
 
 const useVaccinationStore = devtools<State & Action>((set) => ({
   // state
-  vacType: 0,
-  vaccineId: 0,
+  vacType: '',
+  vaccinationId: '',
 
   // actions
   setVacType: (text: string) => set({ vacType: text }),
-  setVaccineId: (text: string) => set({ vaccineId: text }),
+  setVaccinationId: (text: string) => set({ vaccinationId: text }),
 }));
 
 export default create(useVaccinationStore);

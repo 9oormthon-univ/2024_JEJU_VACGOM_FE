@@ -1,35 +1,15 @@
 'use client';
 
 import * as React from 'react';
+import { Fragment } from 'react';
 import { Container } from './style';
-import { Icons, Images } from '@/styles';
-
-import {
-  ageRanges,
-  extraDisease,
-  nationDisease,
-  situationRanges,
-} from '@/constants';
-import { Fragment, useEffect, useState } from 'react';
-import SectionHeader from '@/app/_component/atom/SectionHeader';
 import BackHeader from '@/app/_component/molecule/BackHeader';
-import InputForm from '@/app/_component/atom/InputForm';
-import { css } from '@emotion/react';
-import { OnChangeValueType, ParamsType } from '@/types/globalType';
 import VaccineDetail from '@/app/_component/atom/VaccineDetail';
-import VaccineStatus from '@/app/_component/atom/VaccineStatus';
-import FilterRadioModal from '@/app/_component/organism/filterRadioModal';
-import { getInoculationSimple } from '@/app/_lib/getInoculationSimple';
-import { getInoculationDetail } from '@/app/_lib/getInoculationDetail';
 import { PATH } from '@/routes/path';
-import Image from 'next/image';
-import Filter from '@/app/_component/atom/Filter';
-import { essentialDiseaseList } from '@/utils/essential-disease-api';
-import styled from '@emotion/styled';
-import FilterModal from '@/app/_component/organism/filterModal';
-import { LocalStorage } from '@/hooks/useUtil';
 import NonePage from '@/app/_component/molecule/NonePage';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
+import { useVaccinationDetail } from '@/api/queries/vaccine/vaccinationDetail';
+import useVaccinationStore from '../../../../store/vaccine/vaccinationDetail';
 
 interface DetailDataType {
   order: string;
@@ -42,11 +22,6 @@ interface DetailDataType {
 }
 
 export default function Vaccine() {
-  const [detail, setDetail] = useState<DetailDataType[]>([]);
-  const [loading, setLoading] = useState(true); // 로딩 상태 추가
-
-  const type = LocalStorage.getItem('vacType');
-
   const reName = (order: string, vaccineProductName: string) => {
     if (vaccineProductName !== '') {
       return vaccineProductName + ' | ' + order;
@@ -54,27 +29,15 @@ export default function Vaccine() {
       return order;
     }
   };
-
-  const fetchDetail = async () => {
-    const vaccineId = LocalStorage.getItem('vaccineId');
-
-    try {
-      setLoading(true);
-      const detailData = await getInoculationDetail(type, vaccineId);
-      setDetail(detailData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchDetail();
-  }, []);
+  const { vaccinationId } = useVaccinationStore();
+  const {
+    data: detail,
+    isLoading,
+    error,
+  } = useVaccinationDetail({ vaccinationId });
 
   const nonPage = () => {
-    if (loading) {
+    if (isLoading) {
       return <SkeletonScreen />;
     } else if (detail.length === 0) {
       return (
@@ -99,18 +62,18 @@ export default function Vaccine() {
             </div>
           </div>
           <div className="body">
-            {detail.map((item, key) => (
-              <VaccineDetail
-                vaccineDose={reName(item.order, item.vaccineProductName)}
-                vaccineName={item.vaccineName}
-                vaccineBrandName={item.vaccineBrandName}
-                inoculatedAt={item.date}
-                inoculationAgency={item.agency}
-                lotNo={item.lotNumber}
-              />
-            ))}
+            {/*{detail?.map((item, key) => (*/}
+            {/*  <VaccineDetail*/}
+            {/*    vaccineDose={reName(item.order, item.vaccineProductName)}*/}
+            {/*    vaccineName={item.vaccineName}*/}
+            {/*    vaccineBrandName={item.vaccineBrandName}*/}
+            {/*    inoculatedAt={item.date}*/}
+            {/*    inoculationAgency={item.agency}*/}
+            {/*    lotNo={item.lotNumber}*/}
+            {/*  />*/}
+            {/*))}*/}
           </div>
-          {!loading && (
+          {!isLoading && (
             <div className="bottom">
               예방접종등록사업을 시작한, 2002년 이후의 예방접종기록을 확인할 수
               있어요
@@ -123,7 +86,7 @@ export default function Vaccine() {
 
   return (
     <Container>
-      <BackHeader title={' '} url={PATH.VACHISTORY_VAC} />
+      {!isLoading && <BackHeader title={' '} url={PATH.VACHISTORY_VAC} />}
       {nonPage()}
     </Container>
   );

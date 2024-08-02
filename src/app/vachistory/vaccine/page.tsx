@@ -162,11 +162,10 @@ export default function Vaccine() {
   const router = useRouter();
   const { data: list } = useVaccination({ selectedSection });
 
-  const { setVacType, setVaccineId } = useVaccinationStore((state) => state);
+  const { setVaccinationId } = useVaccinationStore((state) => state);
 
   const handleClickDetail = (vaccineId: string) => {
-    LocalStorage.setItem('vaccineId', vaccineId);
-    setVaccineId(vaccineId);
+    setVaccinationId(vaccineId);
     router.push(PATH.VACHISTORY_VAC + '/' + vaccineId);
   };
 

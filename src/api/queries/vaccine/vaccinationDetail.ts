@@ -12,7 +12,7 @@ import { useEffect } from 'react';
 import { setSession } from '@/api/api_utils';
 
 type Props = {
-  vaccinationId?: number;
+  vaccinationId?: string | null;
 } & Omit<UseQueryOptions, 'queryKey'>;
 
 export const useVaccinationDetail = <T>({
