@@ -121,7 +121,7 @@ export default function Quit() {
       <CautionItem>
         <Image src={Images.ico_quit} alt="" />
         <CautionText>
-          회원님에게 꼭 맞는 백신을{'\n'}추천받을 수 없어요
+        우리 아이에게 꼭 맞는 백신을{'\n'}추천받을 수 없어요
         </CautionText>
       </CautionItem>
       <CautionItem>
@@ -133,10 +133,10 @@ export default function Quit() {
       <CautionItem>
         <Image src={Images.ico_quit} alt="" />
         <CautionText>
-          백신만의 백신 인증서를{'\n'}발급받을 수 없어요
+          백곰만의 백신 인증서를{'\n'}발급받을 수 없어요
         </CautionText>
       </CautionItem>
-      <PrimaryButton onClick={() => (window.location.href = '/home')}>
+      <PrimaryButton>
         홈으로 이동
       </PrimaryButton>
       <SecondaryButton onClick={handleAccountDeletion}>
