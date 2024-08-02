@@ -1,5 +1,4 @@
 const nextConfig = {
-  assetPrefix: './',
   typescript: {
     ignoreBuildErrors: true,
   },
