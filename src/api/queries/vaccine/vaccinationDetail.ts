@@ -11,23 +11,31 @@ import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { useEffect } from 'react';
 import { setSession } from '@/api/api_utils';
 
-type Props = Omit<UseQueryOptions, 'queryKey'>;
+type Props = {
+  vaccinationId?: string | null;
+} & Omit<UseQueryOptions, 'queryKey'>;
 
-export const useInoculation = <T>(params?: Props) => {
+export const useVaccinationDetail = <T>({
+  vaccinationId,
+  ...options
+}: Props) => {
   const { accessToken } = useAccessToken();
   useEffect(() => {
     setSession(accessToken);
   }, [accessToken]);
 
   return useQuery({
-    queryKey: [QUERY_KEY.INOCULATIONS],
+    queryKey: [QUERY_KEY.VACCINATIONS_DETAIL, vaccinationId],
     queryFn: async () => {
-      const response = await axiosInstance.get(PATH_API.INOCULATIONS);
+      const response = await axiosInstance.get(
+        `${PATH_API.VACCINATIONS_DETAIL}?vaccinationId=${vaccinationId}`,
+      );
       return response.data.data;
     },
     // 계속 가지고 있을 거임
     gcTime: Infinity,
     staleTime: Infinity,
-    ...params,
+    enabled: !!vaccinationId,
+    ...options,
   }) as UseQueryResult<T, AxiosError>;
 };

@@ -11,23 +11,20 @@ import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { useEffect } from 'react';
 import { setSession } from '@/api/api_utils';
 
-type Props = Omit<UseQueryOptions, 'queryKey'>;
-
-export const useInoculation = <T>(params?: Props) => {
+export const useMember = <T>() => {
   const { accessToken } = useAccessToken();
   useEffect(() => {
     setSession(accessToken);
   }, [accessToken]);
 
   return useQuery({
-    queryKey: [QUERY_KEY.INOCULATIONS],
+    queryKey: [QUERY_KEY.MEMBER],
     queryFn: async () => {
-      const response = await axiosInstance.get(PATH_API.INOCULATIONS);
+      const response = await axiosInstance.get(`${PATH_API.MEMBER}`);
       return response.data.data;
     },
     // 계속 가지고 있을 거임
     gcTime: Infinity,
     staleTime: Infinity,
-    ...params,
   }) as UseQueryResult<T, AxiosError>;
 };

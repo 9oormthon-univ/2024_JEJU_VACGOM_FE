@@ -15,6 +15,8 @@ import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import useCertificateStore from '@/store/vaccine/certification';
 import { useInoculationDetail } from '@/api/queries/vaccine/inoculationsDetail';
 import { useBridge } from '@/bridge/hook/useBridge';
+import { useMember } from '@/api/queries/auth/member';
+import { useRouter } from 'next/router';
 
 type DetailDataType = {
   diseaseName: string;
@@ -26,81 +28,29 @@ type DetailDataType = {
   type?: 'NATION' | 'EXTRA' | 'EVENT';
 };
 
-type MeDataType = {
-  nickname: string;
+type userDataType = {
+  role: string;
   id: string;
   name: string;
-  healthCondition: [
-    {
-      code: string;
-      description: string;
-    },
-  ];
+  babyName: string;
 };
 
 export default function CertificateDetail() {
   const { vaccinationId } = useCertificateStore((state) => state);
-  console.log(vaccinationId);
   const {
     data: detail,
     isLoading,
     error,
   } = useInoculationDetail<DetailDataType>({ vaccinationId });
+  const { data: userData } = useMember<userDataType>();
 
-  const { getImage, shareImage } = useBridge();
-  console.log(detail);
+  const { goBack } = useBridge();
 
-  const [userData, setUserData] = useState<MeDataType>({});
-
-  const [blob, setBlob] = useState('' as any);
   const [errormessage, setErrormessage] = useState('');
-  //
-  // const saveImage = async () => {
-  //   try {
-  //     const response = await fetch(
-  //       `${apiDevUrl}/inoculation/certificate/${detail.vaccineId}/image`,
-  //       {
-  //         method: 'GET',
-  //         headers: {
-  //           Authorization: `Bearer ${accessToken}`,
-  //           'Content-Type': 'image/png',
-  //         },
-  //       },
-  //     );
-  //     const blob = await response.blob();
-  //     const url = window.URL.createObjectURL(new Blob([blob]));
-  //     const link = document.createElement('a');
-  //     link.href = url;
-  //     link.setAttribute('download', '백곰접종인증서.png');
-  //     document.body.appendChild(link);
-  //     link.click();
-  //     link.parentNode.removeChild(link);
-  //     setBlob(blob);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
-  //
-  // const shareImage = async () => {
-  //   const file = new File([blob], '백곰접종인증서.png', {
-  //     type: 'image/png',
-  //   });
-  //
-  //   // 이미지를 공유할 데이터 설정
-  //   const shareData = {
-  //     title: 'Example File',
-  //     files: [file],
-  //   };
-  //   try {
-  //     await navigator.share(shareData);
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
 
   return (
     <Container>
-      <BackHeader title={'접종 상세'} url={PATH.VACHISTORY_LIST} />
+      <BackHeader title={'접종 상세'} onClickHandler={goBack} />
       <div className="container">
         <VaccineCard
           image={detail?.certificationIcon}
@@ -109,26 +59,10 @@ export default function CertificateDetail() {
           diseaseName={detail?.diseaseName}
           date={detail?.inoculatedDate}
           definition
-          account_id={userData?.nickname}
+          account_id={userData?.name}
           type={detail?.type}
           subLabel
         />
-        <div className="button">
-          <Button
-            prevIcon={Icons.share}
-            label={'이미지 공유'}
-            variant={'OutlineWhite'}
-            size={'large'}
-            onClick={shareImage}
-          />
-          <Button
-            prevIcon={Icons.save}
-            label={'이미지 저장'}
-            variant={'OutlineWhite'}
-            size={'large'}
-            onClick={getImage}
-          />
-        </div>
       </div>
       <WarningToastWrap
         errorMessage={errormessage}

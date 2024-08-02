@@ -11,23 +11,27 @@ import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { useEffect } from 'react';
 import { setSession } from '@/api/api_utils';
 
-type Props = Omit<UseQueryOptions, 'queryKey'>;
+type Props = {
+  listOnlyInoculated?: boolean;
+} & Omit<UseQueryOptions, 'queryKey'>;
 
-export const useInoculation = <T>(params?: Props) => {
+export const useVaccination = <T>({ listOnlyInoculated, ...other }: Props) => {
   const { accessToken } = useAccessToken();
   useEffect(() => {
     setSession(accessToken);
   }, [accessToken]);
 
   return useQuery({
-    queryKey: [QUERY_KEY.INOCULATIONS],
+    queryKey: [QUERY_KEY.VACCINATIONS],
     queryFn: async () => {
-      const response = await axiosInstance.get(PATH_API.INOCULATIONS);
+      const response = await axiosInstance.get(
+        `${PATH_API.VACCINATIONS}?listOnlyInoculated=${listOnlyInoculated}`,
+      );
       return response.data.data;
     },
     // 계속 가지고 있을 거임
     gcTime: Infinity,
     staleTime: Infinity,
-    ...params,
+    ...other,
   }) as UseQueryResult<T, AxiosError>;
 };
