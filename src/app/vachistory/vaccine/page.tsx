@@ -236,7 +236,7 @@ export default function Vaccine() {
 
   const handleToggleSection = (section) => {
     setSelectedSection(section);
-    setType(section === '전체 백신' ? 'NATION' : 'EXTRA'); // Make sure the mapping is correct
+    setType(section === '전체 백신' ? 'NATION' : 'EXTRA');
   };
 
   return (
