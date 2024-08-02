@@ -16,6 +16,7 @@ import useVaccinationStore from '../../../store/vaccine/vaccinationDetail';
 import { useVaccination } from '@/api/queries/vaccine/vaccination';
 import { Certificate } from 'crypto';
 import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
+import { useInoculation } from '@/api/queries/vaccine/inoculations';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import { useMyInfo } from '@/api/queries/vaccine/myinfo';
 
@@ -170,8 +171,8 @@ export default function Vaccine() {
       <MainContainer>
         <CertificateContainer>
           <Image src={Images.ico_my_profile_new} alt="" />
-          <MainTextContainer>2개</MainTextContainer>
-          <MainSubTextContainer>민지의 접종인증서</MainSubTextContainer>
+          <MainTextContainer>{name?.data?.certificateCnt}개</MainTextContainer>
+          <MainSubTextContainer>{name?.babyName}의 접종인증서</MainSubTextContainer>
         </CertificateContainer>
 
         <SubMainContainer>
