@@ -10,7 +10,6 @@ export default function Map() {
     <div>
       <MainHeader title="병원 조회" />
  <HospitalMap />
-      <NavigationFixed/>
     </div>
   );
 }

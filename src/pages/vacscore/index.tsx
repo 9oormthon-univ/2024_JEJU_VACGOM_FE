@@ -214,7 +214,6 @@ export default function VacInfo() {
           </Link>
         </OneNav>
       </NavVacContainer>
-      <NavigationFixed />
     </>
   );
 }

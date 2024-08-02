@@ -275,7 +275,6 @@ export default function Home() {
             ))}
           </div>
         </div>
-        <NavigationFixed />
       </Container>
     </>
   );

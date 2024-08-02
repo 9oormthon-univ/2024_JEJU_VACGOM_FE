@@ -84,7 +84,6 @@ export default function recomVac() {
           />
         ))}
       </CardsContainer>
-      <NavigationFixed/>
     </div>
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import styled from '@emotion/styled';
 import MainHeader from '@/app/_component/atom/RouteHeader';
-import NavigationFixed from '@/app/_component/organism/navigationFixed';
 import Image from 'next/image';
 import { Images } from '@globalStyles';
 import FilterRadioModal from '@/app/_component/organism/filterRadioModal';

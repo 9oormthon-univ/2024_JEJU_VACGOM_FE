@@ -31,7 +31,6 @@ export default function VacLookup() {
           <EtcDiseaseSection selectedSection={selectedSection} />
         )}
       </PageContainer>
-      <NavigationFixed />
     </div>
   );
 }

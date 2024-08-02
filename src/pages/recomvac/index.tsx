@@ -130,7 +130,6 @@ export default function recomVac() {
           <NoneHome title="앗! 추천 백신이 없어요" />
         )}
       </CardsContainer>
-      <NavigationFixed/>
     </div>
   );
 }
