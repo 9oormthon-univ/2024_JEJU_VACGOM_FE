@@ -5,15 +5,19 @@ import Image from 'next/image';
 import { Images } from '@globalStyles';
 import { useRouter } from 'next/router';
 import { LocalStorage } from '@/hooks/useUtil';
+import { getVacBridge } from '@/bridge';
+
+const QuitContainer= styled.div`
+padding: 20px;
+`
 
 const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   padding: 24px;
   opacity: 1;
-  margin-top:50px
+  margin-top: 50px;
   margin-bottom: 60px;
 `;
 
@@ -23,10 +27,10 @@ const CautionItem = styled.div`
   align-items: center;
   gap: 16px;
   padding: 20px;
-  border-bottom: 1px solid #E5E8EB;
+  border-bottom: 1px solid #e5e8eb;
   border-radius: 14px;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-  background: #FFFFFF;
+  background: #ffffff;
   opacity: 1;
   margin-bottom: 10px;
 `;
@@ -37,7 +41,7 @@ const CautionText = styled.span`
   font-weight: 600;
   line-height: 22px;
   text-align: left;
-  color: #333D4B;
+  color: #333d4b;
   white-space: pre-line;
 `;
 
@@ -57,15 +61,15 @@ const Button = styled.button`
 `;
 
 const PrimaryButton = styled(Button)`
-  background: #4196FD;
+  background: #4196fd;
   color: #ffffff;
   border: none;
 `;
 
 const SecondaryButton = styled(Button)`
-  background: #FFFFFF;
+  background: #ffffff;
   color: #000000;
-  border: 1px solid #E5E8EB;
+  border: 1px solid #e5e8eb;
 `;
 
 export default function Quit() {
@@ -73,48 +77,42 @@ export default function Quit() {
   const accessToken = LocalStorage.getItem('accessToken');
 
   const handleAccountDeletion = async () => {
-    try {
-      const response = await fetch('https://api-dev.vacgom.co.kr/api/v1/me', {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to delete account');
-      }
-
-      router.push('/seeagain').then(() => {
-        setTimeout(() => {
-          router.push('/');
-        }, 3000);
-      });
-    } catch (error) {
-      console.error('Account deletion failed:', error);
-    }
+    const bridge = await getVacBridge();
+    await bridge.quit();
   };
 
   return (
     <div>
       <MainHeader title="계정 탈퇴" url="/my" />
+      <QuitContainer>
       <ImageWrapper>
         <Image src={Images.ico_quit_intro} alt="" />
       </ImageWrapper>
       <CautionItem>
         <Image src={Images.ico_quit} alt="" />
-        <CautionText>회원님에게 꼭 맞는 백신을{"\n"}추천받을 수 없어요</CautionText>
+        <CautionText>
+          회원님에게 꼭 맞는 백신을{'\n'}추천받을 수 없어요
+        </CautionText>
       </CautionItem>
       <CautionItem>
         <Image src={Images.ico_quit} alt="" />
-        <CautionText>회원님 근처의 지정의료기관을{"\n"}조회할 수 없어요</CautionText>
+        <CautionText>
+          회원님 근처의 지정의료기관을{'\n'}조회할 수 없어요
+        </CautionText>
       </CautionItem>
       <CautionItem>
         <Image src={Images.ico_quit} alt="" />
-        <CautionText>백신만의 백신 인증서를{"\n"}발급받을 수 없어요</CautionText>
+        <CautionText>
+          백신만의 백신 인증서를{'\n'}발급받을 수 없어요
+        </CautionText>
       </CautionItem>
-      <PrimaryButton onClick={() => window.location.href = '/home'}>홈으로 이동</PrimaryButton>
-      <SecondaryButton onClick={handleAccountDeletion}>계정 탈퇴</SecondaryButton>
+      <PrimaryButton onClick={() => (window.location.href = '/home')}>
+        홈으로 이동
+      </PrimaryButton>
+      <SecondaryButton onClick={handleAccountDeletion}>
+        그래도 탈퇴하기
+      </SecondaryButton>
+      </QuitContainer>
     </div>
   );
 }

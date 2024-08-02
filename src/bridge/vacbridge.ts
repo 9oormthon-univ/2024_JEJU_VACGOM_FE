@@ -12,6 +12,9 @@ import { Token } from './ipc/message/token';
 import { Nickname } from '@/bridge/ipc/message/nickname';
 import { BackRequest } from '@/bridge/ipc/message/back';
 import { GoHomeRequest } from '@/bridge/ipc/message/goHome';
+import { GetLocation } from '@/bridge/ipc/message/getLocation';
+import { LogoutRequest } from '@/bridge/ipc/message/logout';
+import { QuitRequest } from '@/bridge/ipc/message/quit';
 
 declare global {
   interface Window {
@@ -103,6 +106,33 @@ export class Vacbridge implements Bridge {
       data: null,
     });
   }
+
+  async getLocation(): Promise<{ lat: number; lon: number }> {
+    const ipc = await this.getIpc();
+    const location = await ipc.invoke<GetLocation>({
+      type: 'GetLocation',
+      data: null,
+    });
+
+    return location.data;
+  }
+
+  async logout(): Promise<void> {
+    const ipc = await this.getIpc();
+    await ipc.send<LogoutRequest>({
+      type: 'Logout',
+      data: null,
+    });
+  }
+
+  async quit(): Promise<void> {
+    const ipc = await this.getIpc();
+    await ipc.send<QuitRequest>({
+      type: 'Quit',
+      data: null,
+    });
+  }
+
   async goHome(): Promise<void> {
     const ipc = await this.getIpc();
     await ipc.send<GoHomeRequest>({

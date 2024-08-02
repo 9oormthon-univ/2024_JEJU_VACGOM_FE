@@ -3,7 +3,7 @@
 import * as React from 'react';
 import { Container } from './style';
 import { Icons, Images } from '@/styles';
-
+import MainHeader from '@/app/_component/atom/MainHeader';
 import {
   ageRanges,
   extraDisease,
@@ -26,6 +26,7 @@ import styled from '@emotion/styled';
 import FilterModal from '@/app/_component/organism/filterModal';
 import { useRouter } from 'next/navigation';
 import { LocalStorage } from '@/hooks/useUtil';
+import { Certificate } from 'crypto';
 
 interface ListDataType {
   vaccineName: string;
@@ -40,42 +41,144 @@ interface ListDataType {
 }
 const FiltersContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  //flex-wrap: nowrap;
-  overflow-y: auto;
+  padding: 14px 20px;
+  margin-left: 14px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   align-items: center;
-  gap: 6px;
-  margin: 14px 0 14px 14px;
-  padding-right: 14px;
+  background: #fff;
+  display: flex;
+  padding: 4px;
+  align-items: flex-start;
+  gap: 8px;
+`;
 
-  z-index: 1000;
-  button {
-    flex-shrink: 0;
-  }
+const SectionButton = styled.div`
+  display: flex;
+  padding: var(--small, 4px) 8px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  background: var(--surface-bright, #fff);
+  box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  opacity: ${({ active }) => (active ? '1' : '0.3')};
+  color: var(--primary, #191f28);
+  font-family: Pretendard;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 16px;
+`;
 
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #cccccc;
-    border-radius: 2px;
-  }
-  &::-webkit-scrollbar-track {
-    background: transparent;
-  }
+const FilterWrapper = styled.div`
+  display: flex;
+  padding: 4px;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 7px;
+  background: var(--Gray-Gray-100, #f2f4f6);
+`;
+
+const MainContainer = styled.div`
+  display: flex;
+  padding: 10px 20px;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+`;
+
+const CertificateContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  flex: 2;  
+  border-radius: 14px;
+  border: 1px solid var(--Gray-Gray-100, #f2f4f6);
+  background: var(--Gray-White, #fff);
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  align-self: stretch;
+`;
+
+const MainTextContainer = styled.div`
+  color: var(--Gray-Gray-900, #191f28);
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 600;
+`;
+const MainSubTextContainer = styled.div`
+  margin-top: -12px;
+  color: var(--Gray-Gray-600, #6b7684);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+`;
+
+const SubContainer = styled.div`
+  display: flex;
+  padding: 20px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 14px;
+  border: 1px solid var(--Gray-Gray-100, #f2f4f6);
+  background: var(--Gray-White, #fff);
+`;
+
+const SubMainContainer = styled.div`
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  flex: 1;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 0 0;
+  align-self: stretch;
+  justify-content: center;
+  display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+gap: 6px;
+align-self: stretch;
+`;
+
+const SubTitleText = styled.div`
+  color: var(--Gray-Gray-800, #333d4b);
+  text-align: center;
+  justify-content: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-top:4px;
 `;
 
 export default function Vaccine() {
   const [params, setParams] = useState<ParamsType>({
     disease: ['전체'],
   });
-  const [selectedSection, setSelectedSection] =
-    useState<string>('국가예방접종');
+  const [selectedSection, setSelectedSection] = useState<string>('전체 백신');
   const sectionTexts = ['국가예방접종', '기타예방접종'];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [type, setType] = useState('NATION');
   const [list, setList] = useState<ListDataType[]>([]);
-  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -131,36 +234,50 @@ export default function Vaccine() {
     router.push(PATH.VACHISTORY_VAC + '/' + vaccineId);
   };
 
+  const handleToggleSection = (section) => {
+    setSelectedSection(section);
+    setType(section === '전체 백신' ? 'NATION' : 'EXTRA');
+  };
+
   return (
     <Container>
-      <BackHeader title={'예방접종 내역'} url={PATH.VACHISTORY} />
-      <SectionHeader
-        sections={sectionTexts}
-        onSectionChange={setSelectedSection}
-      />
+      <MainHeader title="백신" />
+      <MainContainer>
+        <CertificateContainer>
+          <Image src={Images.ico_my_profile_new} alt="" />
+          <MainTextContainer>2개</MainTextContainer>
+          <MainSubTextContainer>민지의 접종인증서</MainSubTextContainer>
+        </CertificateContainer>
+
+        <SubMainContainer>
+          <SubContainer>
+            <Image src={Images.ico_vacscore_vaccine} alt="" />
+            <SubTitleText>인증서</SubTitleText>
+          </SubContainer>
+          <SubContainer>
+            <Image src={Images.ico_vacinfo_look} alt="" />
+            <SubTitleText>백신 정보</SubTitleText>
+          </SubContainer>
+        </SubMainContainer>
+      </MainContainer>
+
       <FiltersContainer>
-        <Image
-          src={
-            params.disease[0] === '전체'
-              ? Images.adjustment_unselec
-              : Images.adjustment_selec
-          }
-          alt="Filter Icon"
-          width={30}
-          height={30}
-        />
-        {params.disease.map((item) => {
-          return (
-            <Filter
-              label={''}
-              selectedValue={item}
-              onSelect={() => setIsModalOpen(true)}
-              onClear={() => resetAgencyOptions(item)}
-              isSelected={params.disease[0] !== '전체'}
-            />
-          );
-        })}
+        <FilterWrapper>
+          <SectionButton
+            onClick={() => handleToggleSection('전체 백신')}
+            active={selectedSection === '전체 백신'}
+          >
+            전체 백신
+          </SectionButton>
+          <SectionButton
+            onClick={() => handleToggleSection('맞은 내역')}
+            active={selectedSection === '맞은 내역'}
+          >
+            맞은 내역
+          </SectionButton>
+        </FilterWrapper>
       </FiltersContainer>
+
       <div className="body">
         <div className="content_wrap">
           {list.map((item, key) => (
