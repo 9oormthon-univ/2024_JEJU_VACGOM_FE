@@ -149,6 +149,11 @@ export default function Vaccine() {
   const [listOnlyInoculated, setListOnlyInoculated] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  const { data:mydata }= useInoculation();
+  const {data:myname} = useMyInfo();
+
+
   const { data: list, refetch } = useVaccination({ listOnlyInoculated });
 
   useEffect(() => {
@@ -164,15 +169,15 @@ export default function Vaccine() {
   const handleToggleSection = (section) => {
     setListOnlyInoculated(section);
   };
-
+console.log(mydata)
   return (
     <Container>
       <MainHeader title="백신" />
       <MainContainer>
         <CertificateContainer>
           <Image src={Images.ico_my_profile_new} alt="" />
-          <MainTextContainer>{name?.data?.certificateCnt}개</MainTextContainer>
-          <MainSubTextContainer>{name?.babyName}의 접종인증서</MainSubTextContainer>
+          <MainTextContainer>{mydata?.certificateCnt}개</MainTextContainer>
+          <MainSubTextContainer>{myname?.babyName}의 접종인증서</MainSubTextContainer>
         </CertificateContainer>
 
         <SubMainContainer>
