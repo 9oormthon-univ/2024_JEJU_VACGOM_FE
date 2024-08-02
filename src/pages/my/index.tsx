@@ -55,7 +55,8 @@ const EmailContainer = styled.span`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
-`;
+`
+
 const InfoWrapper = styled.div`
   display: flex;
   gap: 8px;

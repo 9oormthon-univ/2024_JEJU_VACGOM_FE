@@ -115,6 +115,13 @@ const drawCircleAnimation = keyframes`
   }
 `;
 
+const ProgressBar= styled.div`
+  align-items: center;
+  width: 90%;
+  padding: 40px;
+  margin-left:20px;
+`
+
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
   const [active, setActive] = useState(false);
@@ -153,6 +160,7 @@ export default function VacInfo() {
   return (
     <>
       <MainHeader title="백곰 점수" />
+      <ProgressBar>
       <CircularProgressbarWithChildren
           value={vaccinationProgress}
           styles={{
@@ -180,6 +188,7 @@ export default function VacInfo() {
           <strong>{vaccinationProgress}%</strong> Complete
         </div>
       </CircularProgressbarWithChildren>
+      </ProgressBar>
       <VacListContainer>
         <VacList>
           <Image src={Images.ico_vacscore_vaccine} alt="" />
