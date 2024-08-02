@@ -12,10 +12,10 @@ import useCertificateStore from '@/store/vaccine/certification';
 
 export default function CertificateList(): React.JSX.Element {
   const router = useRouter();
-  const { setvaccineId } = useCertificateStore((state) => state);
+  const { setvaccinationId } = useCertificateStore((state) => state);
 
   const onClickHandler = (id: number) => {
-    setvaccineId(id);
+    setvaccinationId(id);
     router.push(`/vachistory/certificate/${id}`);
   };
 
