@@ -10,6 +10,7 @@ import vacgom from '../../public/assets/image/img-splash-vacgom.svg';
 import Vacgom01 from '../../public/assets/image/img-Vacgom01.svg';
 import vacgomLoading from '../../public/assets/image/img-Vacgom-loading.svg';
 import vacgom_face from '../../public/assets/image/img-vacgom-face.svg';
+import vacgom_pillow from '../../public/assets/image/img-vacgom-pillow.svg';
 import syringe from '../../public/assets/image/img-syringe.svg';
 
 import share from '../../public/assets/ico/ico-share.svg';
@@ -298,6 +299,7 @@ export const Images: ImagesType = {
   vacgom01: Vacgom01,
   vacgomLoading: vacgomLoading,
   vacgom: vacgom,
+  vacgom_pillow: vacgom_pillow,
   vacgom_face: vacgom_face,
   VaccineCardBack: VaccineCardBack,
   VaccineCardBackLarge: VaccineCardBackLarge,
