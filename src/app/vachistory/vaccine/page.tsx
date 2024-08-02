@@ -162,7 +162,7 @@ const SubTitleText = styled.div`
   text-align: center;
   justify-content: center;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;

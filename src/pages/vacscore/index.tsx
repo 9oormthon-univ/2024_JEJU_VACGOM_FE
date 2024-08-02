@@ -15,6 +15,8 @@ import BackHeader from '@/app/_component/molecule/BackHeader';
 import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 
+import WarningToastWrap from "@/app/_component/molecule/WorningToastWrap";
+
 const NavVacContainer = styled.div`
   display: flex;
   padding: 20px;
@@ -162,12 +164,17 @@ const MaxText = styled.div`
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
   const [active, setActive] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { goBack } = useBridge();
   const { data, error, isLoading } = useMyMainVaccine();
 
   if (isLoading) return <SkeletonScreen />;
-  if (error) return <div>Error: {error.message}</div>;
 
+    if (error) {
+      setErrorMessage(error.message);
+      return <div>Error: {error.message}</div>;
+    }
+ 
   const vaccinationProgress = data ? (data.inoculatedCnt / data.requiredInoculationCnt) * 100 : 0;
 
 
@@ -202,6 +209,7 @@ export default function VacInfo() {
           </div>
         </CircularProgressbarWithChildren>
       </ProgressBar>
+      <WarningToastWrap errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
       <VacListContainer>
         <VacList>
           <Image src={Images.ico_vacscore_vaccine} alt="" />
