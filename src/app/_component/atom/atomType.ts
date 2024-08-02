@@ -11,6 +11,7 @@ export type CustomStyleType = {
   isChecked?: boolean;
   isOpen?: boolean;
   loading?: boolean;
+  loadingLarge?: boolean;
   type?: 'NATION' | 'EXTRA' | 'EVENT';
 };
 

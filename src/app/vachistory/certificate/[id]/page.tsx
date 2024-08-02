@@ -42,27 +42,29 @@ export default function CertificateDetail() {
     isLoading,
     error,
   } = useInoculationDetail<DetailDataType>({ vaccinationId });
-  const { data: userData } = useMember<userDataType>();
-
-  const { goBack } = useBridge();
+  const { data: userData, isLoading: memberLoading } =
+    useMember<userDataType>();
 
   const [errormessage, setErrormessage] = useState('');
 
   return (
     <Container>
-      <BackHeader title={'접종 상세'} onClickHandler={goBack} />
+      <BackHeader title={'접종 상세'} url={PATH.VACHISTORY_LIST} />
       <div className="container">
-        <VaccineCard
-          image={detail?.certificationIcon}
-          variant={'large'}
-          vaccineName={`${detail?.diseaseName}(${detail?.vaccineName})`}
-          diseaseName={detail?.diseaseName}
-          date={detail?.inoculatedDate}
-          definition
-          account_id={userData?.name}
-          type={detail?.type}
-          subLabel
-        />
+        {isLoading && <VaccineCard loading variant={'large'} />}
+        {!isLoading && !memberLoading && (
+          <VaccineCard
+            image={detail?.certificationIcon}
+            variant={'large'}
+            vaccineName={`${detail?.diseaseName}(${detail?.vaccineName})`}
+            diseaseName={detail?.diseaseName}
+            date={detail?.inoculatedDate}
+            definition
+            account_id={userData?.name}
+            type={detail?.type}
+            subLabel
+          />
+        )}
       </div>
       <WarningToastWrap
         errorMessage={errormessage}

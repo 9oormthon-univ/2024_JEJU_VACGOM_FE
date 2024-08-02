@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { VaccineCardWrapper } from './styles';
 import Image from 'next/image';
 import { Images } from '@/styles';
@@ -35,8 +35,12 @@ export default function VaccineCard({
     console.log('shareButton Click');
   };
 
+  if (variant === 'large' && loading) {
+    return <VaccineCardWrapper loadingLarge={loading}></VaccineCardWrapper>;
+  }
+
   if (loading) {
-    return <VaccineCardWrapper loading={loading}> </VaccineCardWrapper>;
+    return <VaccineCardWrapper loading={loading}></VaccineCardWrapper>;
   }
 
   return (
