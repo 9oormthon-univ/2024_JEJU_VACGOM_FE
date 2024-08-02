@@ -47,10 +47,11 @@ export default function CertificateDetail() {
   const { getImage, shareImage } = useBridge();
 
   const [errormessage, setErrormessage] = useState('');
+  const { goBack } = useBridge();
 
   return (
     <Container>
-      <BackHeader title={'접종 상세'} url={PATH.VACHISTORY_LIST} />
+      <BackHeader title={'접종 상세'} url={goBack} />
       <div className="container">
         <VaccineCard
           image={detail?.certificationIcon}

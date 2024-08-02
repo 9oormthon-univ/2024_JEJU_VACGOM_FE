@@ -9,6 +9,7 @@ import { LocalStorage } from '@/hooks/useUtil';
 import { useInoculation } from '@/api/queries/vaccine/inoculations';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import useCertificateStore from '@/store/vaccine/certification';
+import { useBridge } from '@/bridge/hook/useBridge';
 
 export default function CertificateList(): React.JSX.Element {
   const router = useRouter();
@@ -22,10 +23,11 @@ export default function CertificateList(): React.JSX.Element {
   const { data, isLoading, error } = useInoculation();
   if (isLoading) return <SkeletonScreen />;
   if (error) return <h4>{error.message}</h4>;
+  const { goBack } = useBridge();
 
   return (
     <Container>
-      <BackHeader title={'접종 인증서'} url={'/vacinfo'} />
+      <BackHeader title={'접종 인증서'} url={goBack} />
       <div className="container">
         <div className="list">
           {data?.data.map((card, index) => (
