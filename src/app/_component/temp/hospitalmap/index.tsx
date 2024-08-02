@@ -112,7 +112,7 @@ export default function HospitalMap() {
 
       const mapOptions = {
         center: hackathonLocation,
-        zoom: 9.2,
+        zoom: 12,
       };
 
       const map = new naver.maps.Map('map', mapOptions);
@@ -122,6 +122,22 @@ export default function HospitalMap() {
         let iconUrl;
         if (selectedHospitalId === newHospital.hospital_id) {
           // 선택된 병원의 경우
+          switch (newHospital.type) {
+            case 'OBSTERICS_GYNECOLOGY':
+              iconUrl = '/assets/ico/ico-map-mom-none.svg';
+              break;
+            case 'PERDIATRICS':
+              iconUrl = '/assets/ico/ico-map-baby-none.svg';
+              break;
+            case 'UNIVERSITY_HOSPITAL':
+              iconUrl = '/assets/ico/ico-map-univ-none.svg';
+              break;
+            default:
+              iconUrl = '/assets/ico/ico-map-nomal-none.svg';
+              break;
+          }
+        } else {
+          // 선택되지 않은 병원의 경우
           switch (newHospital.type) {
             case 'OBSTERICS_GYNECOLOGY':
               iconUrl = '/assets/ico/ico-map-mom.svg';
@@ -134,22 +150,6 @@ export default function HospitalMap() {
               break;
             default:
               iconUrl = '/assets/ico/ico-map-nomal.svg';
-              break;
-          }
-        } else {
-          // 선택되지 않은 병원의 경우
-          switch (newHospital.type) {
-            case 'OBSTERICS_GYNECOLOGY':
-              iconUrl = '/assets/ico/ico-map-mom-none.svg';
-              break;
-            case 'PERDIATRICS':
-              iconUrl = '/assets/ico/ico-map-baby-none.svg';
-              break;
-            case 'UNIVERSITY_HOSPITAL':
-              iconUrl = '/assets/ico/ico-map-my-univ-none.svg';
-              break;
-            default:
-              iconUrl = '/assets/ico/ico-map-nomal-none.svg';
               break;
           }
         }
