@@ -52,8 +52,8 @@ function Icon({
         <Image
           alt={`${icon.src}Icon`}
           src={Images[icon.src]}
-          width={size}
-          height={size}
+          width={38.4}
+          height={38.4}
         />
       ) : (
         icon?.src
