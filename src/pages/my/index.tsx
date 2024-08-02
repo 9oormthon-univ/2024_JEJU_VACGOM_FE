@@ -172,9 +172,6 @@ export default function My() {
   const [errorMessage, setErrorMessage] = useState('');
   const { data, error, isLoading } = useMyInfo();
 
-  const handleClick = () => {
-    router.push('/myrevise');
-  };
 
   if (isLoading) return <SkeletonScreen />;
 
@@ -189,7 +186,7 @@ export default function My() {
       <GreetingContainer>
         <UserGreeting>
           <InfoWrapper>
-            <ImageWrapper onClick={handleClick}>
+            <ImageWrapper >
               <Image src={Images.ico_my_profile_new} alt="" />
             </ImageWrapper>
             <InfoContainer>
@@ -207,11 +204,9 @@ export default function My() {
             <Image src={Images.ico_my_info_revise} alt="" />
             <ListItemText>정보 수정</ListItemText>
           </ListInfoItem>
-          <Link href="/mybabyrevise" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
-          </Link>
         </ListItem>
         <ListItem>
           <ListInfoItem>
