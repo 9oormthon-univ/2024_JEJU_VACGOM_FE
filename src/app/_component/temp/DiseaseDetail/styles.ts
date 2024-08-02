@@ -4,8 +4,8 @@ export const DiseaseDetailContainer = styled.div`
   width: 100%;
   margin-bottom: 100px;
   gap: 14px;
-padding: 20px 20px 0px 20px;
-align-items: flex-start;
+  padding: 20px 20px 0px 20px;
+  align-items: flex-start;
 `;
 
 export const DiseaseImageContainer = styled.div`
