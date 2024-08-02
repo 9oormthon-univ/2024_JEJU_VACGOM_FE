@@ -14,6 +14,7 @@ import { useBridge } from '@/bridge/hook/useBridge';
 export default function CertificateList(): React.JSX.Element {
   const router = useRouter();
   const { setvaccinationId } = useCertificateStore((state) => state);
+  const { goBack } = useBridge();
 
   const onClickHandler = (id: number) => {
     setvaccinationId(id);
@@ -23,11 +24,10 @@ export default function CertificateList(): React.JSX.Element {
   const { data, isLoading, error } = useInoculation();
   if (isLoading) return <SkeletonScreen />;
   if (error) return <h4>{error.message}</h4>;
-  const { goBack } = useBridge();
 
   return (
     <Container>
-      <BackHeader title={'접종 인증서'} url={goBack} />
+      <BackHeader title={'접종 인증서'} onClickHandler={goBack} />
       <div className="container">
         <div className="list">
           {data?.data.map((card, index) => (

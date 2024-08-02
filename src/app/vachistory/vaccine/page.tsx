@@ -181,9 +181,6 @@ export default function Vaccine() {
   const handleToggleSection = (section) => {
     setListOnlyInoculated(section);
   };
-  const handleRoute = (url: string) => {
-    router.push(url);
-  };
 
   return (
     <Container>

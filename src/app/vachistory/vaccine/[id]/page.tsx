@@ -88,7 +88,7 @@ export default function Vaccine() {
 
   return (
     <Container>
-      {!isLoading && <BackHeader title={' '} url={goBack} />}
+      {!isLoading && <BackHeader title={' '} onClickHandler={goBack} />}
       {nonPage()}
     </Container>
   );

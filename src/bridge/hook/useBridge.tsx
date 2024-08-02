@@ -8,17 +8,23 @@ export const useBridge = () => {
   const [vacbridge, setVacBridge] = useState<any>(null);
 
   useEffect(() => {
+    let isMounted = true;
+
     (async () => {
       const vacbridgeInstance = await getVacBridge();
       if (vacbridgeInstance == null) return;
-      setVacBridge(vacbridgeInstance);
 
-      const nickName = await vacbridgeInstance.getOnboardingNickname();
-
-      setNickName(nickName);
+      if (isMounted) {
+        setVacBridge(vacbridgeInstance);
+        const nickName = await vacbridgeInstance.getOnboardingNickname();
+        setNickName(nickName);
+      }
     })();
-  }, []);
 
+    return () => {
+      isMounted = false;
+    };
+  }, []);
   const goBack = async () => {
     if (!vacbridge) return;
     await vacbridge.goBack();
