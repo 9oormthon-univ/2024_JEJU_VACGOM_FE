@@ -207,6 +207,7 @@ export const VaccineCardStyle: CssArchiveType = {
       );
     }
   `,
+
   loading: css`
     @keyframes loading {
       0% {
@@ -238,12 +239,44 @@ export const VaccineCardStyle: CssArchiveType = {
     background-color: ${Colors.Gray100};
     z-index: 10000;
   `,
+  loadingLarge: css`
+    @keyframes loading {
+      0% {
+        transform: translateX(0);
+      }
+      50%,
+      100% {
+        transform: translateX(460px);
+      }
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 70px;
+      height: 100%;
+      background: linear-gradient(to right, #f3f1f1, #eaeaea, #f3f1f1);
+      animation: loading 2s infinite linear;
+    }
+    width: 353px;
+    height: 507px;
+    border-radius: 14px;
+    flex-shrink: 0;
+    overflow: hidden;
+    position: relative;
+    background-image: unset;
+    background-color: ${Colors.Gray100};
+    z-index: 10000;
+  `,
 };
 
 export const VaccineCardWrapper = styled.div<CustomStyleType>`
   ${VaccineCardStyle.primary}
   ${(props) => VaccineCardStyle[props.variant || 'primary']}
   ${(props) => props.loading && VaccineCardStyle['loading']}
+  ${(props) => props.loadingLarge && VaccineCardStyle['loadingLarge']}
   ${(props) =>
     props.type === 'EVENT' &&
     css`
