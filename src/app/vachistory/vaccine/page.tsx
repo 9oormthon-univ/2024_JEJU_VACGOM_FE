@@ -1,32 +1,18 @@
 'use client';
 
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { Container } from './style';
-import { Icons, Images } from '@/styles';
+import { Images } from '@/styles';
 import MainHeader from '@/app/_component/atom/MainHeader';
-import {
-  ageRanges,
-  extraDisease,
-  nationDisease,
-  situationRanges,
-} from '@/constants';
-import { Fragment, useEffect, useState } from 'react';
-import SectionHeader from '@/app/_component/atom/SectionHeader';
-import BackHeader from '@/app/_component/molecule/BackHeader';
-
-import { OnChangeValueType, ParamsType } from '@/types/globalType';
 
 import VaccineStatus from '@/app/_component/atom/VaccineStatus';
-import { getInoculationSimple } from '@/app/_lib/getInoculationSimple';
 import { PATH } from '@/routes/path';
 import Image from 'next/image';
-import Filter from '@/app/_component/atom/Filter';
-import { essentialDiseaseList } from '@/utils/essential-disease-api';
 import styled from '@emotion/styled';
-import FilterModal from '@/app/_component/organism/filterModal';
 import { useRouter } from 'next/navigation';
 import { LocalStorage } from '@/hooks/useUtil';
-import { Certificate } from 'crypto';
+import useVaccinationStore from '../../../store/vaccine/vaccinationDetail';
 
 interface ListDataType {
   vaccineName: string;
@@ -94,7 +80,7 @@ const CertificateContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: 20px;
-  flex: 2;  
+  flex: 2;
   border-radius: 14px;
   border: 1px solid var(--Gray-Gray-100, #f2f4f6);
   background: var(--Gray-White, #fff);
@@ -150,11 +136,11 @@ const SubMainContainer = styled.div`
   align-self: stretch;
   justify-content: center;
   display: flex;
-flex-direction: column;
-justify-content: center;
-align-items: center;
-gap: 6px;
-align-self: stretch;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  align-self: stretch;
 `;
 
 const SubTitleText = styled.div`
@@ -166,13 +152,10 @@ const SubTitleText = styled.div`
   font-style: normal;
   font-weight: 500;
   line-height: normal;
-  margin-top:4px;
+  margin-top: 4px;
 `;
 
 export default function Vaccine() {
-  const [params, setParams] = useState<ParamsType>({
-    disease: ['전체'],
-  });
   const [selectedSection, setSelectedSection] = useState<string>('전체 백신');
   const sectionTexts = ['국가예방접종', '기타예방접종'];
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -188,46 +171,7 @@ export default function Vaccine() {
       setType('EXTRA');
     }
   }, [selectedSection]);
-
-  const fetchList = async () => {
-    try {
-      const listData = await getInoculationSimple(type, params.disease);
-      setList(listData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  useEffect(() => {
-    setParams({ disease: ['전체'] });
-    fetchList();
-    Promise.all([fetchList()]).then(() => {
-      setLoading(false);
-    });
-  }, [type, selectedSection]);
-
-  useEffect(() => {
-    fetchList();
-  }, [params]);
-
-  const handleAgencySelect = (selectedOptions: string[]) => {
-    const updatedOptions = selectedOptions.filter(
-      (option) => option !== '전체',
-    );
-    setParams({ disease: updatedOptions });
-
-    setIsModalOpen(false);
-  };
-
-  const resetAgencyOptions = (item: string) => {
-    const updatedDisease = params.disease.filter((d) => d !== item);
-    if (params.disease.length === 1) {
-      setParams({ disease: ['전체'] });
-    } else {
-      setParams({ disease: updatedDisease });
-    }
-  };
-
+  const { setVacType, setVaccineId } = useVaccinationStore((state) => state);
   const handleClickDetail = (vaccineId: string) => {
     LocalStorage.setItem('vacType', type);
     LocalStorage.setItem('vaccineId', vaccineId);
@@ -299,19 +243,6 @@ export default function Vaccine() {
           있어요
         </div>
       )}
-      <Fragment>
-        <FilterModal
-          isOpen={isModalOpen}
-          title="병명"
-          options={
-            selectedSection === '국가예방접종' ? nationDisease : extraDisease
-          }
-          selectedOptions={params.disease}
-          onClose={() => setIsModalOpen(false)}
-          onOptionSelect={handleAgencySelect}
-          onReset={resetAgencyOptions}
-        />
-      </Fragment>
     </Container>
   );
 }
