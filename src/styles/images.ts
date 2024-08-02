@@ -128,6 +128,7 @@ import ico_none_syringe from '../../public/assets/ico/ico-none-syringe.svg';
 import ico_my_recom from '../../public/assets/ico/ico-my-recom.svg';
 import ico_my_docs from '../../public/assets/ico/ico-my-docs.svg';
 import ico_my_profile from '../../public/assets/ico/ico-my-profile.svg';
+import ico_my_profile_new from '../../public/assets/ico/ico-my-profile-new.svg';
 import ico_my_right from '../../public/assets/ico/ico-my-right.svg';
 import ico_my_info_revise from '../../public/assets/ico/ico-my-info-revise.svg';
 import ico_my_baby from '../../public/assets/ico/ico-my-baby.svg';
@@ -142,7 +143,6 @@ import ico_my_baby_revise_profile from '../../public/assets/ico/ico-my-baby-revi
 import ico_vacinfo_list from '../../public/assets/ico/ico-vacinfo-list.svg';
 import ico_vacinfo_look from '../../public/assets/ico/ico-vacinfo-look.svg';
 import ico_my_success from  '../../public/assets/ico/ico-my-success.svg';
-
 import ico_dropdown from '../../public/assets/ico/ico-dropdown-down.svg';
 import ico_quit_intro from '../../public/assets/ico/ico-quit-intro.svg';
 import ico_quit from '../../public/assets/ico/ico-quit.svg';
@@ -261,7 +261,8 @@ export const Images: ImagesType = {
   ico_none_syringe: ico_none_syringe,
   ico_see_again: ico_see_again,
   ico_vacscore_info:ico_vacscore_info,
-  ico_vacscore_vaccine:ico_vacscore_vaccine,
+  ico_vacscore_vaccine: ico_vacscore_vaccine,
+  ico_my_profile_new:ico_my_profile_new,
 
   ico_alert_clock: ico_alert_clock,
   ico_alert_fail: ico_alert_fail,

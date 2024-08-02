@@ -278,7 +278,7 @@ export default function Myrevise() {
     <div>
       <MainHeader title="우리 아이 정보 수정" url="/my" />
       <ImageWrapper>
-        <Image src={Images.ico_my_profile} alt="" width={100} height={100} />
+        <Image src={Images.ico_my_profile_new} alt="" width={100} height={100} />
         <ReviseIcon>
           <Image src={Images.ico_my_baby_revise_profile} alt="" />
         </ReviseIcon>
