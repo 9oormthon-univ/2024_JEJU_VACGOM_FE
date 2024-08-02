@@ -18,7 +18,7 @@ import { useBridge } from '@/bridge/hook/useBridge';
 
 type DetailDataType = {
   diseaseName: string;
-  iconImage: string;
+  certificationIcon: string;
   inoculatedDate: string;
   userId: string;
   vaccineId: string;
@@ -39,20 +39,21 @@ type MeDataType = {
 };
 
 export default function CertificateDetail() {
-  const { vaccineId } = useCertificateStore((state) => state);
+  const { vaccinationId } = useCertificateStore((state) => state);
+  console.log(vaccinationId);
+  const {
+    data: detail,
+    isLoading,
+    error,
+  } = useInoculationDetail<DetailDataType>({ vaccinationId });
 
-  const [detail, setDetail] = useState<DetailDataType>({});
-  const { data, isLoading } = useInoculationDetail(vaccineId);
   const { getImage, shareImage } = useBridge();
-
-  if (data) {
-    setDetail(data);
-  }
+  console.log(detail);
 
   const [userData, setUserData] = useState<MeDataType>({});
 
   const [blob, setBlob] = useState('' as any);
-  const [error, setError] = useState('');
+  const [errormessage, setErrormessage] = useState('');
   //
   // const saveImage = async () => {
   //   try {
@@ -102,13 +103,13 @@ export default function CertificateDetail() {
       <BackHeader title={'접종 상세'} url={PATH.VACHISTORY_LIST} />
       <div className="container">
         <VaccineCard
-          image={detail?.iconImage}
+          image={detail?.certificationIcon}
           variant={'large'}
-          vaccineName={`${detail.diseaseName}(${detail.vaccineName})`}
+          vaccineName={`${detail?.diseaseName}(${detail?.vaccineName})`}
           diseaseName={detail?.diseaseName}
           date={detail?.inoculatedDate}
           definition
-          account_id={userData.nickname}
+          account_id={userData?.nickname}
           type={detail?.type}
           subLabel
         />
@@ -129,7 +130,10 @@ export default function CertificateDetail() {
           />
         </div>
       </div>
-      <WarningToastWrap errorMessage={error} setErrorMessage={setError} />
+      <WarningToastWrap
+        errorMessage={errormessage}
+        setErrorMessage={setErrormessage}
+      />
     </Container>
   );
 }
