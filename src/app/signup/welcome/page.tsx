@@ -1,14 +1,10 @@
 'use client';
 
 import * as React from 'react';
-import { useEffect, useState } from 'react';
 import { SignupErrorPageWrap } from './style';
-import Image from 'next/image';
-import { Images } from '@globalStyles';
 
 import BackHeader from '@/app/_component/molecule/BackHeader';
 import { PATH } from '@/routes/path';
-import { css } from '@emotion/react';
 import Button from '@/app/_component/atom/button/button';
 import { useRouter } from 'next/navigation';
 import { useBridge } from '@/bridge/hook/useBridge';

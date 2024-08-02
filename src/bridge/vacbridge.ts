@@ -110,6 +110,20 @@ export class Vacbridge implements Bridge {
       data: null,
     });
   }
+  async getImage(): Promise<void> {
+    const ipc = await this.getIpc();
+    await ipc.send<GoHomeRequest>({
+      type: 'GoHome',
+      data: null,
+    });
+  }
+  async shareImage(): Promise<void> {
+    const ipc = await this.getIpc();
+    await ipc.send<GoHomeRequest>({
+      type: 'GoHome',
+      data: null,
+    });
+  }
 
   async getAccessToken(): Promise<string | null> {
     const ipc = await this.getIpc();
