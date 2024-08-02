@@ -10,9 +10,7 @@ import BottomButton from '@/app/_component/atom/BottomButton';
 import { OnChangeValueType } from '@/types/globalType';
 import { useRouter } from 'next/navigation';
 import { checkParamsFilled, filterNumericInput } from '@/hooks/useUtil';
-
 import InputForm from '@/app/_component/atom/InputForm';
-
 import { useChildVaccination } from '@/api/queries/auth/child-vaccination';
 import { useAccessToken } from '@/bridge/hook/useAccessToken';
 import { setSession } from '@/api/api_utils';

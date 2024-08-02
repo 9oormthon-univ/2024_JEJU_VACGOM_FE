@@ -79,7 +79,10 @@ export default function SignupKaKao(): React.JSX.Element {
           setErrormessage(error.data.message);
           if (error.data.code === 'NOT_MY_CHILD') {
             router.push(PATH.SIGNUP_DONE);
-          } else if (error.data.code === 'KAKAO_REQUESTED') {
+          } else if (
+            error.data.code === 'KAKAO_REQUESTED' ||
+            error.data.code === 'KAKAO_EXPIRED'
+          ) {
             return;
           } else {
             router.push(PATH.SIGNUP_KAKAO_ERROR);
