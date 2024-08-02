@@ -15,6 +15,7 @@ import useSignupStore from '@/store/signup/babySignup';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
+import useParentsStore from '@/store/vaccine/parents';
 
 interface Values {
   userName: string;

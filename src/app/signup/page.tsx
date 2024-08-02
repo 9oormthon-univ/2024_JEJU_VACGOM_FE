@@ -21,6 +21,7 @@ import ViewingPage from '@/app/_component/temp/Viewing';
 import { useBridge } from '@/bridge/hook/useBridge';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import useSignupStore from '@/store/signup/babySignup';
+import useParentsStore from '@/store/vaccine/parents';
 
 interface Values {
   userName: string;
@@ -53,7 +54,7 @@ export default function Signup(): React.JSX.Element {
   };
 
   const { setbabyName, setBabySsn } = useSignupStore((state) => state);
-
+  const { setparentsId, setparentsName } = useParentsStore((state) => state);
   const handleFirstPartChange = (e) => {
     let filteredValue = filterNumericInput(e);
     onChangeValue('identity_first', filteredValue);
@@ -89,6 +90,8 @@ export default function Signup(): React.JSX.Element {
             } // case 2 이미 가입한 유저
             else if (error.data.code === 'CHILD_ALREADY_REGISTERED') {
               router.push(PATH.SIGNUP_INFO);
+              setparentsId(error.data.data.id);
+              setparentsName(error.data.data.name);
               setErrormessage(error.data.message);
             } else {
               // 서버에러
