@@ -10,7 +10,6 @@ const Main = styled.div`
   flex-direction: column;
   justify-content: flex-start;
   width: 100%;
-  height: calc(100vh - var(--header-height) - var(--navigation-height));
   padding: 0;
 `;
 

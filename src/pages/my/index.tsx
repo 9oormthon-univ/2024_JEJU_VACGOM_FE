@@ -338,7 +338,6 @@ export default function My() {
       <Link href="/quit" passHref>
         <QuitText>탈퇴하기</QuitText>
       </Link>
-      <NavigationFixed />
     </>
   );
 }

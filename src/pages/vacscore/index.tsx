@@ -154,18 +154,21 @@ export default function VacInfo() {
     <>
       <MainHeader title="백곰 점수" />
       <CircularProgressbarWithChildren
-        value={vaccinationProgress}
-        styles={{
-          path: {
-            stroke: `rgba( 65,150,253, ${vaccinationProgress / 100})`,
-          },
-          trail: {
-            stroke: '#d6d6d6',
-          },
-          text: {
-            fill: '#f88',
-            fontSize: '16px',
-          },
+          value={vaccinationProgress}
+          styles={{
+            root: {
+              width: '100%',
+            },
+            path: {
+              stroke: `rgba(65, 150, 253, ${vaccinationProgress / 100})`,
+            },
+            trail: {
+              stroke: '#F2F4F6',
+            },
+            text: {
+              fill: '#f88',
+              fontSize: '16px',
+            },
         }}
       >
         <img
