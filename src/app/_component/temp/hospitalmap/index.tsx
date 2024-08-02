@@ -242,4 +242,5 @@ export default function HospitalMap() {
       <CurrectToast isVisible={showToast} />
     </>
   );
+
 }
