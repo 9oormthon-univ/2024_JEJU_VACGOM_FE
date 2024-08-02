@@ -12,6 +12,8 @@ import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import { useBridge } from '@/bridge/hook/useBridge';
 import BackHeader from '@/app/_component/molecule/BackHeader';
+import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
+import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 
 const NavVacContainer = styled.div`
   display: flex;
@@ -160,38 +162,14 @@ const MaxText = styled.div`
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
   const [active, setActive] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-  const vaccinationProgress = 75;
   const { goBack } = useBridge();
-  const accessToken = LocalStorage.getItem('accessToken');
+  const { data, error, isLoading } = useMyMainVaccine();
 
-  useEffect(() => {
-    fetch('https://api-dev.vacgom.co.kr/api/v1/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUserName(data.name);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
-  }, []);
+  if (isLoading) return <SkeletonScreen />;
+  if (error) return <div>Error: {error.message}</div>;
 
-  if (isLoading) return;
-  if (error) return <div>Error: {error}</div>;
+  const vaccinationProgress = data ? (data.inoculatedCnt / data.requiredInoculationCnt) * 100 : 0;
+
 
   return (
     <>
@@ -217,7 +195,7 @@ export default function VacInfo() {
         >
           <div style={{ fontSize: 12, marginTop: -5 }}>
             <ScoreContainer>
-              <ScoreText>{vaccinationProgress}</ScoreText>
+              <ScoreText>{vaccinationProgress.toFixed(0)}</ScoreText>
               <ScoreKoText>점</ScoreKoText>
             </ScoreContainer>
             <MaxText>100점</MaxText>
@@ -229,11 +207,11 @@ export default function VacInfo() {
           <Image src={Images.ico_vacscore_vaccine} alt="" />
           <MyVacList>
             <MyVacTitle>접종한 백신</MyVacTitle>
-            <MyVacSentence>1개</MyVacSentence>
+            <MyVacSentence>{data.inoculatedCnt}개</MyVacSentence>
           </MyVacList>
           <MyVacList>
             <MyVacTitle>필수접종백신</MyVacTitle>
-            <MyVacSentence>3개</MyVacSentence>
+            <MyVacSentence>{data.requiredInoculationCnt}개</MyVacSentence>
           </MyVacList>
         </VacList>
       </VacListContainer>
