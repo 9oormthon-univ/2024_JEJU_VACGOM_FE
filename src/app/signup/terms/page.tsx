@@ -58,13 +58,11 @@ export default function Terms(): React.JSX.Element {
           },
           onError: (error) => {
             // 에러 처리
-            if (error.success === false) {
-              // 서버가 핸들링한 에러
+            console.log(error);
+            if (error.data.code === false) {
               setErrormessage(error.data.message);
-              router.push(PATH.SIGNUP_DONE);
             } else {
-              // 서버에러
-              router.push(PATH.SIGNUP_KAKAO_ERROR);
+              setErrormessage(error.data.message);
             }
           },
         },

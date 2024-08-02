@@ -15,6 +15,9 @@ import useSignupStore from '@/store/signup/babySignup';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
+import useParentsStore from '@/store/vaccine/parents';
+import { PATH } from '@/routes/path';
+import { useRouter } from 'next/navigation';
 
 interface Values {
   userName: string;
@@ -27,6 +30,7 @@ export default function SignupKaKao(): React.JSX.Element {
   const { birthday, userName, phoneNo } = useKaKaoStore((state) => state);
   const { mutate: kakaoMutate, isLoading: isKakaoLoading } =
     useAuthKaKao<Values>();
+  const router = useRouter();
 
   const { mutate: kakaoVerifyMutate, isLoading: isVerifyLoading } =
     useAuthKaKaoVerify<Values>();
@@ -69,12 +73,19 @@ export default function SignupKaKao(): React.JSX.Element {
       {
         onSuccess: (data) => {
           console.log('onSuccess', data);
+          router.push(PATH.SIGNUP_WELCOME);
         },
         onError: (error) => {
-          if (error.data.success === false) {
-            setErrormessage(error.data.message);
+          setErrormessage(error.data.message);
+          if (error.data.code === 'NOT_MY_CHILD') {
+            router.push(PATH.SIGNUP_DONE);
+          } else if (
+            error.data.code === 'KAKAO_REQUESTED' ||
+            error.data.code === 'KAKAO_EXPIRED'
+          ) {
+            return;
           } else {
-            setErrormessage(error.message);
+            router.push(PATH.SIGNUP_KAKAO_ERROR);
           }
         },
       },
@@ -99,7 +110,7 @@ export default function SignupKaKao(): React.JSX.Element {
           </div>
         </div>
         <div className="item">
-          <div className="logo">
+          <div className="logo_gray">
             <Image src={Images.fingerprint_logo} alt={'백곰'} />
           </div>
           <div className="text">

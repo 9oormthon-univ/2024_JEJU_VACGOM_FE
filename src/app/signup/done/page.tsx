@@ -25,10 +25,11 @@ import { postLogin } from '@/app/_lib/postLogin';
 import { LocalStorage, SecureLocalStorage } from '@/hooks/useUtil';
 import ParentsVerify from '@/store/signup/ParentsVerify';
 import babySignup from '@/store/signup/babySignup';
+import useParentsStore from '@/store/vaccine/parents';
 
 export default function SignupDone(): React.JSX.Element {
   const router = useRouter();
-  const { parentsName } = ParentsVerify();
+  const { parentsId, parentsName } = useParentsStore((state) => state);
   const { babyName } = babySignup();
 
   return (
@@ -37,7 +38,7 @@ export default function SignupDone(): React.JSX.Element {
         <DonePage
           title={`배우자에게 등록된 자녀예요!`}
           content_top={`${babyName}님은 예방접종 도우미에서`}
-          content_bottom={`${parentsName}님의 자녀로 등록되어 있어요.`}
+          content_bottom={`${parentsId}(${parentsName})님의 자녀로 등록되어 있어요.`}
           plus={`백곰 가입 링크를 보내고 초대를 요청해 보세요!`}
         />
         <Button
