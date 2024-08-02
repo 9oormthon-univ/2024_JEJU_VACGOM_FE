@@ -3,11 +3,8 @@ import styled from '@emotion/styled';
 import MainHeader from '@/app/_component/atom/MainHeader';
 import Image from 'next/image';
 import { Images } from '@globalStyles';
-import NavigationFixed from '@/app/_component/organism/navigationFixed';
 import Link from 'next/link';
-import { LocalStorage } from '@/hooks/useUtil';
 import router from 'next/router';
-import { getVacBridge } from '@/bridge';
 
 const GreetingContainer = styled.div`
   text-align: left;
@@ -55,10 +52,11 @@ const EmailContainer = styled.span`
 const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+
 `;
 const InfoWrapper = styled.div`
   display: flex;
-  gap: 8px;
+  gap:8px;
   align-items: center;
 `;
 
@@ -209,13 +207,13 @@ export default function My() {
       <GreetingContainer>
         <UserGreeting>
           <InfoWrapper>
-            <ImageWrapper onClick={handleClick}>
-              <Image src={Images.ico_my_profile_new} alt="" />
-            </ImageWrapper>
-            <InfoContainer>
-              <NameContainer>오소현</NameContainer>
-              <EmailContainer>가든 돌보미</EmailContainer>
-            </InfoContainer>
+          <ImageWrapper onClick={handleClick}>
+            <Image src={Images.ico_my_profile_new} alt="" />
+          </ImageWrapper>
+          <InfoContainer>
+            <NameContainer>오소현</NameContainer>
+            <EmailContainer>가든 돌보미</EmailContainer>
+          </InfoContainer>
           </InfoWrapper>
         </UserGreeting>
       </GreetingContainer>
@@ -252,10 +250,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>개인정보 수집 및 활용 동의서</ListItemText>
           </ListInfoItem>
-          <Link
-            href="https://been2spring.notion.site/143ea9e50cd9471a856fd1ce52e47ed3?pvs=4"
-            passHref
-          >
+          <Link href="https://been2spring.notion.site/143ea9e50cd9471a856fd1ce52e47ed3?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -265,10 +260,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>이용약관</ListItemText>
           </ListInfoItem>
-          <Link
-            href="https://been2spring.notion.site/104c56edfef54ae3bd36657f8824d24e?pvs=4"
-            passHref
-          >
+          <Link href="https://been2spring.notion.site/104c56edfef54ae3bd36657f8824d24e?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -282,10 +274,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>개인정보 수집 및 이용에 대한 동의</ListItemText>
           </ListInfoItem>
-          <Link
-            href="https://been2spring.notion.site/4c407e7fa55c4866827b7b2301169e57?pvs=4"
-            passHref
-          >
+          <Link href="https://been2spring.notion.site/4c407e7fa55c4866827b7b2301169e57?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -295,10 +284,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>개인정보처리방침</ListItemText>
           </ListInfoItem>
-          <Link
-            href="https://been2spring.notion.site/37c4eb9131f944a3981f97e9a80cb933?pvs=4"
-            passHref
-          >
+          <Link href="https://been2spring.notion.site/37c4eb9131f944a3981f97e9a80cb933?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -308,10 +294,7 @@ export default function My() {
           <ListInfoItem>
             <ListItemText>이용약관</ListItemText>
           </ListInfoItem>
-          <Link
-            href="https://been2spring.notion.site/cb723ed5c4dc45a183964c9ff056cd2c?pvs=4"
-            passHref
-          >
+          <Link href="https://been2spring.notion.site/cb723ed5c4dc45a183964c9ff056cd2c?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
@@ -331,19 +314,16 @@ export default function My() {
             </LinkButton>
           </Link>
         </ListItem>
-        <ListItem
-          onClick={async () => {
-            const bridge = await getVacBridge();
-            await bridge.logout();
-          }}
-        >
+        <ListItem>
           <ListInfoItem>
             <Image src={Images.ico_my_logout} alt="" />
             <ListItemText>로그 아웃</ListItemText>
           </ListInfoItem>
-          <LinkButton>
-            <Image src={Images.ico_my_right} alt="" />
-          </LinkButton>
+          <Link href="/seeagain" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
         </ListItem>
         <ListItem>
           <ListInfoItem>
