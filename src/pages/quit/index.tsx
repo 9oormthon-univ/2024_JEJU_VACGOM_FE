@@ -48,7 +48,7 @@ const CautionText = styled.span`
 const Button = styled.button`
   width: 100%;
   height: 56px;
-  padding: 20px 140px;
+  padding: 20px 100px;
   border-radius: 12px;
   font-size: 16px;
   font-weight: 600;
@@ -61,15 +61,45 @@ const Button = styled.button`
 `;
 
 const PrimaryButton = styled(Button)`
-  background: #4196fd;
-  color: #ffffff;
-  border: none;
+display: flex;
+height: 56px;
+padding: 20px 100px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex: 1 0 0;
+border-radius: 12px;
+background: var(--Primary, #4196FD);
+color: var(--Gray-White, #FFF);
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 16px;
+letter-spacing: -0.3px;
+border:none;
 `;
 
 const SecondaryButton = styled(Button)`
-  background: #ffffff;
-  color: #000000;
-  border: 1px solid #e5e8eb;
+display: flex;
+height: 56px;
+padding: 20px 100px;
+justify-content: center;
+align-items: center;
+gap: 10px;
+flex: 1 0 0;
+border-radius: 12px;
+border: 1px solid var(--Gray-Gray-200, #E5E8EB);
+background: var(--Gray-White, #FFF);
+color: var(--Gray-Gray-700, #4E5968);
+text-align: center;
+font-family: Pretendard;
+font-size: 16px;
+font-style: normal;
+font-weight: 600;
+line-height: 16px; /* 100% */
+letter-spacing: -0.3px;
 `;
 
 export default function Quit() {
