@@ -131,7 +131,7 @@ const circleStyle = css`
 
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
-
+  const [active, setActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
@@ -167,7 +167,6 @@ export default function VacInfo() {
   return (
     <>
       <MainHeader title="백곰 점수" />
-      <AnimatedCircle/>
       <VacListContainer>
         <VacList>
         <Image src={Images.ico_vacscore_vaccine} alt="" />

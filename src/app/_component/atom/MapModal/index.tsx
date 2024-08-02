@@ -18,7 +18,6 @@ export const Modal = ({ isOpen, onClose, content }) => {
     return currentTime < closeTime;
   };
 
-  // 타입에 따른 친숙한 이름 반환
   const getTypeName = (type) => {
     switch (type) {
       case "PERDIATRICS":
