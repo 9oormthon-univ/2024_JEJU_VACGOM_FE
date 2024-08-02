@@ -30,7 +30,7 @@ export default function CertificateList(): React.JSX.Element {
       <BackHeader title={'접종 인증서'} onClickHandler={goBack} />
       <div className="container">
         <div className="list">
-          {data?.data.map((card, index) => (
+          {data?.inoculationResponses.map((card, index) => (
             <VaccineCard
               key={index}
               variant={'small'}

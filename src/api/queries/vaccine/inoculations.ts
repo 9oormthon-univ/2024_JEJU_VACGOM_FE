@@ -23,7 +23,7 @@ export const useInoculation = <T>(params?: Props) => {
     queryKey: [QUERY_KEY.INOCULATIONS],
     queryFn: async () => {
       const response = await axiosInstance.get(PATH_API.INOCULATIONS);
-      return response.data;
+      return response.data.data;
     },
     // 계속 가지고 있을 거임
     gcTime: Infinity,
