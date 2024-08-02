@@ -35,6 +35,7 @@ export default function Vaccine() {
     isLoading,
     error,
   } = useVaccinationDetail({ vaccinationId });
+  console.log(detail);
 
   const nonPage = () => {
     if (isLoading) {

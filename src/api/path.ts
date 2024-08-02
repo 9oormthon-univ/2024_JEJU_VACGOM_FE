@@ -19,7 +19,7 @@ export const PATH_API = {
 
   // 접종 내역 조회
   VACCINATIONS: '/api/v2/vaccinations',
-  VACCINATIONS_DETAIL: '/api/v2/vaccination',
+  VACCINATIONS_DETAIL: '/api/v2/inoculations/all',
 };
 
 /**

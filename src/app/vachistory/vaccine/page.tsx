@@ -110,11 +110,13 @@ const MainSubTextContainer = styled.div`
 `;
 
 const SubContainer = styled.div`
+  cursor: pointer;
   display: flex;
   padding: 20px;
   flex-direction: column;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
+  gap: 6px;
   flex: 1 0 0;
   align-self: stretch;
   border-radius: 14px;
@@ -163,7 +165,6 @@ export default function Vaccine() {
   const { data: list } = useVaccination({ selectedSection });
 
   const { setVaccinationId } = useVaccinationStore((state) => state);
-
   const handleClickDetail = (vaccineId: string) => {
     setVaccinationId(vaccineId);
     router.push(PATH.VACHISTORY_VAC + '/' + vaccineId);
@@ -171,6 +172,9 @@ export default function Vaccine() {
 
   const handleToggleSection = (section) => {
     setSelectedSection(section);
+  };
+  const handleRoute = (url: string) => {
+    router.push(url);
   };
 
   return (
@@ -184,11 +188,11 @@ export default function Vaccine() {
         </CertificateContainer>
 
         <SubMainContainer>
-          <SubContainer>
+          <SubContainer onClick={() => router.push(PATH.VACHISTORY_LIST)}>
             <Image src={Images.ico_vacscore_vaccine} alt="" />
             <SubTitleText>인증서</SubTitleText>
           </SubContainer>
-          <SubContainer>
+          <SubContainer onClick={() => router.push(PATH.VACHISTORY_VAC)}>
             <Image src={Images.ico_vacinfo_look} alt="" />
             <SubTitleText>백신 정보</SubTitleText>
           </SubContainer>
