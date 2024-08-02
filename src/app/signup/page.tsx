@@ -82,11 +82,12 @@ export default function Signup(): React.JSX.Element {
             router.push(PATH.SIGNUP_WELCOME);
           },
           onError: (error) => {
+            console.log(error);
             // case 3 확인할 수 없다
-            if (error.code === 'CHILD_REGISTRATION_FAILED') {
+            if (error.data.code === 'CHILD_REGISTRATION_FAILED') {
               router.push(PATH.SIGNUP_ERROR);
             } // case 2 이미 가입한 유저
-            else if (error.code === 'CHILD_ALREADY_REGISTERED') {
+            else if (error.data.code === 'CHILD_ALREADY_REGISTERED') {
               router.push(PATH.SIGNUP_INFO);
               setErrormessage(error.data.message);
             } else {
