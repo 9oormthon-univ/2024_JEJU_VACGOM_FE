@@ -13,6 +13,8 @@ export const PATH_API = {
   INOCULATIONS: '/api/v2/inoculations',
   // 이 사람의 맞은 백신 개수랑 아직 안맞은 백신 개수
   MAIN: '/api/v2/main',
+  // 이 사람의 이름이랑 자녀 정보
+  INFO: '/api/v2/member',
 };
 
 /**

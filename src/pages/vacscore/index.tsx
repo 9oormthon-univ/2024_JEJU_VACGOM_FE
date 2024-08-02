@@ -174,22 +174,24 @@ export default function VacInfo() {
       setErrorMessage(error.message);
       return <div>Error: {error.message}</div>;
     }
+
+    console.log("data",data)
  
   const vaccinationProgress = data ? (data.inoculatedCnt / data.requiredInoculationCnt) * 100 : 0;
-
 
   return (
     <>
       <BackHeader title={'백곰 점수'} onClickHandler={goBack} />
       <ProgressBar>
         <CircularProgressbarWithChildren
-          value={vaccinationProgress}
+          value={data.data.vacgomScore}
           styles={{
             root: {
               width: '100%',
             },
             path: {
-              stroke: `rgba(65, 150, 253, ${vaccinationProgress / 100})`,
+              stroke: `rgba(65, 150, 253, 
+              ${data.vacgomScore / 100})`,
             },
             trail: {
               stroke: '#F2F4F6',
@@ -202,7 +204,7 @@ export default function VacInfo() {
         >
           <div style={{ fontSize: 12, marginTop: -5 }}>
             <ScoreContainer>
-              <ScoreText>{vaccinationProgress.toFixed(0)}</ScoreText>
+              <ScoreText>{data.data.vacgomScore}</ScoreText>
               <ScoreKoText>점</ScoreKoText>
             </ScoreContainer>
             <MaxText>100점</MaxText>
@@ -215,11 +217,11 @@ export default function VacInfo() {
           <Image src={Images.ico_vacscore_vaccine} alt="" />
           <MyVacList>
             <MyVacTitle>접종한 백신</MyVacTitle>
-            <MyVacSentence>{data.inoculatedCnt}개</MyVacSentence>
+            <MyVacSentence>{data.data.inoculationResponse.inoculatedCnt}개</MyVacSentence>
           </MyVacList>
           <MyVacList>
             <MyVacTitle>필수접종백신</MyVacTitle>
-            <MyVacSentence>{data.requiredInoculationCnt}개</MyVacSentence>
+            <MyVacSentence>{data.data.inoculationResponse.requiredInoculationCnt}개</MyVacSentence>
           </MyVacList>
         </VacList>
       </VacListContainer>

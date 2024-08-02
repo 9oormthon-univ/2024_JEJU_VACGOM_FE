@@ -18,6 +18,7 @@ interface VaccineData {
     vaccineName: string;
     icon: string;
   };
+  vacgomScore: number;
 }
 
 export const useMyMainVaccine = (params?: UseQueryOptions<VaccineData, AxiosError>) => {
