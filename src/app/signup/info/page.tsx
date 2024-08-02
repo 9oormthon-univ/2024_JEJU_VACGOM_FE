@@ -20,6 +20,7 @@ import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
 import { useBridge } from '@/bridge/hook/useBridge';
 import { PATH } from '@/routes/path';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
+import TermsAllAgree from '@/app/_component/TermsAllAgree';
 
 interface Values {
   userName: string;

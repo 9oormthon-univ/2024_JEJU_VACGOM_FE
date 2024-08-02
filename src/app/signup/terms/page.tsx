@@ -19,6 +19,7 @@ import useKaKaoStore from '@/store/signup/kakaoAgain';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import { useBridge } from '@/bridge/hook/useBridge';
+import TermsAllAgree from '@/app/_component/TermsAllAgree';
 
 interface Values {
   userName: string;
@@ -76,19 +77,16 @@ export default function Terms(): React.JSX.Element {
       <BackHeader title={' '} onClickHandler={goBack} />
       <JoinTemplate
         title={'서비스 이용을 위해'}
+        titleBottom={'이용약관 동의가 필요해요.'}
         useterm={true}
-        subTop={'이용약관 동의가 필요해요.'}
+        subTop={'약관에 동의해야 정상적으로 서비스를 이용할 수 있어요.'}
         oneLabel={'네, 모두 동의합니다.'}
         params={params}
         field={'terms'}
         onChangeValue={onChangeValue}
       />
       <div className="detail">
-        <TermsDetail
-          title={'예방접종 도우미 이용약관'}
-          content={' '}
-          status={params.terms}
-        />
+        <TermsAllAgree />
       </div>
       <WarningToastWrap
         errorMessage={errormessage}
