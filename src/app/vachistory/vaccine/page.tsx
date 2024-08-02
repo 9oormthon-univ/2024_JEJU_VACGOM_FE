@@ -157,8 +157,6 @@ const SubTitleText = styled.div`
 
 export default function Vaccine() {
   const [selectedSection, setSelectedSection] = useState<string>('전체 백신');
-  const sectionTexts = ['국가예방접종', '기타예방접종'];
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [type, setType] = useState('NATION');
   const [list, setList] = useState<ListDataType[]>([]);
   const [loading, setLoading] = useState(true);
@@ -175,6 +173,8 @@ export default function Vaccine() {
   const handleClickDetail = (vaccineId: string) => {
     LocalStorage.setItem('vacType', type);
     LocalStorage.setItem('vaccineId', vaccineId);
+    setVacType(type);
+    setVaccineId(vaccineId);
     router.push(PATH.VACHISTORY_VAC + '/' + vaccineId);
   };
 
