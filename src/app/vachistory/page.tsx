@@ -170,7 +170,6 @@ export default function Vachistory() {
           </div>
         </div>
       </div>
-      <NavigationFixed />
     </Container>
   );
 }

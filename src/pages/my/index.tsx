@@ -210,7 +210,7 @@ export default function My() {
         <UserGreeting>
           <InfoWrapper>
           <ImageWrapper onClick={handleClick}>
-            <Image src={Images.ico_my_profile} alt="" />
+            <Image src={Images.ico_my_profile_new} alt="" />
           </ImageWrapper>
           <InfoContainer>
             <NameContainer>오소현</NameContainer>

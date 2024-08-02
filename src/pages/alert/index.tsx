@@ -155,7 +155,6 @@ export default function AlertPage() {
           </AlarmItem>
         ))}
       </AlarmList>
-      <NavigationFixed />
     </div>
   );
 }
