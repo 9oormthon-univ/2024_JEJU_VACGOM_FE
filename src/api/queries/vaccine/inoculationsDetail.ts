@@ -31,6 +31,5 @@ export const useInoculationDetail = <T>({ vaccinationId }: Props) => {
     gcTime: Infinity,
     staleTime: Infinity,
     enabled: !!vaccinationId,
-    ...params,
   }) as UseQueryResult<T, AxiosError>;
 };

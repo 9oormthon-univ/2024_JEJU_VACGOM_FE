@@ -27,6 +27,14 @@ export const useBridge = () => {
     if (!vacbridge) return;
     await vacbridge.goHome();
   };
+  const getImage = async () => {
+    if (!vacbridge) return;
+    await vacbridge.getImage();
+  };
+  const shareImage = async () => {
+    if (!vacbridge) return;
+    await vacbridge.shareImage();
+  };
 
-  return { nickName, goBack, goHome };
+  return { nickName, goBack, goHome, getImage, shareImage };
 };
