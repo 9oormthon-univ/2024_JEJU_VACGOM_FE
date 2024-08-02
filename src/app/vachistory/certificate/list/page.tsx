@@ -32,7 +32,7 @@ export default function CertificateList(): React.JSX.Element {
 
   return (
     <Container>
-      <BackHeader title={'접종 인증서'} url={'/vachistory'} />
+      <BackHeader title={'접종 인증서'} url={'/vacinfo'} />
       <div className="container">
         <div className="list">
           {CertificateData.map((card, index) => (

@@ -54,6 +54,7 @@ export default function Signup(): React.JSX.Element {
   );
   const identityFirstRef = useRef<HTMLInputElement>(null);
   const identityLastRef = useRef<HTMLInputElement>(null);
+
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
       mutate(
