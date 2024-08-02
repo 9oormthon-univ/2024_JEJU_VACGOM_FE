@@ -53,7 +53,9 @@ export default function Terms(): React.JSX.Element {
           phoneNo: phoneNo,
         },
         {
-          onSuccess: () => {},
+          onSuccess: () => {
+            router.push(PATH.SIGNUP_KAKAO);
+          },
           onError: (error) => {
             // 에러 처리
             if (error.success === false) {
