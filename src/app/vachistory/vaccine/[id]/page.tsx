@@ -88,7 +88,7 @@ export default function Vaccine() {
 
   return (
     <Container>
-      {!isLoading && <BackHeader title={' '} onClickHandler={goBack} />}
+      {!isLoading && <BackHeader title={' '} url={PATH.VACHISTORY_VAC} />}
       {nonPage()}
     </Container>
   );
