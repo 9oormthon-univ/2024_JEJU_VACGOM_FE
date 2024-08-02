@@ -44,6 +44,7 @@ export const Bar = styled.div`
 export const MainSection = styled.div`
   width:321px
   height:48px;
+  margin-top: -8px;
   padding: 6px 0px 10px 0px;
   justify-content: space-between;
   gap: 10px;
@@ -102,5 +103,4 @@ export const Address = styled.div`
   font-weight: 400;
   color: #4e5968;
   text-align: left;
-  margin-top: 10px;
 `;
