@@ -14,6 +14,10 @@ import { useRouter } from 'next/navigation';
 import { LocalStorage } from '@/hooks/useUtil';
 import useVaccinationStore from '../../../store/vaccine/vaccinationDetail';
 import { useVaccination } from '@/api/queries/vaccine/vaccination';
+import { Certificate } from 'crypto';
+import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
+import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
+import { useMyInfo } from "@/api/queries/vaccine/myinfo";
 
 interface ListDataType {
   vaccineName: string;

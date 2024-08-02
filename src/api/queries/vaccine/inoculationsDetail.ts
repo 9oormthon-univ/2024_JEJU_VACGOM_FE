@@ -19,6 +19,7 @@ export const useInoculationDetail = <T>({
   vaccinationId,
   ...options
 }: Props) => {
+
   const { accessToken } = useAccessToken();
   useEffect(() => {
     setSession(accessToken);
