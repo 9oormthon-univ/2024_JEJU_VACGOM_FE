@@ -30,7 +30,6 @@ interface Values {
 export default function Terms(): React.JSX.Element {
   const router = useRouter();
   const [params, setParams] = useState<ParamsType>({
-    nickname: '',
     terms: false,
   });
   const onChangeValue: OnChangeValueType = (field, value) => {
@@ -43,6 +42,7 @@ export default function Terms(): React.JSX.Element {
 
   const { mutate, isLoading } = useAuthKaKao<Values>();
   const [errormessage, setErrormessage] = useState(''); // 로딩 상태 추가
+  const [selected, setSelected] = useState(''); // 로딩 상태 추가
   const { birthday, phoneNo, userName } = useKaKaoStore((state) => state);
   const handleClick = async () => {
     if (checkParamsFilled(params)) {
@@ -86,7 +86,7 @@ export default function Terms(): React.JSX.Element {
         onChangeValue={onChangeValue}
       />
       <div className="detail">
-        <TermsAllAgree />
+        <TermsAllAgree selected={params.terms} />
       </div>
       <WarningToastWrap
         errorMessage={errormessage}
