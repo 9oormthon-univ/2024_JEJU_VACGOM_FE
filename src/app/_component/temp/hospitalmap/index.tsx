@@ -1,16 +1,17 @@
 import React, { useEffect, useState, useRef } from 'react';
 import styled from '@emotion/styled';
-import {newHospitalList} from '@/utils/new-hospital-api';
+import { newHospitalList } from '@/utils/new-hospital-api';
 import { Modal } from '../../atom/MapModal';
 import ReloadButton from '@/app/_component/atom/ReloadButton';
 import CurrectToast from '../../atom/CurrectToast';
+import { getVacBridge } from '@/bridge';
 
 const Main = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 100%;
   height: calc(100vh - var(--header-height));
+  width: 100%;
   padding: 0;
 `;
 
@@ -52,9 +53,19 @@ export default function HospitalMap() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedHospitalId, setSelectedHospitalId] = useState(null);
   const [selectedMarkerPosition, setSelectedMarkerPosition] = useState(null);
-  const [rememberedMarkerPosition, setRememberedMarkerPosition] = useState(null);
+  const [rememberedMarkerPosition, setRememberedMarkerPosition] =
+    useState(null);
   const mapRef = useRef(null);
   const [showToast, setShowToast] = useState(false);
+
+  const [currentLocation, setCurrentLocation] = useState<{
+    lat: number;
+    lon: number;
+  }>();
+
+  useEffect(() => {
+    handleCurrentLocationClick();
+  }, []);
 
   useEffect(() => {
     setShowToast(true);
@@ -68,50 +79,44 @@ export default function HospitalMap() {
   const navigationHeight = '68px';
 
   const handleCurrentLocationClick = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
+    getVacBridge().then((bridge) => {
+      bridge.getLocation().then((location) => {
+        setCurrentLocation(location);
+
         const currentLocation = new naver.maps.LatLng(
-          position.coords.latitude,
-          position.coords.longitude
+          location.lat,
+          location.lon,
         );
+
         mapRef.current.setCenter(currentLocation);
+
+        new naver.maps.Marker({
+          position: currentLocation,
+          map: mapRef.current,
+          title: 'Your Location',
+          icon: {
+            url: '/assets/ico/ico-map-my.svg',
+            size: new naver.maps.Size(50, 63),
+            scaledSize: new naver.maps.Size(50, 63),
+            origin: new naver.maps.Point(0, 0),
+            anchor: new naver.maps.Point(12, 37),
+          },
+        });
       });
-    }
+    });
   };
 
   useEffect(() => {
     const loadMap = () => {
-      const hackathonLocation = new naver.maps.LatLng(33.449800, 126.918179);
+      const hackathonLocation = new naver.maps.LatLng(33.4498, 126.918179);
 
       const mapOptions = {
         center: hackathonLocation,
         zoom: 9.2,
       };
-  
 
       const map = new naver.maps.Map('map', mapOptions);
       mapRef.current = map;
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const currentLocation = new naver.maps.LatLng(
-            position.coords.latitude,
-            position.coords.longitude
-          );
-          new naver.maps.Marker({
-            position: currentLocation,
-            map: map,
-            title: 'Your Location',
-            icon: {
-              url: '/assets/ico/ico-map-my.svg',
-              size: new naver.maps.Size(50, 63),
-              scaledSize: new naver.maps.Size(50, 63),
-              origin: new naver.maps.Point(0, 0),
-              anchor: new naver.maps.Point(12, 37),
-            },
-          });
-        });
-      }
 
       newHospitalList.forEach((newHospital) => {
         let iconUrl;
@@ -148,9 +153,12 @@ export default function HospitalMap() {
               break;
           }
         }
-        
+
         const marker = new naver.maps.Marker({
-          position: new naver.maps.LatLng(newHospital.latitude,newHospital.longitude),
+          position: new naver.maps.LatLng(
+            newHospital.latitude,
+            newHospital.longitude,
+          ),
           map: map,
           title: newHospital.name,
           icon: {
@@ -161,9 +169,13 @@ export default function HospitalMap() {
             anchor: new naver.maps.Point(12, 37),
           },
         });
-      
+
         naver.maps.Event.addListener(marker, 'click', () => {
-          setSelectedHospitalId(selectedHospitalId ===newHospital.hospital_id ? null : newHospital.hospital_id);
+          setSelectedHospitalId(
+            selectedHospitalId === newHospital.hospital_id
+              ? null
+              : newHospital.hospital_id,
+          );
           setModalContent({
             name: newHospital.name,
             type: newHospital.type,
@@ -211,23 +223,23 @@ export default function HospitalMap() {
 
   return (
     <>
-    <Main
-      style={{
-        '--header-height': headerHeight,
-        '--navigation-height': navigationHeight,
-      }}
-    >
-      <MapContainer id="map">
-        {!isMapLoaded && <p>지도를 준비 중입니다!</p>}
-        <ReloadButton onClick={handleCurrentLocationClick} />
-        <Modal
-          isOpen={isModalOpen}
-          onClose={() => setIsModalOpen(false)}
-          content={modalContent}
-        />
-      </MapContainer>
-    </Main>
-    <CurrectToast isVisible={showToast} />
+      <Main
+        style={{
+          '--header-height': headerHeight,
+          '--navigation-height': navigationHeight,
+        }}
+      >
+        <MapContainer id="map">
+          {!isMapLoaded && <p>지도를 준비 중입니다!</p>}
+          <ReloadButton onClick={handleCurrentLocationClick} />
+          <Modal
+            isOpen={isModalOpen}
+            onClose={() => setIsModalOpen(false)}
+            content={modalContent}
+          />
+        </MapContainer>
+      </Main>
+      <CurrectToast isVisible={showToast} />
     </>
   );
 }
