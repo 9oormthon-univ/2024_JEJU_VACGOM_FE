@@ -20,11 +20,12 @@ import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
 import { useBridge } from '@/bridge/hook/useBridge';
 import { PATH } from '@/routes/path';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
+import TermsAllAgree from '@/app/_component/TermsAllAgree';
 
 interface Values {
   userName: string;
-  identity_first: string;
-  identity_last: string;
+  birthday: string;
+  phoneNo: string;
 }
 
 export default function Signup(): React.JSX.Element {
@@ -47,8 +48,6 @@ export default function Signup(): React.JSX.Element {
   /**
    *  api 호출
    */
-  const { mutate, isLoading } = useAuthKaKao<Values>();
-  const [errormessage, setErrormessage] = useState(''); // 로딩 상태 추가
   const { setBirthday, setPhoneNo, setUserName } = useKaKaoStore(
     (state) => state,
   );
@@ -57,41 +56,14 @@ export default function Signup(): React.JSX.Element {
 
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
-      mutate(
-        {
-          birthday: calculateBirthday(
-            params?.identity_first,
-            params?.identity_last,
-          ),
-          userName: params.userName,
-          phoneNo: params.phoneNumber,
-        },
-        {
-          onSuccess: () => {
-            setUserName(params.userName);
-            setBirthday(
-              calculateBirthday(params?.identity_first, params?.identity_last),
-            );
-            setPhoneNo(params.phoneNumber);
-            router.push(PATH.SIGNUP_KAKAO);
-          },
-          onError: (error) => {
-            // 에러 처리
-            if (error.success === false) {
-              // 서버가 핸들링한 에러
-              setErrormessage(error.data.message);
-              router.push(PATH.SIGNUP_DONE);
-            } else {
-              // 서버에러
-              router.push(PATH.SIGNUP_KAKAO_ERROR);
-            }
-          },
-        },
+      setUserName(params.userName);
+      setBirthday(
+        calculateBirthday(params?.identity_first, params?.identity_last),
       );
+      setPhoneNo(params.phoneNumber);
+      router.push(PATH.SIGNUP_TERMS);
     }
   };
-
-  if (isLoading) return <SkeletonScreen />;
 
   const handleFirstPartChange = (e) => {
     let filteredValue = filterNumericInput(e);
@@ -172,14 +144,10 @@ export default function Signup(): React.JSX.Element {
             </div>
           </div>
         </div>
-        <WarningToastWrap
-          errorMessage={errormessage}
-          setErrorMessage={setErrormessage}
-        />
+
         <BottomButton
           filled={checkParamsFilled(params)}
           handleNextButtonClick={handleNextButtonClick}
-          loading={isLoading}
         />
       </SignupWrapper>
     </Suspense>

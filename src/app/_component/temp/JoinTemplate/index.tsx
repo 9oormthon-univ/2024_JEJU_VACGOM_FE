@@ -57,6 +57,7 @@ const JoinTemplate: React.FC<props> = ({
                 : Icons.checkBox_unselec_en
             }
             onClick={() => onChangeValue(field, false)}
+            iconSize={'20'}
             variant={'OutlineWhite'}
             size={'large'}
           />

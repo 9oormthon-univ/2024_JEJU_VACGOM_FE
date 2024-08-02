@@ -10,6 +10,8 @@ import vacgom from '../../public/assets/image/img-splash-vacgom.svg';
 import Vacgom01 from '../../public/assets/image/img-Vacgom01.svg';
 import vacgomLoading from '../../public/assets/image/img-Vacgom-loading.svg';
 import vacgom_face from '../../public/assets/image/img-vacgom-face.svg';
+import vacgom_pillow from '../../public/assets/image/img-vacgom-pillow.svg';
+import vacgomViewing from '../../public/assets/image/img-Vacgom-viewing.svg';
 import syringe from '../../public/assets/image/img-syringe.svg';
 
 import share from '../../public/assets/ico/ico-share.svg';
@@ -44,6 +46,7 @@ import warning from '../../public/assets/ico/ico-warning.svg';
 import arrow_down from '../../public/assets/ico/ico-arrow-down.png';
 import arrow_right from '../../public/assets/ico/ico-arrow-right.svg';
 import arrow_left from '../../public/assets/ico/ico-arrow-left.svg';
+import arrow_left_white from '../../public/assets/ico/ico-arrow_left_white.svg';
 import choice_selec from '../../public/assets/ico/ico-choice-selec.svg';
 import choice_unselec from '../../public/assets/ico/ico-choice-unselec.svg';
 import radio_selec from '../../public/assets/ico/ico-Radiobox_select.svg';
@@ -142,7 +145,7 @@ import ico_my_1_1 from '../../public/assets/ico/ico-my-1-1.svg';
 import ico_my_baby_revise_profile from '../../public/assets/ico/ico-my-baby-revise-profile.svg';
 import ico_vacinfo_list from '../../public/assets/ico/ico-vacinfo-list.svg';
 import ico_vacinfo_look from '../../public/assets/ico/ico-vacinfo-look.svg';
-import ico_my_success from  '../../public/assets/ico/ico-my-success.svg';
+import ico_my_success from '../../public/assets/ico/ico-my-success.svg';
 import ico_dropdown from '../../public/assets/ico/ico-dropdown-down.svg';
 import ico_quit_intro from '../../public/assets/ico/ico-quit-intro.svg';
 import ico_quit from '../../public/assets/ico/ico-quit.svg';
@@ -195,7 +198,8 @@ export const Images: ImagesType = {
   arrow_down: arrow_down,
   arrow_right: arrow_right,
   arrow_left: arrow_left,
-
+  arrow_left_white:arrow_left_white,
+  
   choice_selec: choice_selec,
   choice_unselec: choice_unselec,
   radio_selec: radio_selec,
@@ -225,7 +229,6 @@ export const Images: ImagesType = {
   ico_check_filled: ico_check_filled,
   ico_pin_selec: ico_pin_selec,
   ico_pin_unselec: ico_pin_unselec,
-  arrow_left: arrow_left,
   dropdown_up: dropdown_up,
   dropdown_down: dropdown_down,
   check_default: check_default,
@@ -297,6 +300,8 @@ export const Images: ImagesType = {
   vacgom01: Vacgom01,
   vacgomLoading: vacgomLoading,
   vacgom: vacgom,
+  vacgom_pillow: vacgom_pillow,
+  vacgomViewing: vacgomViewing,
   vacgom_face: vacgom_face,
   VaccineCardBack: VaccineCardBack,
   VaccineCardBackLarge: VaccineCardBackLarge,

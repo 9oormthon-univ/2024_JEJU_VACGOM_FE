@@ -13,19 +13,23 @@ const MainHeader: React.FC<MainHeaderType> = ({
   counter,
   color = 'black',
   onClickHandler,
+  nonicon = false,
 }) => {
   const router = useRouter();
 
   return (
     <HeaderContainer>
-      <Image
-        src={color === 'black' ? Images.arrow_left : Images.arrow_left_white}
-        alt={'BACK'}
-        onClick={() => {
-          url && router.push(url);
-          onClickHandler && onClickHandler();
-        }}
-      />
+      {!nonicon && (
+        <Icon
+          icon={color === 'black' ? Icons.arrow_left : Icons.arrow_left_white}
+          onClick={() => {
+            router.push(url);
+            onClickHandler && onClickHandler();
+          }}
+          size={'20px'}
+        />
+      )}
+
       <Title>{title}</Title>
       {counter && <div className={'counter'}>{counter}/5</div>}
     </HeaderContainer>

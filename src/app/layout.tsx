@@ -44,7 +44,7 @@ export default function RootLayout({
 
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-touch-fullscreen" content="yes" />
-        <meta http-equiv="Cache-control" content="no-store" />
+        <meta httpEquiv="Cache-control" content="no-store" />
 
         <link rel="manifest" href="/assets/pwa/mainfest.json" />
         <link rel="apple-touch-icon" href="/assets/pwa/apple-touch-icon.png" />

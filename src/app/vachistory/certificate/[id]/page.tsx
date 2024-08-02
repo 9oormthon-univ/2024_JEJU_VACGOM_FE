@@ -12,6 +12,9 @@ import { PATH } from '@/routes/path';
 import Button from '@/app/_component/atom/button/button';
 import { Icons } from '@/styles';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
+import useCertificateStore from '@/store/vaccine/certification';
+import { useInoculationDetail } from '@/api/queries/vaccine/inoculationsDetail';
+import { useBridge } from '@/bridge/hook/useBridge';
 
 type DetailDataType = {
   diseaseName: string;
@@ -36,90 +39,63 @@ type MeDataType = {
 };
 
 export default function CertificateDetail() {
-  const vaccineId = LocalStorage.getItem('vaccineId');
-  const [detail, setDetail] = useState<DetailDataType>({});
+  const { vaccineId } = useCertificateStore((state) => state);
 
-  const fetchDetail = async () => {
-    try {
-      const detailData = await getCertificateDetail(vaccineId);
-      setDetail(detailData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  const [detail, setDetail] = useState<DetailDataType>({});
+  const { data, isLoading } = useInoculationDetail(vaccineId);
+  const { getImage, shareImage } = useBridge();
+
+  if (data) {
+    setDetail(data);
+  }
 
   const [userData, setUserData] = useState<MeDataType>({});
-  const accessToken = LocalStorage.getItem('accessToken');
-
-  const fetchMe = async () => {
-    try {
-      const response = await fetch(`${apiDevUrl}/me`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setUserData(data);
-    } catch (error) {
-      // setError(error.message);
-    }
-  };
 
   const [blob, setBlob] = useState('' as any);
   const [error, setError] = useState('');
-
-  const saveImage = async () => {
-    try {
-      const response = await fetch(
-        `${apiDevUrl}/inoculation/certificate/${detail.vaccineId}/image`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            'Content-Type': 'image/png',
-          },
-        },
-      );
-      const blob = await response.blob();
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', '백곰접종인증서.png');
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-      setBlob(blob);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  const shareImage = async () => {
-    const file = new File([blob], '백곰접종인증서.png', {
-      type: 'image/png',
-    });
-
-    // 이미지를 공유할 데이터 설정
-    const shareData = {
-      title: 'Example File',
-      files: [file],
-    };
-    try {
-      await navigator.share(shareData);
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  useEffect(() => {
-    fetchMe();
-  }, []);
-
-  useEffect(() => {
-    fetchDetail();
-  }, []);
+  //
+  // const saveImage = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `${apiDevUrl}/inoculation/certificate/${detail.vaccineId}/image`,
+  //       {
+  //         method: 'GET',
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //           'Content-Type': 'image/png',
+  //         },
+  //       },
+  //     );
+  //     const blob = await response.blob();
+  //     const url = window.URL.createObjectURL(new Blob([blob]));
+  //     const link = document.createElement('a');
+  //     link.href = url;
+  //     link.setAttribute('download', '백곰접종인증서.png');
+  //     document.body.appendChild(link);
+  //     link.click();
+  //     link.parentNode.removeChild(link);
+  //     setBlob(blob);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+  //
+  // const shareImage = async () => {
+  //   const file = new File([blob], '백곰접종인증서.png', {
+  //     type: 'image/png',
+  //   });
+  //
+  //   // 이미지를 공유할 데이터 설정
+  //   const shareData = {
+  //     title: 'Example File',
+  //     files: [file],
+  //   };
+  //   try {
+  //     await navigator.share(shareData);
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
 
   return (
     <Container>
@@ -149,7 +125,7 @@ export default function CertificateDetail() {
             label={'이미지 저장'}
             variant={'OutlineWhite'}
             size={'large'}
-            onClick={saveImage}
+            onClick={getImage}
           />
         </div>
       </div>
