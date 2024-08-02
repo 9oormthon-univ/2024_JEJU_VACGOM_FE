@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import MainHeader from '@/app/_component/atom/MainHeader';
+import MainHeader from "@/app/_component/molecule/BackHeader";
 import Image from 'next/image';
 import { Images } from '@globalStyles';
 import NavigationFixed from '@/app/_component/organism/navigationFixed';
@@ -10,6 +10,8 @@ import { css, keyframes } from '@emotion/react';
 import { AnimatedCircle } from '@/app/_component/organism/AnimatedCircle';
 import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { useBridge } from '@/bridge/hook/useBridge';
+import BackHeader from '@/app/_component/molecule/BackHeader';
 
 const NavVacContainer = styled.div`
   display: flex;
@@ -121,13 +123,49 @@ const ProgressBar= styled.div`
   padding: 40px;
   margin-left:20px;
 `
+const ScoreContainer=styled.div`
+display: flex;
+align-items: center;
+gap: var(--small, 4px);
 
+`
+
+const ScoreText= styled.div`
+color: var(--Gray-Gray-900, #191F28);
+text-align: center;
+font-family: Montserrat;
+font-size: 64px;
+font-style: normal;
+font-weight: 600;
+line-height: 120%;
+`
+
+const ScoreKoText=styled.div`
+color: var(--Gray-Gray-500, #8B95A1);
+text-align: center;
+font-family: Montserrat;
+font-size: 28px;
+font-style: normal;
+font-weight: 400;
+margin-top:16px;
+
+`
+const MaxText=styled.div`
+color: var(--Gray-Gray-400, #B0B8C1);
+text-align: center;
+font-family: Montserrat;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: 130%;
+`
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
   const [active, setActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const vaccinationProgress = 75;
+  const { goBack } = useBridge();
   const accessToken = LocalStorage.getItem('accessToken');
 
   useEffect(() => {
@@ -159,7 +197,7 @@ export default function VacInfo() {
 
   return (
     <>
-      <MainHeader title="백곰 점수" />
+      <BackHeader title={'백곰 점수'} onClickHandler={goBack} />
       <ProgressBar>
       <CircularProgressbarWithChildren
           value={vaccinationProgress}
@@ -179,13 +217,12 @@ export default function VacInfo() {
             },
         }}
       >
-        <img
-          style={{ width: 40, marginTop: -5 }}
-          src="https://i.imgur.com/b9NyUGm.png"
-          alt="icon"
-        />
         <div style={{ fontSize: 12, marginTop: -5 }}>
-          <strong>{vaccinationProgress}%</strong> Complete
+          <ScoreContainer>
+          <ScoreText>{vaccinationProgress}</ScoreText>
+          <ScoreKoText>점</ScoreKoText>
+          </ScoreContainer>
+          <MaxText>100점</MaxText>
         </div>
       </CircularProgressbarWithChildren>
       </ProgressBar>
