@@ -35,7 +35,7 @@ const ViewingPage: React.FC<props> = ({ backUrl, userName }: props) => {
       setProgress((prevProgress) =>
         prevProgress >= 100 ? 0 : prevProgress + 1,
       );
-    }, 50); // 주기를 20밀리초로 설정하여 1단위로 증가
+    }, 80); // 주기를 20밀리초로 설정하여 1단위로 증가
 
     return () => {
       clearInterval(timer);
