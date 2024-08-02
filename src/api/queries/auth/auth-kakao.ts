@@ -10,6 +10,8 @@ import { QUERY_KEY } from '../../queryKeys';
 import { setSession } from '@/api/api_utils';
 import { useRouter } from 'next/navigation';
 import useKaKaoStore from '@/store/signup/kakaoAgain';
+import { useAccessToken } from '@/bridge/hook/useAccessToken';
+import { useEffect } from 'react';
 
 // 카카오 간편인증 1차
 export const useAuthKaKao = <T>(
@@ -17,6 +19,10 @@ export const useAuthKaKao = <T>(
 ) => {
   const queryClient = useQueryClient();
   const navigate = useRouter();
+  const { accessToken } = useAccessToken();
+  useEffect(() => {
+    setSession(accessToken);
+  }, [accessToken]);
 
   return useMutation({
     mutationKey: [QUERY_KEY.KAKAO],

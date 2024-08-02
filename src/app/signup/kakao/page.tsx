@@ -16,6 +16,8 @@ import useKaKaoStore from '@/store/signup/kakaoAgain';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
 import { useAuthKaKao } from '@/api/queries/auth/auth-kakao';
 import useParentsStore from '@/store/vaccine/parents';
+import { PATH } from '@/routes/path';
+import { useRouter } from 'next/navigation';
 
 interface Values {
   userName: string;
@@ -28,6 +30,7 @@ export default function SignupKaKao(): React.JSX.Element {
   const { birthday, userName, phoneNo } = useKaKaoStore((state) => state);
   const { mutate: kakaoMutate, isLoading: isKakaoLoading } =
     useAuthKaKao<Values>();
+  const router = useRouter();
 
   const { mutate: kakaoVerifyMutate, isLoading: isVerifyLoading } =
     useAuthKaKaoVerify<Values>();
@@ -70,12 +73,12 @@ export default function SignupKaKao(): React.JSX.Element {
       {
         onSuccess: (data) => {
           console.log('onSuccess', data);
+          router.push(PATH.SIGNUP_WELCOME);
         },
         onError: (error) => {
           if (error.data.success === false) {
             setErrormessage(error.data.message);
-          } else {
-            setErrormessage(error.message);
+            router.push(PATH.SIGNUP_DONE);
           }
         },
       },
