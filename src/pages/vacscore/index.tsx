@@ -7,7 +7,9 @@ import NavigationFixed from '@/app/_component/organism/navigationFixed';
 import Link from 'next/link';
 import { LocalStorage } from '@/hooks/useUtil';
 import { css, keyframes } from '@emotion/react';
-import { AnimatedCircle } from "@/app/_component/organism/AnimatedCircle";
+import { AnimatedCircle } from '@/app/_component/organism/AnimatedCircle';
+import { CircularProgressbarWithChildren } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 const NavVacContainer = styled.div`
   display: flex;
@@ -55,53 +57,53 @@ const LinkButton = styled.a`
   cursor: pointer;
 `;
 
-const VacListContainer= styled.div`
-display: flex;
-padding: 0px 20px 24px 20px;
-align-items: center;
-gap: 10px;
-align-self: stretch;
-`
+const VacListContainer = styled.div`
+  display: flex;
+  padding: 0px 20px 24px 20px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+`;
 
 const VacList = styled.div`
-display: flex;
-height: 79.5px;
-padding: 20px 18px;
-align-items: center;
-gap: 24px;
-flex: 1 0 0;
-border-radius: 14px;
-background: var(--Gray-Gray-50, #F9FAFB);
-`
+  display: flex;
+  height: 79.5px;
+  padding: 20px 18px;
+  align-items: center;
+  gap: 24px;
+  flex: 1 0 0;
+  border-radius: 14px;
+  background: var(--Gray-Gray-50, #f9fafb);
+`;
 
-const MyVacList= styled.div`
-width: 120px;
-display: flex;
-align-items: center;
-gap: 6px;
-align-self: stretch;
+const MyVacList = styled.div`
+  width: 120px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  align-self: stretch;
   flex-direction: column;
-    justify-content: left;
-`
+  justify-content: left;
+`;
 
-const MyVacTitle= styled.div`
-color: var(--Gray-Gray-500, #8B95A1);
-font-family: Pretendard;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 120%; /* 16.8px */
-letter-spacing: -0.3px;
-`
+const MyVacTitle = styled.div`
+  color: var(--Gray-Gray-500, #8b95a1);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%; /* 16.8px */
+  letter-spacing: -0.3px;
+`;
 
-const MyVacSentence= styled.div`
-display: flex;
-flex-direction: column;
-align-items: flex-start;
-gap: 6px;
-flex: 1 0 0;
-border-right: 1px solid var(--Gray-Gray-100, #F2F4F6);
-`
+const MyVacSentence = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  flex: 1 0 0;
+  border-right: 1px solid var(--Gray-Gray-100, #f2f4f6);
+`;
 
 // 원형 테두리 애니메이션을 위한 키프레임 정의
 const drawCircleAnimation = keyframes`
@@ -113,28 +115,12 @@ const drawCircleAnimation = keyframes`
   }
 `;
 
-// SVG 원형 스타일
-const circleStyle = css`
-  width: 100px;
-  height: 100px;
-  display: block;
-  margin: 20px auto;
-  
-  circle {
-    fill: none;
-    stroke: #3498db;
-    stroke-width: 4;
-    stroke-dasharray: 0, 314;
-    animation: ${drawCircleAnimation} 2s linear forwards;
-  }
-`;
-
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
   const [active, setActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
-
+  const vaccinationProgress = 75;
   const accessToken = LocalStorage.getItem('accessToken');
 
   useEffect(() => {
@@ -167,19 +153,42 @@ export default function VacInfo() {
   return (
     <>
       <MainHeader title="백곰 점수" />
+      <CircularProgressbarWithChildren
+        value={vaccinationProgress}
+        styles={{
+          path: {
+            stroke: `rgba( 65,150,253, ${vaccinationProgress / 100})`,
+          },
+          trail: {
+            stroke: '#d6d6d6',
+          },
+          text: {
+            fill: '#f88',
+            fontSize: '16px',
+          },
+        }}
+      >
+        <img
+          style={{ width: 40, marginTop: -5 }}
+          src="https://i.imgur.com/b9NyUGm.png"
+          alt="icon"
+        />
+        <div style={{ fontSize: 12, marginTop: -5 }}>
+          <strong>{vaccinationProgress}%</strong> Complete
+        </div>
+      </CircularProgressbarWithChildren>
       <VacListContainer>
         <VacList>
-        <Image src={Images.ico_vacscore_vaccine} alt="" />
-        <MyVacList>
-        <MyVacTitle>접종한 백신</MyVacTitle>
-        <MyVacSentence>1개</MyVacSentence>
-        </MyVacList>
-        <MyVacList>
-        <MyVacTitle>필수접종백신</MyVacTitle>
-        <MyVacSentence>3개</MyVacSentence>
-        </MyVacList>
+          <Image src={Images.ico_vacscore_vaccine} alt="" />
+          <MyVacList>
+            <MyVacTitle>접종한 백신</MyVacTitle>
+            <MyVacSentence>1개</MyVacSentence>
+          </MyVacList>
+          <MyVacList>
+            <MyVacTitle>필수접종백신</MyVacTitle>
+            <MyVacSentence>3개</MyVacSentence>
+          </MyVacList>
         </VacList>
-
       </VacListContainer>
       <NavVacContainer>
         <OneNav>
