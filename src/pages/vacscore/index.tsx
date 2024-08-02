@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import MainHeader from "@/app/_component/molecule/BackHeader";
+import MainHeader from '@/app/_component/molecule/BackHeader';
 import Image from 'next/image';
 import { Images } from '@globalStyles';
 import NavigationFixed from '@/app/_component/organism/navigationFixed';
@@ -117,48 +117,46 @@ const drawCircleAnimation = keyframes`
   }
 `;
 
-const ProgressBar= styled.div`
+const ProgressBar = styled.div`
   align-items: center;
   width: 90%;
   padding: 40px;
-  margin-left:20px;
-`
-const ScoreContainer=styled.div`
-display: flex;
-align-items: center;
-gap: var(--small, 4px);
+  margin-left: 20px;
+`;
+const ScoreContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: var(--small, 4px);
+`;
 
-`
+const ScoreText = styled.div`
+  color: var(--Gray-Gray-900, #191f28);
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 64px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+`;
 
-const ScoreText= styled.div`
-color: var(--Gray-Gray-900, #191F28);
-text-align: center;
-font-family: Montserrat;
-font-size: 64px;
-font-style: normal;
-font-weight: 600;
-line-height: 120%;
-`
-
-const ScoreKoText=styled.div`
-color: var(--Gray-Gray-500, #8B95A1);
-text-align: center;
-font-family: Montserrat;
-font-size: 28px;
-font-style: normal;
-font-weight: 400;
-margin-top:16px;
-
-`
-const MaxText=styled.div`
-color: var(--Gray-Gray-400, #B0B8C1);
-text-align: center;
-font-family: Montserrat;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: 130%;
-`
+const ScoreKoText = styled.div`
+  color: var(--Gray-Gray-500, #8b95a1);
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 400;
+  margin-top: 16px;
+`;
+const MaxText = styled.div`
+  color: var(--Gray-Gray-400, #b0b8c1);
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 130%;
+`;
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
   const [active, setActive] = useState(false);
@@ -199,7 +197,7 @@ export default function VacInfo() {
     <>
       <BackHeader title={'백곰 점수'} onClickHandler={goBack} />
       <ProgressBar>
-      <CircularProgressbarWithChildren
+        <CircularProgressbarWithChildren
           value={vaccinationProgress}
           styles={{
             root: {
@@ -215,16 +213,16 @@ export default function VacInfo() {
               fill: '#f88',
               fontSize: '16px',
             },
-        }}
-      >
-        <div style={{ fontSize: 12, marginTop: -5 }}>
-          <ScoreContainer>
-          <ScoreText>{vaccinationProgress}</ScoreText>
-          <ScoreKoText>점</ScoreKoText>
-          </ScoreContainer>
-          <MaxText>100점</MaxText>
-        </div>
-      </CircularProgressbarWithChildren>
+          }}
+        >
+          <div style={{ fontSize: 12, marginTop: -5 }}>
+            <ScoreContainer>
+              <ScoreText>{vaccinationProgress}</ScoreText>
+              <ScoreKoText>점</ScoreKoText>
+            </ScoreContainer>
+            <MaxText>100점</MaxText>
+          </div>
+        </CircularProgressbarWithChildren>
       </ProgressBar>
       <VacListContainer>
         <VacList>
