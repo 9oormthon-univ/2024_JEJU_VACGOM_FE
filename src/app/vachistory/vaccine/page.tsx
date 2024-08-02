@@ -28,6 +28,7 @@ import { useRouter } from 'next/navigation';
 import { LocalStorage } from '@/hooks/useUtil';
 import { Certificate } from 'crypto';
 import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
+import { useInoculation } from '@/api/queries/vaccine/inoculations';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import { useMyInfo } from "@/api/queries/vaccine/myinfo";
 
@@ -183,7 +184,7 @@ export default function Vaccine() {
   const [list, setList] = useState<ListDataType[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const {  data:name, error, isLoading } = useMyMainVaccine() &&useMyInfo();
+  const {  data:name, error, isLoading } = useInoculation() &&useMyInfo();
   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
@@ -257,7 +258,7 @@ export default function Vaccine() {
       <MainContainer>
         <CertificateContainer>
           <Image src={Images.ico_my_profile_new} alt="" />
-          <MainTextContainer>4개</MainTextContainer>
+          <MainTextContainer>{name?.data?.certificateCnt}개</MainTextContainer>
           <MainSubTextContainer>{name?.babyName}의 접종인증서</MainSubTextContainer>
         </CertificateContainer>
 
