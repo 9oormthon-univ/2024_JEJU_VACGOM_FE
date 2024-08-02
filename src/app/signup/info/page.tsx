@@ -57,6 +57,12 @@ export default function Signup(): React.JSX.Element {
 
   const handleNextButtonClick = async () => {
     if (checkParamsFilled(params)) {
+      setUserName(params.userName);
+      setBirthday(
+        calculateBirthday(params?.identity_first, params?.identity_last),
+      );
+      setPhoneNo(params.phoneNumber);
+      router.push(PATH.SIGNUP_TERMS);
       mutate(
         {
           birthday: calculateBirthday(
@@ -67,14 +73,7 @@ export default function Signup(): React.JSX.Element {
           phoneNo: params.phoneNumber,
         },
         {
-          onSuccess: () => {
-            setUserName(params.userName);
-            setBirthday(
-              calculateBirthday(params?.identity_first, params?.identity_last),
-            );
-            setPhoneNo(params.phoneNumber);
-            router.push(PATH.SIGNUP_KAKAO);
-          },
+          onSuccess: () => {},
           onError: (error) => {
             // 에러 처리
             if (error.success === false) {
