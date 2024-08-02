@@ -10,6 +10,10 @@ import { useEffect, useState } from 'react';
 import { getCertificate } from '@/app/_lib/getCertificate';
 import { LocalStorage } from '@/hooks/useUtil';
 import { VaccineData } from '@/types/globalType';
+import { useInoculation } from '@/api/queries/vaccine/inoculations';
+import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
+import { useAccessToken } from '@/bridge/hook/useAccessToken';
+import { setSession } from '@/api/api_utils';
 
 export default function CertificateList(): React.JSX.Element {
   const router = useRouter();
@@ -17,25 +21,18 @@ export default function CertificateList(): React.JSX.Element {
     LocalStorage.setItem('vaccineId', id);
     router.push(`/vachistory/certificate/${id}`);
   };
-  const [CertificateData, setCertificateData] = useState<VaccineData[]>([]);
-  const fetchCertifi = async () => {
-    try {
-      const certificateData = await getCertificate();
-      setCertificateData(certificateData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-  useEffect(() => {
-    fetchCertifi();
-  }, []);
+
+  const { data, isLoading, error } = useInoculation();
+  if (isLoading) return <SkeletonScreen />;
+  if (error) return <h4>{error.message}</h4>;
+  console.log(data);
 
   return (
     <Container>
       <BackHeader title={'접종 인증서'} url={'/vacinfo'} />
       <div className="container">
         <div className="list">
-          {CertificateData.map((card, index) => (
+          {data?.data?.map((card, index) => (
             <VaccineCard
               key={index}
               variant={'small'}
