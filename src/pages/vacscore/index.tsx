@@ -15,6 +15,8 @@ import BackHeader from '@/app/_component/molecule/BackHeader';
 import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 
+import WarningToastWrap from "@/app/_component/molecule/WorningToastWrap";
+
 const NavVacContainer = styled.div`
   display: flex;
   padding: 20px;
@@ -162,27 +164,34 @@ const MaxText = styled.div`
 export default function VacInfo() {
   const [userName, setUserName] = useState('');
   const [active, setActive] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const { goBack } = useBridge();
   const { data, error, isLoading } = useMyMainVaccine();
 
   if (isLoading) return <SkeletonScreen />;
-  if (error) return <div>Error: {error.message}</div>;
 
+    if (error) {
+      setErrorMessage(error.message);
+      return <div>Error: {error.message}</div>;
+    }
+
+    console.log("data",data)
+ 
   const vaccinationProgress = data ? (data.inoculatedCnt / data.requiredInoculationCnt) * 100 : 0;
-
 
   return (
     <>
       <BackHeader title={'백곰 점수'} onClickHandler={goBack} />
       <ProgressBar>
         <CircularProgressbarWithChildren
-          value={vaccinationProgress}
+          value={data.data.vacgomScore}
           styles={{
             root: {
               width: '100%',
             },
             path: {
-              stroke: `rgba(65, 150, 253, ${vaccinationProgress / 100})`,
+              stroke: `rgba(65, 150, 253, 
+              ${data.vacgomScore / 100})`,
             },
             trail: {
               stroke: '#F2F4F6',
@@ -195,23 +204,24 @@ export default function VacInfo() {
         >
           <div style={{ fontSize: 12, marginTop: -5 }}>
             <ScoreContainer>
-              <ScoreText>{vaccinationProgress.toFixed(0)}</ScoreText>
+              <ScoreText>{data.data.vacgomScore}</ScoreText>
               <ScoreKoText>점</ScoreKoText>
             </ScoreContainer>
             <MaxText>100점</MaxText>
           </div>
         </CircularProgressbarWithChildren>
       </ProgressBar>
+      <WarningToastWrap errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
       <VacListContainer>
         <VacList>
           <Image src={Images.ico_vacscore_vaccine} alt="" />
           <MyVacList>
             <MyVacTitle>접종한 백신</MyVacTitle>
-            <MyVacSentence>{data.inoculatedCnt}개</MyVacSentence>
+            <MyVacSentence>{data.data.inoculationResponse.inoculatedCnt}개</MyVacSentence>
           </MyVacList>
           <MyVacList>
             <MyVacTitle>필수접종백신</MyVacTitle>
-            <MyVacSentence>{data.requiredInoculationCnt}개</MyVacSentence>
+            <MyVacSentence>{data.data.inoculationResponse.requiredInoculationCnt}개</MyVacSentence>
           </MyVacList>
         </VacList>
       </VacListContainer>

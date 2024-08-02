@@ -8,6 +8,8 @@ import Link from 'next/link';
 import { LocalStorage } from '@/hooks/useUtil';
 import router from 'next/router';
 import { getVacBridge } from '@/bridge';
+import { useMyInfo } from "@/api/queries/vaccine/myinfo";
+import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 
 const GreetingContainer = styled.div`
   text-align: left;
@@ -167,43 +169,19 @@ const VersionText = styled.div`
 `;
 
 export default function My() {
-  const [userName, setUserName] = useState('');
-
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
-
-  // const accessToken = LocalStorage.getItem('accessToken');
-
-  // useEffect(() => {
-  //   fetch('https://api-dev-v2.vacgom.co.kr/member', {
-  //     method: 'GET',
-  //     headers: {
-  //       Authorization: `Bearer ${accessToken}`,
-  //       'Content-Type': 'application/json',
-  //     },
-  //   })
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setUserName(data.name);
-  //       setIsLoading(false);
-  //     })
-  //     .catch((error) => {
-  //       setError(error.message);
-  //       setIsLoading(false);
-  //     });
-  // }, []);
-
-  // if (isLoading) return;
-  // if (error) return <div>Error: {error}</div>;
+  const [errorMessage, setErrorMessage] = useState('');
+  const { data, error, isLoading } = useMyInfo();
 
   const handleClick = () => {
     router.push('/myrevise');
   };
+
+  if (isLoading) return <SkeletonScreen />;
+
+  if (error) {
+    setErrorMessage(error.message);
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
     <>
@@ -215,8 +193,8 @@ export default function My() {
               <Image src={Images.ico_my_profile_new} alt="" />
             </ImageWrapper>
             <InfoContainer>
-              <NameContainer>오소현</NameContainer>
-              <EmailContainer>가든 돌보미</EmailContainer>
+              <NameContainer>{data.name}</NameContainer>
+              <EmailContainer>{data.babyName} 돌보미</EmailContainer>
             </InfoContainer>
           </InfoWrapper>
         </UserGreeting>

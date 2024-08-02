@@ -27,6 +27,9 @@ import FilterModal from '@/app/_component/organism/filterModal';
 import { useRouter } from 'next/navigation';
 import { LocalStorage } from '@/hooks/useUtil';
 import { Certificate } from 'crypto';
+import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
+import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
+import { useMyInfo } from "@/api/queries/vaccine/myinfo";
 
 interface ListDataType {
   vaccineName: string;
@@ -162,7 +165,7 @@ const SubTitleText = styled.div`
   text-align: center;
   justify-content: center;
   font-family: Pretendard;
-  font-size: 16px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
@@ -180,6 +183,8 @@ export default function Vaccine() {
   const [list, setList] = useState<ListDataType[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const {  data:name, error, isLoading } = useMyMainVaccine() &&useMyInfo();
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (selectedSection === '국가예방접종') {
@@ -239,14 +244,21 @@ export default function Vaccine() {
     setType(section === '전체 백신' ? 'NATION' : 'EXTRA');
   };
 
+  if (isLoading) return <SkeletonScreen />;
+
+  if (error) {
+    setErrorMessage(error.message);
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
     <Container>
       <MainHeader title="백신" />
       <MainContainer>
         <CertificateContainer>
           <Image src={Images.ico_my_profile_new} alt="" />
-          <MainTextContainer>2개</MainTextContainer>
-          <MainSubTextContainer>민지의 접종인증서</MainSubTextContainer>
+          <MainTextContainer>4개</MainTextContainer>
+          <MainSubTextContainer>{name?.babyName}의 접종인증서</MainSubTextContainer>
         </CertificateContainer>
 
         <SubMainContainer>
