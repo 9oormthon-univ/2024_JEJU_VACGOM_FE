@@ -32,9 +32,6 @@ const MapMainHeader: React.FC<MapMainHeaderProps> = ({ title }) => {
   return (
     <HeaderContainer>
       <Title>{title}</Title>
-      <Link href="/alert">
-        <Image src={Images.ico_map_bell} alt="Notification" style={{ cursor: 'pointer' }} />
-      </Link>
     </HeaderContainer>
   );
 };
