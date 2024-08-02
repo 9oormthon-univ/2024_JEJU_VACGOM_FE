@@ -161,6 +161,10 @@ import ico_alert_vaccine from '../../public/assets/ico/ico-alert-vaccine.svg';
 import ico_alert_welcome from '../../public/assets/ico/ico-alert-welcome.svg';
 import icon_setting from '../../public/assets/ico/icon-setting.svg';
 
+import check_logo from '../../public/assets/image/img-check-logo.svg';
+import fringerprint_logo from '../../public/assets/image/img-fingerprint_logo.svg';
+import kakao_logo from '../../public/assets/image/img-kakao_logo.svg';
+
 // prettier-ignore
 export const Images: ImagesType = {
   // icon
@@ -310,5 +314,8 @@ export const Images: ImagesType = {
   vaccine_status_disable: vaccine_status_disable,
   splash: splash,
   syringe:syringe,
+  fingerprint_logo :fringerprint_logo,
+  kakao_logo : kakao_logo,
+  check_logo : check_logo
   
 };

@@ -36,6 +36,17 @@ export const SingupKakaoWrapper = styled.main`
     height: 70px;
     padding: 9px;
   }
+  .logo_gray {
+    justify-content: center;
+    align-items: center;
+    border-radius: 61.25px;
+    background-color: ${Colors.Gray50};
+    display: flex;
+    width: 70px;
+    height: 70px;
+    padding: 9px;
+    border: 1px solid rgba(229, 232, 235, 1);
+  }
   .img {
     aspect-ratio: 1;
     object-fit: auto;
@@ -81,7 +92,7 @@ export const SingupKakaoWrapper = styled.main`
     display: flex;
     justify-content: center;
     position: absolute;
-    bottom: 56px;
+    bottom: 76px;
     width: 100%;
     max-width: 500px;
   }

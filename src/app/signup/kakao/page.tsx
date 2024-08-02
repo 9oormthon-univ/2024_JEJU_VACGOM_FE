@@ -103,7 +103,7 @@ export default function SignupKaKao(): React.JSX.Element {
           </div>
         </div>
         <div className="item">
-          <div className="logo">
+          <div className="logo_gray">
             <Image src={Images.fingerprint_logo} alt={'백곰'} />
           </div>
           <div className="text">
