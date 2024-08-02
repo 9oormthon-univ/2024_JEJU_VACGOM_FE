@@ -12,6 +12,8 @@ import { PATH } from '@/routes/path';
 import Button from '@/app/_component/atom/button/button';
 import { Icons } from '@/styles';
 import WarningToastWrap from '@/app/_component/molecule/WorningToastWrap';
+import useCertificateStore from '@/store/vaccine/certification';
+import { useInoculationDetail } from '@/api/queries/vaccine/inoculationsDetail';
 
 type DetailDataType = {
   diseaseName: string;
@@ -36,36 +38,17 @@ type MeDataType = {
 };
 
 export default function CertificateDetail() {
-  const vaccineId = LocalStorage.getItem('vaccineId');
-  const [detail, setDetail] = useState<DetailDataType>({});
+  const { vaccineId } = useCertificateStore((state) => state);
 
-  const fetchDetail = async () => {
-    try {
-      const detailData = await getCertificateDetail(vaccineId);
-      setDetail(detailData);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+  const [detail, setDetail] = useState<DetailDataType>({});
+  const { data, isLoading } = useInoculationDetail(vaccineId);
+
+  if (data) {
+    setDetail(data);
+  }
 
   const [userData, setUserData] = useState<MeDataType>({});
   const accessToken = LocalStorage.getItem('accessToken');
-
-  const fetchMe = async () => {
-    try {
-      const response = await fetch(`${apiDevUrl}/me`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      const data = await response.json();
-      setUserData(data);
-    } catch (error) {
-      // setError(error.message);
-    }
-  };
 
   const [blob, setBlob] = useState('' as any);
   const [error, setError] = useState('');
@@ -115,10 +98,6 @@ export default function CertificateDetail() {
 
   useEffect(() => {
     fetchMe();
-  }, []);
-
-  useEffect(() => {
-    fetchDetail();
   }, []);
 
   return (
