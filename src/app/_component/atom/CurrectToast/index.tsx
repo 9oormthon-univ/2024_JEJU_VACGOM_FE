@@ -18,7 +18,7 @@ const ToastContainer = styled.div`
   opacity: 0;
   transition: opacity 0.3s;
   z-index: 10;
-  margin-bottom:60px;
+
 `;
 
 const ToastImage = styled.img`
