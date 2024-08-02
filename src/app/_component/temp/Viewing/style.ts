@@ -11,7 +11,7 @@ export const ViewingPageWrap = styled.main`
     position: relative;
 
     & > .top {
-      margin: 4vh 20px;
+      margin: 2vh 20px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -23,7 +23,7 @@ export const ViewingPageWrap = styled.main`
       & > .title {
         ${fontGenerator('24px', '500', '32px')}
         color: ${Colors.Black};
-        margin-bottom: 14px;
+        //margin-bottom: 10px;
         white-space: nowrap;
         p {
           display: inline-block;
