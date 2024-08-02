@@ -18,7 +18,7 @@ export const PATH_API = {
   INOCULATIONS_DETAIL: '/api/v2/inoculation',
 
   // 접종 내역 조회
-  VACCINATIONS: '/api/v2/vaccinations',
+  VACCINATIONS: '/api/v2/inoculation/simple',
   VACCINATIONS_DETAIL: '/api/v2/inoculations/all',
   // 이 사람의 맞은 백신 개수랑 아직 안맞은 백신 개수
   MAIN: '/api/v2/main',

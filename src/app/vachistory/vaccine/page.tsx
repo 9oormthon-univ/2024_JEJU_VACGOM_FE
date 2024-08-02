@@ -17,7 +17,7 @@ import { useVaccination } from '@/api/queries/vaccine/vaccination';
 import { Certificate } from 'crypto';
 import { useMyMainVaccine } from '@/api/queries/vaccine/mymainvaccine';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
-import { useMyInfo } from "@/api/queries/vaccine/myinfo";
+import { useMyInfo } from '@/api/queries/vaccine/myinfo';
 
 interface ListDataType {
   vaccineName: string;
@@ -163,10 +163,14 @@ const SubTitleText = styled.div`
 `;
 
 export default function Vaccine() {
-  const [selectedSection, setSelectedSection] = useState<string>('전체 백신');
+  const [listOnlyInoculated, setListOnlyInoculated] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const { data: list } = useVaccination({ selectedSection });
+  const { data: list, refetch } = useVaccination({ listOnlyInoculated });
+
+  useEffect(() => {
+    refetch();
+  }, [listOnlyInoculated, refetch]);
 
   const { setVaccinationId } = useVaccinationStore((state) => state);
   const handleClickDetail = (vaccineId: string) => {
@@ -175,7 +179,7 @@ export default function Vaccine() {
   };
 
   const handleToggleSection = (section) => {
-    setSelectedSection(section);
+    setListOnlyInoculated(section);
   };
   const handleRoute = (url: string) => {
     router.push(url);
@@ -206,14 +210,14 @@ export default function Vaccine() {
       <FiltersContainer>
         <FilterWrapper>
           <SectionButton
-            onClick={() => handleToggleSection('전체 백신')}
-            active={selectedSection === '전체 백신'}
+            onClick={() => handleToggleSection(false)}
+            active={listOnlyInoculated === false}
           >
             전체 백신
           </SectionButton>
           <SectionButton
-            onClick={() => handleToggleSection('맞은 내역')}
-            active={selectedSection === '맞은 내역'}
+            onClick={() => handleToggleSection(true)}
+            active={listOnlyInoculated === true}
           >
             맞은 내역
           </SectionButton>
@@ -222,17 +226,17 @@ export default function Vaccine() {
 
       <div className="body">
         <div className="content_wrap">
-          {/*{list?.map((item, key) => (*/}
-          {/*  <VaccineStatus*/}
-          {/*    vaccineType={item.vaccineName}*/}
-          {/*    diseaseName={item.diseaseName}*/}
-          {/*    maxOrder={item.maxOrder}*/}
-          {/*    minOrder={item.minOrder}*/}
-          {/*    inoculationOrders={item.inoculationOrders}*/}
-          {/*    isCompleted={item.isCompleted}*/}
-          {/*    onClick={() => handleClickDetail(item.vaccineId)}*/}
-          {/*  />*/}
-          {/*))}*/}
+          {list?.map((item, key) => (
+            <VaccineStatus
+              vaccineType={item.vaccineName}
+              diseaseName={item.diseaseName}
+              maxOrder={item.maxOrder}
+              minOrder={item.minOrder}
+              inoculationOrders={item.inoculationOrders}
+              isCompleted={item.isCompleted}
+              onClick={() => handleClickDetail(item.vaccineId)}
+            />
+          ))}
         </div>
       </div>
       {!loading && (
