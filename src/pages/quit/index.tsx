@@ -7,11 +7,14 @@ import { useRouter } from 'next/router';
 import { LocalStorage } from '@/hooks/useUtil';
 import { getVacBridge } from '@/bridge';
 
+const QuitContainer= styled.div`
+padding: 20px;
+`
+
 const ImageWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
   padding: 24px;
   opacity: 1;
   margin-top: 50px;
@@ -81,6 +84,7 @@ export default function Quit() {
   return (
     <div>
       <MainHeader title="계정 탈퇴" url="/my" />
+      <QuitContainer>
       <ImageWrapper>
         <Image src={Images.ico_quit_intro} alt="" />
       </ImageWrapper>
@@ -106,8 +110,9 @@ export default function Quit() {
         홈으로 이동
       </PrimaryButton>
       <SecondaryButton onClick={handleAccountDeletion}>
-        계정 탈퇴
+        그래도 탈퇴하기
       </SecondaryButton>
+      </QuitContainer>
     </div>
   );
 }
