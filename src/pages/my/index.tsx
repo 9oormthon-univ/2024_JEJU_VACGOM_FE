@@ -6,6 +6,7 @@ import { Images } from '@globalStyles';
 import NavigationFixed from '@/app/_component/organism/navigationFixed';
 import Link from 'next/link';
 import { LocalStorage } from '@/hooks/useUtil';
+import router from 'next/router';
 
 const GreetingContainer = styled.div`
   text-align: left;
@@ -15,12 +16,13 @@ const GreetingContainer = styled.div`
 const UserGreeting = styled.div`
   display: flex;
   align-items: center;
+  justify-content: space-between;
   font-family: Pretendard;
   font-size: 18px;
   font-weight: 600;
   line-height: 26px;
   letter-spacing: -0.03em;
-  color: #191F28;
+  color: #191f28;
   margin-top: 20px;
   margin-bottom: 20px;
 `;
@@ -29,18 +31,69 @@ const ImageWrapper = styled.div`
   margin-right: 20px;
 `;
 
-const TextContainer = styled.span`
+const NameContainer = styled.span`
   display: inline;
+  color: var(--Gray-Gray-900, #191f28);
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 26px;
+`;
+
+const EmailContainer = styled.span`
+  display: inline;
+  color: var(--Gray-Gray-400, #b0b8c1);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+`;
+const InfoWrapper = styled.div`
+  display: flex;
+  gap:8px;
+  align-items: center;
 `;
 
 const ImageContainer = styled.div`
   display: flex;
+  padding: 14px 0px;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  background: var(--Gray-White, #fff);
+  color: var(--Gray-Gray-900, #191f28);
+  font-family: Pretendard;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 26px;
+`;
+
+const SubTitleContainer = styled.div`
+  color: var(--Gray-Gray-900, #191f28);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+`;
+
+const TitleContainer = styled.div`
+  display: flex;
+  padding: 14px
+  flex-direction: column;
   justify-content: center;
-  margin-top: 20px;
-  padding: 10px 0px 0px 0px;
-  gap: 25px;
-  opacity: 0px;
-  border: 1px solid #F2F4F6
+  align-items: center;
+  align-self: stretch;
+  background: var(--Gray-White, #fff);
 `;
 
 const NavContainer = styled.div`
@@ -50,12 +103,12 @@ const NavContainer = styled.div`
 `;
 
 const AccountTitle = styled.h2`
+  color: var(--Gray-Gray-900, #191f28);
   font-family: Pretendard;
   font-size: 18px;
+  font-style: normal;
   font-weight: 600;
-  line-height: 24px;
-  text-align: left;
-  color: #191F28;
+  line-height: 26px;
 `;
 
 const ListItem = styled.div`
@@ -63,19 +116,52 @@ const ListItem = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-top: 30px;
-`
+`;
+
+const ListInfoItem = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+`;
 
 const ListItemText = styled.span`
+  color: var(--Gray-Gray-900, #191f28);
   font-family: Pretendard;
   font-size: 16px;
-  font-weight: 500;
-  line-height: 20px;
-  text-align: left;
-  color: #333D4B;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 `;
 
 const LinkButton = styled.a`
   cursor: pointer;
+`;
+
+const SettingContainer = styled.div``;
+
+const QuitText = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: stretch;
+  color: var(--Gray-Gray-500, #8b95a1);
+  font-family: Pretendard;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-decoration: underline;
+  cursor: pointer;
+`;
+
+const VersionText = styled.div`
+  color: var(--Gray-Gray-500, #8b95a1);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
 `;
 
 export default function My() {
@@ -84,85 +170,157 @@ export default function My() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
 
-  const accessToken = LocalStorage.getItem('accessToken');
+  // const accessToken = LocalStorage.getItem('accessToken');
 
-  useEffect(() => {
-    fetch('https://api-dev.vacgom.co.kr/api/v1/me', {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setUserName(data.name);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        setError(error.message);
-        setIsLoading(false);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('https://api-dev-v2.vacgom.co.kr/member', {
+  //     method: 'GET',
+  //     headers: {
+  //       Authorization: `Bearer ${accessToken}`,
+  //       'Content-Type': 'application/json',
+  //     },
+  //   })
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error('Network response was not ok');
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setUserName(data.name);
+  //       setIsLoading(false);
+  //     })
+  //     .catch((error) => {
+  //       setError(error.message);
+  //       setIsLoading(false);
+  //     });
+  // }, []);
 
-  if (isLoading) return;
-  if (error) return <div>Error: {error}</div>;
+  // if (isLoading) return;
+  // if (error) return <div>Error: {error}</div>;
+
+  const handleClick = () => {
+    router.push('/myrevise');
+  };
 
   return (
     <>
       <MainHeader title="마이페이지" />
       <GreetingContainer>
         <UserGreeting>
-          <ImageWrapper>
-            <Image src={Images.ico_my_profile} alt="" />
+          <InfoWrapper>
+          <ImageWrapper onClick={handleClick}>
+            <Image src={Images.ico_my_profile_new} alt="" />
           </ImageWrapper>
-          <TextContainer>
-            {userName}님,<br />
-            오늘도 건강하세요!
-          </TextContainer>
+          <InfoContainer>
+            <NameContainer>오소현</NameContainer>
+            <EmailContainer>가든 돌보미</EmailContainer>
+          </InfoContainer>
+          </InfoWrapper>
         </UserGreeting>
       </GreetingContainer>
-      <ImageContainer>
-      <Link href="/recomvac" passHref>
-      <Image src={Images.ico_my_recom} alt=""/>
-      </Link>
-      <Link href="/vachistory/certificate/list" passHref>
-        <Image src={Images.ico_my_docs} alt="" /> 
-        </Link>
-      </ImageContainer>
+
       <NavContainer>
-        <AccountTitle>계정 관리</AccountTitle>
+        <AccountTitle>우리 아이</AccountTitle>
         <ListItem>
-          <ListItemText>내 정보 수정</ListItemText>
-          <Link href="/myrevise" passHref>
+          <ListInfoItem>
+            <Image src={Images.ico_my_info_revise} alt="" />
+            <ListItemText>정보 수정</ListItemText>
+          </ListInfoItem>
+          <Link href="/mybabyrevise" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
           </Link>
         </ListItem>
         <ListItem>
-          <ListItemText>개인정보처리방침</ListItemText>
-          <Link href="https://www.notion.so/been2spring/da1fae9ce9f54a7980a0782c91b7551f" passHref>
+          <ListInfoItem>
+            <Image src={Images.ico_my_baby} alt="" />
+            <ListItemText>공동 돌보미</ListItemText>
+          </ListInfoItem>
+          <Link href="/mybaby" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+      </NavContainer>
+
+      <NavContainer>
+        <AccountTitle>백곰 약관</AccountTitle>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보 수집 및 활용 동의서</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/143ea9e50cd9471a856fd1ce52e47ed3?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
           </Link>
         </ListItem>
         <ListItem>
-          <ListItemText>이용약관</ListItemText>
-          <Link href="https://www.notion.so/been2spring/63e3302aed7142dfa4771f41af1260d8?pvs=4" passHref>
+          <ListInfoItem>
+            <ListItemText>이용약관</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/104c56edfef54ae3bd36657f8824d24e?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+      </NavContainer>
+
+      <NavContainer>
+        <AccountTitle>예방 접종 도우미 약관</AccountTitle>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>개인정보 수집 및 이용에 대한 동의</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/4c407e7fa55c4866827b7b2301169e57?pvs=4" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
             </LinkButton>
           </Link>
         </ListItem>
         <ListItem>
-          <ListItemText>로그아웃</ListItemText>
+          <ListInfoItem>
+            <ListItemText>개인정보처리방침</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/37c4eb9131f944a3981f97e9a80cb933?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <ListItemText>이용약관</ListItemText>
+          </ListInfoItem>
+          <Link href="https://been2spring.notion.site/cb723ed5c4dc45a183964c9ff056cd2c?pvs=4" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+      </NavContainer>
+      <NavContainer>
+        <AccountTitle>설정</AccountTitle>
+        <ListItem>
+          <ListInfoItem>
+            <Image src={Images.ico_my_1_1} alt="" />
+            <ListItemText>1:1 문의</ListItemText>
+          </ListInfoItem>
+          <Link href="/ask" passHref>
+            <LinkButton>
+              <Image src={Images.ico_my_right} alt="" />
+            </LinkButton>
+          </Link>
+        </ListItem>
+        <ListItem>
+          <ListInfoItem>
+            <Image src={Images.ico_my_logout} alt="" />
+            <ListItemText>로그 아웃</ListItemText>
+          </ListInfoItem>
           <Link href="/seeagain" passHref>
             <LinkButton>
               <Image src={Images.ico_my_right} alt="" />
@@ -170,15 +328,16 @@ export default function My() {
           </Link>
         </ListItem>
         <ListItem>
-          <ListItemText>계정 탈퇴</ListItemText>
-          <Link href="/quit" passHref>
-            <LinkButton>
-              <Image src={Images.ico_my_right} alt="" />
-            </LinkButton>
-          </Link>
+          <ListInfoItem>
+            <Image src={Images.ico_my_version} alt="" />
+            <ListItemText>버전 정보</ListItemText>
+          </ListInfoItem>
+          <VersionText>1.0.0v</VersionText>
         </ListItem>
       </NavContainer>
-      <NavigationFixed />
+      <Link href="/quit" passHref>
+        <QuitText>탈퇴하기</QuitText>
+      </Link>
     </>
   );
 }

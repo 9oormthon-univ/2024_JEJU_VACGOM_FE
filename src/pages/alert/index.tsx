@@ -123,7 +123,9 @@ export default function AlertPage() {
         setError(error.message);
         setIsLoading(false);
       });
+
   }, []);
+
 
   if (isLoading) return ;
   if (error) return <div>Error: {error}</div>;
@@ -153,7 +155,6 @@ export default function AlertPage() {
           </AlarmItem>
         ))}
       </AlarmList>
-      <NavigationFixed />
     </div>
   );
 }

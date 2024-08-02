@@ -45,6 +45,7 @@ export const PATH = {
   MAP_INFLU: '/influmap',
   //
   VACLOOKUP: '/vaclookup',
+  VACINFO:'/vacinfo',
   //
   MY: '/my',
 };

@@ -7,7 +7,7 @@ export default function VachistoryLayout({ children }: Props) {
   return (
     <div className="container">
       {children}
-      <NavigationFixed />
+
     </div>
   );
 }
