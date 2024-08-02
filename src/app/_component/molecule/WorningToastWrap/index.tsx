@@ -1,4 +1,5 @@
 'use client';
+
 import React, { useEffect, useState } from 'react';
 import { WarningToastWrapContainer } from './style';
 import WarningToast from '@/app/_component/atom/WarningToast';
