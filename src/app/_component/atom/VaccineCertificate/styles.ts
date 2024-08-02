@@ -261,6 +261,8 @@ export const VaccineCardStyle: CssArchiveType = {
       animation: loading 2s infinite linear;
     }
     width: 353px;
+    max-width: unset;
+    max-height: unset;
     height: 507px;
     border-radius: 14px;
     flex-shrink: 0;
