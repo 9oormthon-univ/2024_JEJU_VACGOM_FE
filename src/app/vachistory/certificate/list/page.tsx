@@ -10,11 +10,11 @@ import { useInoculation } from '@/api/queries/vaccine/inoculations';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import useCertificateStore from '@/store/vaccine/certification';
 import { useBridge } from '@/bridge/hook/useBridge';
+import { PATH } from '@/routes/path';
 
 export default function CertificateList(): React.JSX.Element {
   const router = useRouter();
   const { setvaccinationId } = useCertificateStore((state) => state);
-  const { goBack } = useBridge();
 
   const onClickHandler = (id: number) => {
     setvaccinationId(id);
@@ -27,7 +27,7 @@ export default function CertificateList(): React.JSX.Element {
 
   return (
     <Container>
-      <BackHeader title={'접종 인증서'} onClickHandler={goBack} />
+      <BackHeader title={'접종 인증서'} url={PATH.VACHISTORY_VAC} />
       <div className="container">
         <div className="list">
           {data?.inoculationResponses.map((card, index) => (
