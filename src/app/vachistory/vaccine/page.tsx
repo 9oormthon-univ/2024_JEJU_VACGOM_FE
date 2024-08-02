@@ -13,6 +13,7 @@ import styled from '@emotion/styled';
 import { useRouter } from 'next/navigation';
 import { LocalStorage } from '@/hooks/useUtil';
 import useVaccinationStore from '../../../store/vaccine/vaccinationDetail';
+import { useVaccination } from '@/api/queries/vaccine/vaccination';
 
 interface ListDataType {
   vaccineName: string;
@@ -157,30 +158,20 @@ const SubTitleText = styled.div`
 
 export default function Vaccine() {
   const [selectedSection, setSelectedSection] = useState<string>('전체 백신');
-  const [type, setType] = useState('NATION');
-  const [list, setList] = useState<ListDataType[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const { data: list } = useVaccination({ selectedSection });
 
-  useEffect(() => {
-    if (selectedSection === '국가예방접종') {
-      setType('NATION');
-    } else {
-      setType('EXTRA');
-    }
-  }, [selectedSection]);
   const { setVacType, setVaccineId } = useVaccinationStore((state) => state);
+
   const handleClickDetail = (vaccineId: string) => {
-    LocalStorage.setItem('vacType', type);
     LocalStorage.setItem('vaccineId', vaccineId);
-    setVacType(type);
     setVaccineId(vaccineId);
     router.push(PATH.VACHISTORY_VAC + '/' + vaccineId);
   };
 
   const handleToggleSection = (section) => {
     setSelectedSection(section);
-    setType(section === '전체 백신' ? 'NATION' : 'EXTRA');
   };
 
   return (
@@ -224,17 +215,17 @@ export default function Vaccine() {
 
       <div className="body">
         <div className="content_wrap">
-          {list.map((item, key) => (
-            <VaccineStatus
-              vaccineType={item.vaccineName}
-              diseaseName={item.diseaseName}
-              maxOrder={item.maxOrder}
-              minOrder={item.minOrder}
-              inoculationOrders={item.inoculationOrders}
-              isCompleted={item.isCompleted}
-              onClick={() => handleClickDetail(item.vaccineId)}
-            />
-          ))}
+          {/*{list?.map((item, key) => (*/}
+          {/*  <VaccineStatus*/}
+          {/*    vaccineType={item.vaccineName}*/}
+          {/*    diseaseName={item.diseaseName}*/}
+          {/*    maxOrder={item.maxOrder}*/}
+          {/*    minOrder={item.minOrder}*/}
+          {/*    inoculationOrders={item.inoculationOrders}*/}
+          {/*    isCompleted={item.isCompleted}*/}
+          {/*    onClick={() => handleClickDetail(item.vaccineId)}*/}
+          {/*  />*/}
+          {/*))}*/}
         </div>
       </div>
       {!loading && (
