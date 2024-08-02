@@ -37,14 +37,6 @@ const SignupErrorPage = (): React.JSX.Element => {
         </div>
         <div className="bottom">
           <Button
-            label={'제가 직접 등록할게요'}
-            size={'large'}
-            variant={'Secondary'}
-            onClick={() => {
-              router.push(PATH.SIGNUP_INFO);
-            }}
-          />
-          <Button
             label={'아이 정보를 다시 입력할게요'}
             size={'large'}
             onClick={() => {

@@ -33,7 +33,7 @@ export const SignupErrorPageWrap = styled.main`
     & > .body {
       padding: 30px 27px;
       position: absolute;
-      bottom: 130px;
+      bottom: 70px;
       display: flex;
       justify-content: center;
       align-content: center;
