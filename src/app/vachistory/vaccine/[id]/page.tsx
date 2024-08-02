@@ -10,6 +10,7 @@ import NonePage from '@/app/_component/molecule/NonePage';
 import SkeletonScreen from '@/app/_component/temp/SkeletonScreen';
 import { useVaccinationDetail } from '@/api/queries/vaccine/vaccinationDetail';
 import useVaccinationStore from '../../../../store/vaccine/vaccinationDetail';
+import { useBridge } from '@/bridge/hook/useBridge';
 
 interface DetailDataType {
   order: string;
@@ -35,7 +36,7 @@ export default function Vaccine() {
     isLoading,
     error,
   } = useVaccinationDetail({ vaccinationId });
-  console.log(detail);
+  const { goBack } = useBridge();
 
   const nonPage = () => {
     if (isLoading) {
@@ -87,7 +88,7 @@ export default function Vaccine() {
 
   return (
     <Container>
-      {!isLoading && <BackHeader title={' '} url={PATH.VACHISTORY_VAC} />}
+      {!isLoading && <BackHeader title={' '} onClickHandler={goBack} />}
       {nonPage()}
     </Container>
   );

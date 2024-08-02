@@ -36,9 +36,7 @@ const FiltersContainer = styled.div`
   margin-left: 14px;
   margin-top: 20px;
   margin-bottom: 20px;
-  align-items: center;
   background: #fff;
-  display: flex;
   padding: 4px;
   align-items: flex-start;
   gap: 8px;
@@ -51,7 +49,7 @@ const SectionButton = styled.div`
   align-items: center;
   border-radius: 4px;
   background: var(--surface-bright, #fff);
-  box-shadow: 0px 1px 6px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.05);
   cursor: pointer;
   opacity: ${({ active }) => (active ? '1' : '0.3')};
   color: var(--primary, #191f28);
@@ -85,15 +83,11 @@ const CertificateContainer = styled.div`
   justify-content: center;
   align-items: flex-start;
   gap: 20px;
-  flex: 2;
+  flex: 1.8;
   border-radius: 14px;
   border: 1px solid var(--Gray-Gray-100, #f2f4f6);
   background: var(--Gray-White, #fff);
-  display: flex;
   padding: 20px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 20px;
   align-self: stretch;
 `;
 
@@ -121,7 +115,7 @@ const SubContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   gap: 6px;
-  flex: 1 0 0;
+  flex: 1.2 0 0;
   align-self: stretch;
   border-radius: 14px;
   border: 1px solid var(--Gray-Gray-100, #f2f4f6);
@@ -130,24 +124,12 @@ const SubContainer = styled.div`
 
 const SubMainContainer = styled.div`
   display: flex;
-  gap: 8px;
-  flex-direction: column;
-  flex: 1;
-  align-items: flex-start;
-  flex: 1 0 0;
-  align-self: stretch;
-  display: flex;
   flex-direction: column;
   align-items: flex-start;
   flex: 1 0 0;
   align-self: stretch;
   justify-content: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: 6px;
-  align-self: stretch;
 `;
 
 const SubTitleText = styled.div`
@@ -181,9 +163,6 @@ export default function Vaccine() {
   const handleToggleSection = (section) => {
     setListOnlyInoculated(section);
   };
-  const handleRoute = (url: string) => {
-    router.push(url);
-  };
 
   return (
     <Container>
@@ -200,7 +179,7 @@ export default function Vaccine() {
             <Image src={Images.ico_vacscore_vaccine} alt="" />
             <SubTitleText>인증서</SubTitleText>
           </SubContainer>
-          <SubContainer onClick={() => router.push(PATH.VACHISTORY_VAC)}>
+          <SubContainer onClick={() => router.push(PATH.VACLOOKUP)}>
             <Image src={Images.ico_vacinfo_look} alt="" />
             <SubTitleText>백신 정보</SubTitleText>
           </SubContainer>

@@ -44,13 +44,13 @@ export default function CertificateDetail() {
   } = useInoculationDetail<DetailDataType>({ vaccinationId });
   const { data: userData } = useMember<userDataType>();
 
-  const { getImage, shareImage } = useBridge();
+  const { goBack } = useBridge();
 
   const [errormessage, setErrormessage] = useState('');
 
   return (
     <Container>
-      <BackHeader title={'접종 상세'} url={PATH.VACHISTORY_LIST} />
+      <BackHeader title={'접종 상세'} onClickHandler={goBack} />
       <div className="container">
         <VaccineCard
           image={detail?.certificationIcon}
@@ -63,22 +63,6 @@ export default function CertificateDetail() {
           type={detail?.type}
           subLabel
         />
-        <div className="button">
-          <Button
-            prevIcon={Icons.share}
-            label={'이미지 공유'}
-            variant={'OutlineWhite'}
-            size={'large'}
-            onClick={shareImage}
-          />
-          <Button
-            prevIcon={Icons.save}
-            label={'이미지 저장'}
-            variant={'OutlineWhite'}
-            size={'large'}
-            onClick={getImage}
-          />
-        </div>
       </div>
       <WarningToastWrap
         errorMessage={errormessage}
