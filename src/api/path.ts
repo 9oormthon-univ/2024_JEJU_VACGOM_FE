@@ -11,6 +11,8 @@ export const PATH_API = {
   KAKAO_VERIFY: '/api/v2/auth/simpleAuth/kakao/verify',
   // 백신 인증서 조회
   INOCULATIONS: '/api/v2/inoculations',
+  // 이 사람의 맞은 백신 개수랑 아직 안맞은 백신 개수
+  MAIN: '/api/v2/main',
 };
 
 /**
