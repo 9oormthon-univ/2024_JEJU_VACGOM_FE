@@ -63,16 +63,16 @@ export default function Vaccine() {
             </div>
           </div>
           <div className="body">
-            {/*{detail?.map((item, key) => (*/}
-            {/*  <VaccineDetail*/}
-            {/*    vaccineDose={reName(item.order, item.vaccineProductName)}*/}
-            {/*    vaccineName={item.vaccineName}*/}
-            {/*    vaccineBrandName={item.vaccineBrandName}*/}
-            {/*    inoculatedAt={item.date}*/}
-            {/*    inoculationAgency={item.agency}*/}
-            {/*    lotNo={item.lotNumber}*/}
-            {/*  />*/}
-            {/*))}*/}
+            {detail?.map((item, key) => (
+              <VaccineDetail
+                vaccineDose={reName(item.order, item.vaccineProductName)}
+                vaccineName={item.vaccineName}
+                vaccineBrandName={item.vaccineBrandName}
+                inoculatedAt={item.date}
+                inoculationAgency={item.agency}
+                lotNo={item.lotNumber}
+              />
+            ))}
           </div>
           {!isLoading && (
             <div className="bottom">
