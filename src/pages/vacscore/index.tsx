@@ -190,8 +190,7 @@ export default function VacInfo() {
               width: '100%',
             },
             path: {
-              stroke: `rgba(65, 150, 253, 
-              ${data.vacgomScore / 100})`,
+              stroke: `rgb(65, 150, 253)`,
             },
             trail: {
               stroke: '#F2F4F6',
